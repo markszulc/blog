@@ -73,6 +73,144 @@ export function buildFigure(blockEl) {
   return figEl;
 }
 
+/**
+ * gets a blog article index information by path.
+ * @param {string} path indentifies article
+ * @returns {object} article object (or null if article does not exist)
+ */
+
+export async function getBlogArticle(path) {
+  const meta = await getMetadataJson(`${path}.metadata.json`);
+
+  if (meta) {
+    let title = meta['og:title'].trim();
+    const trimEndings = ['|Adobe', '| Adobe', '| Adobe Blog', '|Adobe Blog'];
+    trimEndings.forEach((ending) => {
+      if (title.endsWith(ending)) title = title.substr(0, title.length - ending.length);
+    });
+
+    const articleMeta = {
+      description: meta.description,
+      title,
+      author: meta.author,
+      image: meta['og:image'],
+      imageAlt: meta['og:image:alt'],
+      date: meta['publication-date'],
+      path,
+      tags: meta['article:tag'],
+    };
+    //loadArticleTaxonomy(articleMeta);
+    return articleMeta;
+  }
+  return null;
+}
+
+/**
+ * Build article card
+ * @param {Element} article The article data to be placed in card.
+ * @returns card Generated card
+ */
+export function buildArticleCard(article, type = 'article', eager = false) {
+  const {
+    title, description, image, imageAlt, date,
+  } = article;
+
+  const path = article.path.split('.')[0];
+
+  const picture = createOptimizedPicture(image, imageAlt || title, eager, [{ width: '750' }]);
+  const pictureTag = picture.outerHTML;
+  const card = document.createElement('a');
+  card.className = `${type}-card`;
+  card.href = path;
+
+  card.innerHTML = `<div class="${type}-card-image">
+      ${pictureTag}
+    </div>
+    <div class="${type}-card-body">
+      <h3>${title}</h3>
+    </div>`;
+  return card;
+}
+
+
+
+/**
+ * Returns a picture element with webp and fallbacks
+ * @param {string} src The image URL
+ * @param {boolean} eager load image eager
+ * @param {Array} breakpoints breakpoints and corresponding params (eg. width)
+ */
+
+export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
+  const url = new URL(src, window.location.href);
+  const picture = document.createElement('picture');
+  const { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
+
+  // webp
+  breakpoints.forEach((br) => {
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('type', 'image/webp');
+    source.setAttribute('srcset', `${pathname}?width=${br.width}&format=webply&optimize=medium`);
+    picture.appendChild(source);
+  });
+
+  // fallback
+  breakpoints.forEach((br, i) => {
+    if (i < breakpoints.length - 1) {
+      const source = document.createElement('source');
+      if (br.media) source.setAttribute('media', br.media);
+      source.setAttribute('srcset', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      picture.appendChild(source);
+    } else {
+      const img = document.createElement('img');
+      img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      img.setAttribute('loading', eager ? 'eager' : 'lazy');
+      img.setAttribute('alt', alt);
+      picture.appendChild(img);
+    }
+  });
+
+  return picture;
+}
+
+/**
+ * forward looking *.metadata.json experiment
+ * fetches metadata.json of page
+ * @param {path} path to *.metadata.json
+ * @returns {Object} containing sanitized meta data
+ */
+async function getMetadataJson(path) {
+  let resp;
+  try {
+    resp = await fetch(`${path.split('.')[0]}?noredirect`);
+  } catch {
+    debug(`Could not retrieve metadata for ${path}`);
+  }
+
+  if (resp && resp.ok) {
+    const text = await resp.text();
+    const headStr = text.split('<head>')[1].split('</head>')[0];
+    const head = document.createElement('head');
+    head.innerHTML = headStr;
+    const metaTags = head.querySelectorAll(':scope > meta');
+    const meta = {};
+    metaTags.forEach((metaTag) => {
+      const name = metaTag.getAttribute('name') || metaTag.getAttribute('property');
+      const value = metaTag.getAttribute('content');
+      if (meta[name]) {
+        meta[name] += `, ${value}`;
+      } else {
+        meta[name] = value;
+      }
+    });
+    return meta;
+  }
+  return null;
+}
+
+
 
 /**
  * Builds all synthetic blocks in a container element.

@@ -1,0 +1,19 @@
+
+    .article-cards {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .article-card {
+        width: 30%;
+        text-decoration: none;
+    }
+
+    .article-card > a {
+        text-decoration: none;
+        color: beige;
+    }
+
+    .article-card-body {
+        color: black;
+    }

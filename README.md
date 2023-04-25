@@ -1,9 +1,9 @@
-# Your Project's Title...
-Your project's description...
+# MarkSzulc.com AEM Based Blog
+Using Next Gen Composibility from Adobe Experience Manager
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.hlx.page/
-- Live: https://main--{repo}--{owner}.hlx.live/
+- Preview: https://main--blog--markszulc.hlx.page/
+- Live: https://main--blog--markszulc.hlx.live/
 
 ## Installation
 

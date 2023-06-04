@@ -1,25 +1,25 @@
-.recentlivestream img {
-    max-width: 380px;
+.recenttravel img {
+    max-width: 580px;
 }
 
-.recentlivestream ul {
+.recenttravel ul {
     list-style: none;
     display: flex;
     justify-content: space-between; 
     padding: 0;
 }
 
-.recentlivestream li {
+.recenttravel li {
     max-width: 600px;
 }
 
-.recentlivestream li a {
+.recenttravel li a {
     color: #000;
     font-size: 16px;
 }
 
-.recentlivestream li h4 {
+.recenttravel li h4 {
     font-size: 24px;
-    max-width: 380px;
+    max-width: 580px;
     margin: 0;
 }

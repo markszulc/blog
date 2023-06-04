@@ -10,7 +10,7 @@ export default async function decorate(block) {
 
   index.data
     .forEach((post) => {
-      if (post.category !== 'livestream') {
+      if (post.category !== 'travel') {
         return;
       }
       const li = document.createElement('li');

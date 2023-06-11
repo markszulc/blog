@@ -5,14 +5,28 @@
 }
 
 .homebanner {
-
   max-height: 549px;
   overflow: hidden;
   max-width: 1200px;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.homebanner .icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 549px;
+  width: 100%;
 }
 
 .homebanner picture img{
   max-height: 549px;
+}
 
+.homebanner .icon svg {
+  height: 200px;
+  width: 600px;
 }

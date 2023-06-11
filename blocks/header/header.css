@@ -226,7 +226,8 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 2em;
+    justify-content: end;
+    gap: 3em;
     margin: 0;
     font-size: var(--body-font-size-xs);
   }

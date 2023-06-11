@@ -8,9 +8,10 @@ export default async function decorate(block) {
 
   const container = document.createElement('ul');
 
+
   index.data
     .forEach((post) => {
-      if (post.category !== 'tech') {
+      if (post.featured !== 'true') {
         return;
       }
       const li = document.createElement('li');

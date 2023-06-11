@@ -6,12 +6,24 @@
     list-style: none;
     display: flex;
     justify-content: space-between; 
-    padding: 0;
+    gap: 10px;
+    padding: 0 10px;
     overflow-x: scroll;
+    @media (min-width: 900px) {
+        padding: 0;
+    }
+    
 }
 
 .recentlivestream li {
-    max-width: 600px;
+    max-width: 340px;
+    padding-left: 0px;
+    margin-bottom: 20px;
+
+    @media (min-width: 900px) {
+        max-width: 600px;
+        padding-left: 0;
+    }
 }
 
 .recentlivestream li a {
@@ -31,4 +43,12 @@
     font-size: 18px;
     max-width: 380px;
     margin: 0;
+}
+
+.recentlivestream li img {
+    max-width: 320px;
+    @media (min-width: 900px) {
+        max-width: 380px;
+        padding-left: 0;
+    }
 }

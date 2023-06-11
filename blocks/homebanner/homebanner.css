@@ -5,25 +5,45 @@
 }
 
 .homebanner {
-  max-height: 540px;
+
   overflow: hidden;
   max-width: 1200px;
   margin: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   color: #fff
 }
+@media (min-width: 768px) {
+  .homebanner {
+    flex-direction: row;
+    max-height: 540px;
+  }
+}
+
+
+
 .homebanner p {
   margin: 0;
 }
 
 .homebanner div {
-  height: 549px;
   display: flex;
   flex-direction: column;
   gap: 0;
-  justify-content: center;
+  justify-content: start; 
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .homebanner div {
+    width: 600px;
+    height: 549px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
+  }
 }
 
 .homebanner .icon {
@@ -36,6 +56,12 @@
 }
 
 .homebanner .icon svg {
-  height: 200px;
-  width: 600px;
+  width: 300px;
+}
+
+@media (min-width: 768px) {
+  .homebanner .icon svg {
+    height: 200px;
+    width: 600px;
+  }
 }

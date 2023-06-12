@@ -5,12 +5,13 @@
 .featureditems ul {
     list-style: none;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     gap: 10px;
     padding: 0 10px;
     overflow-x: scroll;
     @media (min-width: 900px) {
         padding: 0;
+        flex-wrap: wrap;
     }
 
 }

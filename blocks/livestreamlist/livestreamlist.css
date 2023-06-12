@@ -1,21 +1,22 @@
-.recentlivestream img {
+.livestreamlist img {
     max-width: 380px;
 }
 
-.recentlivestream ul {
+.livestreamlist ul {
     list-style: none;
     display: flex;
     justify-content: space-between; 
     gap: 10px;
     padding: 0 10px;
-    overflow-x: scroll;
+    flex-wrap: wrap;
     @media (min-width: 900px) {
         padding: 0;
+        max-width: 1200px;
     }
     
 }
 
-.recentlivestream li {
+.livestreamlist li {
     max-width: 340px;
     padding-left: 0px;
     margin-bottom: 20px;
@@ -26,12 +27,12 @@
     }
 }
 
-.recentlivestream li a {
+.livestreamlist li a {
     color: #000;
     font-size: 16px;
 }
 
-.recentlivestream li h2 {
+.livestreamlist li h2 {
     font-size: 24px;
     max-width: 380px;
     font-weight: 900;
@@ -39,13 +40,13 @@
     margin: 0;
 }
 
-.recentlivestream li h4 {
+.livestreamlist li h4 {
     font-size: 18px;
     max-width: 380px;
     margin: 0;
 }
 
-.recentlivestream li img {
+.livestreamlist li img {
     max-width: 320px;
     @media (min-width: 900px) {
         max-width: 380px;

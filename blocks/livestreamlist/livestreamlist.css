@@ -1,0 +1,54 @@
+.recentlivestream img {
+    max-width: 380px;
+}
+
+.recentlivestream ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px;
+    padding: 0 10px;
+    overflow-x: scroll;
+    @media (min-width: 900px) {
+        padding: 0;
+    }
+    
+}
+
+.recentlivestream li {
+    max-width: 340px;
+    padding-left: 0px;
+    margin-bottom: 20px;
+
+    @media (min-width: 900px) {
+        max-width: 600px;
+        padding-left: 0;
+    }
+}
+
+.recentlivestream li a {
+    color: #000;
+    font-size: 16px;
+}
+
+.recentlivestream li h2 {
+    font-size: 24px;
+    max-width: 380px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+.recentlivestream li h4 {
+    font-size: 18px;
+    max-width: 380px;
+    margin: 0;
+}
+
+.recentlivestream li img {
+    max-width: 320px;
+    @media (min-width: 900px) {
+        max-width: 380px;
+        padding-left: 0;
+    }
+}

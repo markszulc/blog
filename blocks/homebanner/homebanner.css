@@ -1,3 +1,7 @@
+.homebanner-container  {
+  padding: 0 !important;
+}
+
 .homebanner-wrapper {
   max-width: unset !important;
   padding: 0;

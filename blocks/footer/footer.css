@@ -1,7 +1,8 @@
 footer {
   padding: 2rem;
   background-color: var(--overlay-background-color);
-  font-size: var(--body-font-size-s);
+  font-size: 24px;
+  text-align: center;
 }
 
 footer .footer {
@@ -10,5 +11,14 @@ footer .footer {
 }
 
 footer .footer p {
+  margin: 10px 20px;
+}
+
+footer .footer ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
 }

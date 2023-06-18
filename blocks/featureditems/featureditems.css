@@ -1,5 +1,9 @@
 .featureditems img {
-    width: 380px;
+    max-width: 320px;
+    @media (min-width: 900px) {
+        max-width: 380px;
+        padding-left: 0;
+    }
 }
 
 .featureditems ul {

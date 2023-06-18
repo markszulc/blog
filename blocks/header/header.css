@@ -176,7 +176,15 @@ header nav .nav-sections ul  {
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 700;
+  font-weight: 400;
+  
+}
+
+@media (max-width: 900px) {
+  header nav .nav-sections ul > li {
+    padding: 20px 0px;
+    border-bottom: #ffffff solid 1px;
+  }
 }
 
 header nav .nav-sections ul > li > ul {

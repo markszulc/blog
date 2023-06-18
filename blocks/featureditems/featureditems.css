@@ -1,5 +1,5 @@
 .featureditems img {
-    max-width: 580px;
+    max-width: 380px;
 }
 
 .featureditems ul {
@@ -17,9 +17,16 @@
 }
 
 .featureditems li {
-    max-width: 600px;
+    max-width: 340px;
+    padding-left: 0px;
     margin-bottom: 20px;
+
+    @media (min-width: 900px) {
+        max-width: 600px;
+        padding-left: 0;
+    }
 }
+
 
 .featureditems li a {
     color: #000;
@@ -28,14 +35,15 @@
 
 .featureditems li h4 {
     font-size: 18px;
-    max-width: 580px;
+    max-width: 380px;
     margin: 0;
 }
 
 .featureditems li img {
     max-width: 320px;
     @media (min-width: 900px) {
-        max-width: 580px;
+        max-width: 380px;
+        padding-left: 0;
 
     }
 }

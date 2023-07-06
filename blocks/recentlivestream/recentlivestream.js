@@ -36,7 +36,6 @@ export default async function decorate(block) {
       </a>
     `;
       container.append(li);
-      console.log("LiveStream: " + featurecount);
       featurecount++;
     }
   }

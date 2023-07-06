@@ -29,7 +29,7 @@ export default async function decorate(block) {
           <div class="content">
             <h4>${post.title}</h4>
             <p>${post.description}</p>
-            <p>${date}</p>
+            <p>Published: ${date}</p>
           </div>
       </a>
     `;

@@ -5,7 +5,19 @@
 }
 
 .category-list li a {
-display: flex;
-flex-direction: row;
-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    text-decoration: none;
+    color: #000;
+}
+
+.category-list .content {
+    font-size: 20px;
+    max-width: 800px;
+}
+
+.category-list img {
+    aspect-ratio: 16/9;
+    width: 500px;
 }

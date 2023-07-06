@@ -12,6 +12,10 @@
     color: #000;
 }
 
+.category-list li:nth-child(2n) a {
+    flex-direction: row-reverse;
+}
+
 .category-list .content {
     font-size: 20px;
     max-width: 800px;

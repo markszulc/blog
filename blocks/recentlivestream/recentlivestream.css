@@ -30,7 +30,7 @@
 
     @media (min-width: 900px) {
         max-width: 600px;
-        padding-left: 0;
+        padding-left: 0; 
     }
 }
 
@@ -39,15 +39,7 @@
     font-size: 16px;
 }
 
-.recentlivestream li h2 {
-    font-size: 24px;
-    max-width: 380px;
-    font-weight: 900;
-    text-align: center;
-    margin: 0;
-}
-
-.recentlivestream li h4 {
+.recentlivestream li p {
     font-size: 18px;
     max-width: 380px;
     margin: 0;

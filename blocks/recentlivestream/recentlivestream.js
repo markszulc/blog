@@ -32,7 +32,7 @@ export default async function decorate(block) {
       li.innerHTML = `
       <a href="${post.path}">
           ${pictureTag}
-          <h4>${post.title}</h4>
+          <p>${post.title}</p>
       </a>
     `;
       container.append(li);

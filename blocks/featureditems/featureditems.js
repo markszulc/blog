@@ -18,16 +18,14 @@ export default async function decorate(block) {
           const li = document.createElement('li');
 
           const eager = false;
-          const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '750' }]);
+          const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '380' }]);
           const pictureTag = picture.outerHTML;
           const card = document.createElement('a');
-          card.className = `foo-card`;
-          card.href = "#";
 
           li.innerHTML = `
           <a href="${post.path}">
               ${pictureTag}
-              <h4>${post.title}</h4>
+              <p>${post.title}</p>
           </a>`;
 
           container.append(li);

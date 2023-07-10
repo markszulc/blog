@@ -241,6 +241,12 @@ header nav .nav-sections ul > li > ul > li {
     font-size: var(--body-font-size-xs);
   }
 
+  @media (min-width: 822px) and (max-width: 1200px) {
+    header nav .nav-sections ul {
+      gap: 1.8em;
+    }
+}
+
   header nav .nav-sections > ul > li {
     flex: 0 1 auto;
     position: relative;

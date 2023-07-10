@@ -157,44 +157,44 @@ const EMBEDS_CONFIG = {
 
 
 const loadEmbed = (block) => {
-    if (block.classList.contains('is-loaded')) {
-      return;
-    }
-  
-    const figure = buildFigure(block.firstElementChild.firstElementChild);
-    const a = figure.querySelector('a');
-  
-    if (a) {
-      const url = new URL(a.href.replace(/\/$/, ''));
-      const hostnameArr = url.hostname.split('.');
-  
-      // trimed domain name (ex, www.google.com -> google)
-      const simpleDomain = hostnameArr[hostnameArr.length - 2];
-  
-      // getting config
-      let config = EMBEDS_CONFIG[simpleDomain];
-  
-      // for different config for same domain:
-      if (url.hostname.includes('adobe')) {
-        if (url.hostname.includes('spark.adobe.com')) {
-          config = EMBEDS_CONFIG['adobe-spark'];
-        } else {
-          config = EMBEDS_CONFIG['adobe-tv'];
-        }
-      } else if (url.hostname.includes('youtu')) {
-        config = EMBEDS_CONFIG.youtube;
-      }
-  
-      // loading embed function for given config and url.
-      if (config) {
-        a.outerHTML = config.embed(url);
-        block.classList = `block embed embed-${config.type}`;
+  if (block.classList.contains('is-loaded')) {
+    return;
+  }
+
+  const figure = buildFigure(block.firstElementChild.firstElementChild);
+  const a = figure.querySelector('a');
+
+  if (a) {
+    const url = new URL(a.href.replace(/\/$/, ''));
+    const hostnameArr = url.hostname.split('.');
+
+    // trimed domain name (ex, www.google.com -> google)
+    const simpleDomain = hostnameArr[hostnameArr.length - 2];
+
+    // getting config
+    let config = EMBEDS_CONFIG[simpleDomain];
+
+    // for different config for same domain:
+    if (url.hostname.includes('adobe')) {
+      if (url.hostname.includes('spark.adobe.com')) {
+        config = EMBEDS_CONFIG['adobe-spark'];
       } else {
-        a.outerHTML = getDefaultEmbed(url);
-        block.classList = `block embed embed-${simpleDomain}`;
+        config = EMBEDS_CONFIG['adobe-tv'];
       }
-      block.innerHTML = figure.outerHTML;
-      block.classList.add('is-loaded');
+    } else if (url.hostname.includes('youtu')) {
+      config = EMBEDS_CONFIG.youtube;
+    }
+
+    // loading embed function for given config and url.
+    if (config) {
+      a.outerHTML = config.embed(url);
+      block.classList = `block embed embed-${config.type}`;
+    } else {
+      a.outerHTML = getDefaultEmbed(url);
+      block.classList = `block embed embed-${simpleDomain}`;
+    }
+    block.innerHTML = figure.outerHTML;
+    block.classList.add('is-loaded');
     }
   };
   

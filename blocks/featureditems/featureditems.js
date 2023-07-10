@@ -12,8 +12,7 @@ export default async function decorate(block) {
 
   index.data
     .forEach((post) => {
-      if (post.featured == 'true') {
-
+      if (post.featured === 'true') {
         if (featurecount < 3) {
           const li = document.createElement('li');
 
@@ -33,7 +32,6 @@ export default async function decorate(block) {
           featurecount++;
         }
       }
-
     });
 
   block.append(container);

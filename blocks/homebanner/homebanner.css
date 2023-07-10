@@ -9,23 +9,27 @@
 }
 
 .homebanner {
-
   overflow: hidden;
   max-width: 1200px;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #fff
+  color: #fff;
 }
-@media (min-width: 768px) {
+@media (min-width: 822px) {
   .homebanner {
     flex-direction: row;
     max-height: 540px;
+
   }
 }
 
-
+@media (min-width: 822px) {
+  .homebanner {
+    padding: 0px 34px;
+  }
+}
 
 .homebanner p {
   margin: 0;
@@ -39,7 +43,7 @@
   text-align: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 822px) {
   .homebanner div {
     width: 600px;
     height: 549px;

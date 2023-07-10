@@ -20,7 +20,12 @@
     @media (min-width: 900px) {
         padding: 0;
     }
-    
+}
+
+@media (min-width: 822px) and (max-width: 1200px) {
+    .recentlivestream ul {
+      padding: 0px 34px;
+    }
 }
 
 .recentlivestream li {

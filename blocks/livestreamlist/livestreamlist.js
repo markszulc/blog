@@ -16,6 +16,7 @@ export default async function decorate(block) {
         return;
       }
       const eager = false;
+      const title = '';
       const li = document.createElement('li');
       const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '750' }]);
       const pictureTag = picture.outerHTML;

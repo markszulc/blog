@@ -29,8 +29,7 @@ export default async function decorate(block) {
           </a>`;
 
           container.append(li);
-          // console.log("Feature: " + featurecount);
-          featurecount+1;
+          featurecount += 1;
         }
       }
     });

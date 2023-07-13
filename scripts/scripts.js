@@ -73,8 +73,6 @@ export function buildFigure(blockEl) {
   return figEl;
 }
 
-
-
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element

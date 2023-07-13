@@ -1,6 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-
 export default async function decorate(block) {
   const indexResponse = await fetch('/query-index.json');
   if (!indexResponse.ok) {
@@ -17,10 +16,10 @@ export default async function decorate(block) {
         return;
       }
       const eager = false;
+      const title = '';
       const li = document.createElement('li');
       const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '750' }]);
       const pictureTag = picture.outerHTML;
-      
 
       li.innerHTML = `
       <a href="${post.path}">
@@ -30,8 +29,6 @@ export default async function decorate(block) {
     `;
       container.append(li);
     });
-
-
 
   block.append(container);
 }

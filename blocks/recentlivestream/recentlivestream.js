@@ -21,7 +21,6 @@ export default async function decorate(block) {
           const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '750' }]);
           const pictureTag = picture.outerHTML;
           const card = document.createElement('a');
-          card.className = `foo-card`;
           card.href = "#";
 
           li.innerHTML = `

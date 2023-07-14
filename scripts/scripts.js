@@ -53,7 +53,7 @@ export function buildFigure(blockEl) {
       if (video) {
         figEl.prepend(video);
       }
-    
+      
       const link = clone.querySelector('a');
       if (link) {
         const img = figEl.querySelector('picture') || figEl.querySelector('video');

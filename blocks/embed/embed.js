@@ -155,7 +155,6 @@ const EMBEDS_CONFIG = {
   },
 };
 
-
 const loadEmbed = (block) => {
   if (block.classList.contains('is-loaded')) {
     return;
@@ -195,39 +194,38 @@ const loadEmbed = (block) => {
     }
     block.innerHTML = figure.outerHTML;
     block.classList.add('is-loaded');
-    }
-  };
-  
-  const intersectHandler = (entries) => {
-    const entry = entries[0];
-    if (entry.isIntersecting) {
-      if (entry.intersectionRatio >= 0.25) {
-        const block = entry.target;
-        loadEmbed(block);
-      }
-    } else {
-      // if ((entry.intersectionRatio === 0.0) && (adBox.dataset.totalViewTime >= 60000)) {
-      // Error handler placeholder
-      // }
-    }
-  };
-  
-  export default function decorate(block) {
-    const run = () => {
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: [0.0, 0.25],
-      };
-  
-      const observer = new IntersectionObserver(intersectHandler, options);
-      observer.observe(block);
-    };
-  
-    if (document.readyState === 'complete') {
-      run();
-    } else {
-      window.addEventListener('load', run);
-    }
   }
-  
+};
+
+const intersectHandler = (entries) => {
+  const entry = entries[0];
+  if (entry.isIntersecting) {
+    if (entry.intersectionRatio >= 0.25) {
+      const block = entry.target;
+      loadEmbed(block);
+    }
+  } else {
+    // if ((entry.intersectionRatio === 0.0) && (adBox.dataset.totalViewTime >= 60000)) {
+    // Error handler placeholder
+    // }
+  }
+};
+
+export default function decorate(block) {
+  const run = () => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: [0.0, 0.25],
+    };
+
+    const observer = new IntersectionObserver(intersectHandler, options);
+    observer.observe(block);
+  };
+
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run);
+  }
+}

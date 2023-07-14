@@ -27,14 +27,14 @@
 
 @media (min-width: 822px) and (max-width: 1200px) {
     .featureditems ul {
-      padding: 0px 34px;
+      padding: 0 34px;
     }
 }
 
 
 .featureditems li {
     max-width: 340px;
-    padding-left: 0px;
+    padding-left: 0;
     margin-bottom: 20px;
 
     @media (min-width: 900px) {

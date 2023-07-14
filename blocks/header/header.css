@@ -183,7 +183,7 @@ header nav .nav-sections ul > li {
 
 @media (max-width: 900px) {
   header nav .nav-sections ul > li {
-    padding: 20px 0px;
+    padding: 20px 0;
     border-bottom: #fff solid 1px;
   }
 }

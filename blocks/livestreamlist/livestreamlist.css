@@ -19,7 +19,7 @@
 
 .livestreamlist li {
     max-width: 340px;
-    padding-left: 0px;
+    padding-left: 0;
     margin-bottom: 20px;
 
     @media (min-width: 900px) {

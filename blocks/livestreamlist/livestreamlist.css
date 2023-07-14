@@ -9,6 +9,7 @@
     gap: 10px;
     padding: 0 10px;
     flex-wrap: wrap;
+
     @media (min-width: 900px) {
         padding: 0;
         max-width: 1200px;
@@ -48,6 +49,7 @@
 
 .livestreamlist li img {
     max-width: 320px;
+    
     @media (min-width: 900px) {
         max-width: 380px;
         padding-left: 0;

@@ -17,6 +17,7 @@
   justify-content: space-between;
   color: #fff;
 }
+
 @media (min-width: 822px) {
   .homebanner {
     flex-direction: row;

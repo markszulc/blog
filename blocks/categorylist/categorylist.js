@@ -10,7 +10,7 @@ export default async function decorate(block) {
   const index = await indexResponse.json();
   const container = document.createElement('ul');
   container.classList.add('category-list');
-  container.classList.add('category-list--' + category);
+  container.classList.add(`category-list--${category}`);
 
   index.data
     .forEach((post) => {
@@ -18,7 +18,7 @@ export default async function decorate(block) {
         return;
       }
       const li = document.createElement('li');
-      const picture = createOptimizedPicture(post.image,'',false,[{width: 500}]);
+      const picture = createOptimizedPicture(post.image, '', false, [{ width: 500 }]);
       const date = post['publication-date'];
 
       li.innerHTML = `

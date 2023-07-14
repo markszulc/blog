@@ -18,7 +18,7 @@ export default async function decorate(block) {
         if (featurecount < 3) {
           const li = document.createElement('li');
           const eager = false;
-          const picture = createOptimizedPicture(post.image, post.title || "", eager, [{ width: '750' }]);
+          const picture = createOptimizedPicture(post.image, post.title || '', eager, [{ width: '750' }]);
           const pictureTag = picture.outerHTML;
           const card = document.createElement('a');
           card.href = '#';
@@ -33,7 +33,7 @@ export default async function decorate(block) {
           featurecount += 1;
         }
       }
-  });
+    });
 
   block.append(container);
 }

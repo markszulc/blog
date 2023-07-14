@@ -2,6 +2,7 @@
     max-width: 320px;
     width:320px;
     aspect-ratio: 16/9;
+
     @media (min-width: 900px) {
         max-width: 380px; 
         width: 380px;   
@@ -17,6 +18,7 @@
     gap: 10px;
     padding: 0 10px;
     overflow-x: scroll;
+
     @media (min-width: 900px) {
         padding: 0;
     }
@@ -24,13 +26,13 @@
 
 @media (min-width: 822px) and (max-width: 1200px) {
     .recentlivestream ul {
-      padding: 0px 34px;
+      padding: 0 34px;
     }
 }
 
 .recentlivestream li {
     max-width: 340px;
-    padding-left: 0px;
+    padding-left: 0;
     margin-bottom: 20px;
 
     @media (min-width: 900px) {

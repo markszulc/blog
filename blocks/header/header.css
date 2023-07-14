@@ -1,7 +1,7 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: #ff0000;
-  color: #ffffff;
+  background-color: #f00;
+  color: #fff;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -72,7 +72,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: #ff0000;
+  background-color: #f00;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
@@ -183,8 +183,8 @@ header nav .nav-sections ul > li {
 
 @media (max-width: 900px) {
   header nav .nav-sections ul > li {
-    padding: 20px 0px;
-    border-bottom: #ffffff solid 1px;
+    padding: 20px 0;
+    border-bottom: #fff solid 1px;
   }
 }
 

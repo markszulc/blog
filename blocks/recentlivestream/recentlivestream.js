@@ -18,11 +18,10 @@ export default async function decorate(block) {
         if (featurecount < 3) {
           const li = document.createElement('li');
           const eager = false;
-          const picture = createOptimizedPicture(post.image, post.title || title, eager, [{ width: '750' }]);
+          const picture = createOptimizedPicture(post.image, post.title || '', eager, [{ width: '750' }]);
           const pictureTag = picture.outerHTML;
           const card = document.createElement('a');
-          card.className = `foo-card`;
-          card.href = "#";
+          card.href = '#';
 
           li.innerHTML = `
           <a href="${post.path}">
@@ -31,11 +30,10 @@ export default async function decorate(block) {
           </a>
         `;
           container.append(li);
-          featurecount++;
-    }
-  }
-});
+          featurecount += 1;
+        }
+      }
+    });
 
   block.append(container);
 }
-

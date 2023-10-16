@@ -45,6 +45,7 @@ const limit = "1000";
  * @return {Promise<void>}
  */
 async function createFeed(feed) {
+  console.log(`Fetching posts`);
   const allPosts = await fetchBlogPosts(feed);
   console.log(`found ${allPosts.length} posts`);
 
@@ -86,7 +87,7 @@ async function createFeed(feed) {
 async function fetchBlogPosts(feed) {
   let offset = 0;
   const allPosts = [];
-
+  console.log(`Fetching Blog posts`);
   while (true) {
     const api = new URL(feed.source);
     api.searchParams.append('offset', JSON.stringify(offset));

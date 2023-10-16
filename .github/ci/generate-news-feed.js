@@ -1,5 +1,6 @@
 import { Feed } from 'feed';
 import fs from 'fs';
+console.log(`loading...`);
 
 /**
  * @type {FeedConfig[]}
@@ -12,7 +13,7 @@ const feeds = [
     siteRoot: "https://www.markszulc.com",
     link:	"https://www.markszulc.com/news/",
     language:	"en",
-    description:	"Get the latest news from Mark."
+    description: "Get the latest news from Mark."
   }
 ]
 

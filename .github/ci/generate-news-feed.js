@@ -9,7 +9,7 @@ const feeds = [
   {
     title: 'MarkSzulc.com News',
     targetFile: `../../news/feed.xml`,
-    source: 'https://main--blog--markszulc.hlx.live/news/feed.json',
+    source: 'https://main--blog--markszulc.hlx.live/query-index.json',
     siteRoot: "https://www.markszulc.com",
     link:	"https://www.markszulc.com/news/",
     language:	"en",

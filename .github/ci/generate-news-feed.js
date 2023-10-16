@@ -10,7 +10,7 @@ const feeds = [
     targetFile: `../../news/feed.xml`,
     source: 'https://main--blog--markszulc.hlx.live/news/feed.json',
     siteRoot: "https://www.markszulc.com",
-    link:	"https://www.macktrucks.com/news/",
+    link:	"https://www.markszulc.com/news/",
     language:	"en",
     description:	"Get the latest news from Mark."
   }

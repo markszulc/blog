@@ -11,6 +11,7 @@ on:
     paths:
       - '.github/ci/**'
       - '.github/workflows/generate-atom-news-feeds.yaml'
+  workflow_dispatch:
 
 jobs:
   build:

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://www.markszulc.com/news/</id>
+    <title>MarkSzulc.com News</title>
+    <updated>2023-10-11T22:01:40.000Z</updated>
+    <generator>AEM News feed generator (GitHub action)</generator>
+    <link rel="alternate" href="https://www.markszulc.com/news/"/>
+    <subtitle>Get the latest news from Mark.</subtitle>
+    <entry>
+        <title type="html"><![CDATA[MarkSzulc.com]]></title>
+        <id>https://www.markszulc.com/</id>
+        <link href="https://www.markszulc.com/"/>
+        <updated>2023-10-11T22:01:40.000Z</updated>
+        <published>2023-10-11T22:01:40.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Drone Time: A Lake, A Mountain and a Reservoir]]></title>
+        <id>https://www.markszulc.com/travel/california2018</id>
+        <link href="https://www.markszulc.com/travel/california2018"/>
+        <updated>2023-07-06T03:49:01.000Z</updated>
+        <published>2023-07-06T03:49:01.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[My Journey with Home Automation - 2023 edition]]></title>
+        <id>https://www.markszulc.com/tech/my-journey-with-home-automation-2023-edition</id>
+        <link href="https://www.markszulc.com/tech/my-journey-with-home-automation-2023-edition"/>
+        <updated>2023-07-20T10:04:02.000Z</updated>
+        <published>2023-07-20T10:04:02.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Building Adaptive Forms with AEM]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2210</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2210"/>
+        <updated>2023-06-12T06:43:34.000Z</updated>
+        <published>2023-06-12T06:43:34.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Outbound Marketing Content Workflows]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2303</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2303"/>
+        <updated>2023-06-12T07:07:23.000Z</updated>
+        <published>2023-06-12T07:07:23.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Building Experiences with Mark Szulc Live Stream]]></title>
+        <id>https://www.markszulc.com/building-experiences/</id>
+        <link href="https://www.markszulc.com/building-experiences/"/>
+        <updated>2023-06-12T09:01:11.000Z</updated>
+        <published>2023-06-12T09:01:11.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Content Fragment Admin & Extensibility with AEM Sites]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2301</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2301"/>
+        <updated>2023-06-12T06:46:20.000Z</updated>
+        <published>2023-06-12T06:46:20.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Outbound Marketing Content Workflows]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2302</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2302"/>
+        <updated>2023-06-12T09:03:56.000Z</updated>
+        <published>2023-06-12T09:03:56.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MARKSZULC.COM]]></title>
+        <id>https://www.markszulc.com/nav</id>
+        <link href="https://www.markszulc.com/nav"/>
+        <updated>2023-06-12T07:34:31.000Z</updated>
+        <published>2023-06-12T07:34:31.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Content Automation with Experience Manager]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2209</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2209"/>
+        <updated>2023-06-12T09:22:01.000Z</updated>
+        <published>2023-06-12T09:22:01.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[New Music - The Journey]]></title>
+        <id>https://www.markszulc.com/music/the-journey</id>
+        <link href="https://www.markszulc.com/music/the-journey"/>
+        <updated>2023-07-05T05:43:35.000Z</updated>
+        <published>2023-07-05T05:43:35.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Drone Time: Utah, Monument Valley and more.]]></title>
+        <id>https://www.markszulc.com/travel/utah2022</id>
+        <link href="https://www.markszulc.com/travel/utah2022"/>
+        <updated>2023-06-12T10:32:44.000Z</updated>
+        <published>2023-06-12T10:32:44.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[columns]]></title>
+        <id>https://www.markszulc.com/tools/sidekick/blocks/columns</id>
+        <link href="https://www.markszulc.com/tools/sidekick/blocks/columns"/>
+        <updated>2023-06-15T00:37:49.000Z</updated>
+        <published>2023-06-15T00:37:49.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Music of Mark Szulc]]></title>
+        <id>https://www.markszulc.com/music/</id>
+        <link href="https://www.markszulc.com/music/"/>
+        <updated>2023-07-05T05:44:37.000Z</updated>
+        <published>2023-07-05T05:44:37.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Who is Mark Szulc?]]></title>
+        <id>https://www.markszulc.com/who-is-mark-szulc/</id>
+        <link href="https://www.markszulc.com/who-is-mark-szulc/"/>
+        <updated>2023-06-18T07:01:46.000Z</updated>
+        <published>2023-06-18T07:01:46.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MarkSzulc.com]]></title>
+        <id>https://www.markszulc.com/footer</id>
+        <link href="https://www.markszulc.com/footer"/>
+        <updated>2023-06-18T07:21:19.000Z</updated>
+        <published>2023-06-18T07:21:19.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Travels of Mark Szulc]]></title>
+        <id>https://www.markszulc.com/travel/</id>
+        <link href="https://www.markszulc.com/travel/"/>
+        <updated>2023-07-05T07:06:32.000Z</updated>
+        <published>2023-07-05T07:06:32.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The Tech that interests Mark Szulc]]></title>
+        <id>https://www.markszulc.com/tech/</id>
+        <link href="https://www.markszulc.com/tech/"/>
+        <updated>2023-07-05T03:19:41.000Z</updated>
+        <published>2023-07-05T03:19:41.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Previewing Content Fragments with App Builder]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2304</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2304"/>
+        <updated>2023-07-04T12:28:37.000Z</updated>
+        <published>2023-07-04T12:28:37.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Digital Signage With Experience Manager Screens]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2110</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2110"/>
+        <updated>2023-07-04T12:41:58.000Z</updated>
+        <published>2023-07-04T12:41:58.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Content Automation with Experience Manager]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2109</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2109"/>
+        <updated>2023-07-04T12:44:28.000Z</updated>
+        <published>2023-07-04T12:44:28.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Managing Alexa Content with Experience Manager]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2105</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2105"/>
+        <updated>2023-07-04T12:50:42.000Z</updated>
+        <published>2023-07-04T12:50:42.000Z</published>
+    </entry>
+</feed>

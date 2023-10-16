@@ -46,13 +46,12 @@ const limit = "1000";
  * @return {Promise<void>}
  */
 async function createFeed(feed) {
-  console.log(`Fetching posts`);
   const allPosts = await fetchBlogPosts(feed);
   console.log(`found ${allPosts.length} posts`);
 
 
   const newestPost = allPosts
-    .map((post) => new Date(post.publicationDate * 1000))
+    .map((post) => new Date(post.lastModified * 1000))
     .reduce((maxDate, date) => (date > maxDate ? date : maxDate), new Date(0));
 
   const atomFeed = new Feed({
@@ -72,8 +71,8 @@ async function createFeed(feed) {
       id: link,
       link,
       content: post.summary,
-      date: new Date(post.publicationDate * 1000),
-      published: new Date(post.publicationDate * 1000),
+      date: new Date(post.lastModified * 1000),
+      published: new Date(post.lastModified * 1000),
     });
   });
 

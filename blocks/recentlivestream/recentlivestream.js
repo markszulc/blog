@@ -14,7 +14,7 @@ export default async function decorate(block) {
 
   index.data
     .forEach((post) => {
-      if (post.category === 'livestream') {
+      if (post.category === 'livestream' && post.featured === 'true') {
         if (featurecount < 3) {
           const li = document.createElement('li');
           const eager = false;

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.markszulc.com/news/</id>
     <title>MarkSzulc.com News</title>
-    <updated>2023-11-08T08:57:54.000Z</updated>
+    <updated>2023-11-08T09:57:39.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.markszulc.com/news/"/>
     <subtitle>Get the latest news from Mark.</subtitle>
@@ -159,5 +159,12 @@
         <link href="https://www.markszulc.com/building-experiences/bewms2105"/>
         <updated>2023-07-04T12:50:42.000Z</updated>
         <published>2023-07-04T12:50:42.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Previewing Content Fragments with App Builder]]></title>
+        <id>https://www.markszulc.com/building-experiences/bewms2310</id>
+        <link href="https://www.markszulc.com/building-experiences/bewms2310"/>
+        <updated>2023-11-08T09:57:39.000Z</updated>
+        <published>2023-11-08T09:57:39.000Z</published>
     </entry>
 </feed>

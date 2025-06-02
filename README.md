@@ -1,26 +1,4 @@
 # MarkSzulc.com AEM Based Blog
-Using Next Gen Composibility from Adobe Experience Manager
+Using Edge Delivery Services from Adobe Experience Manager
 
-## Environments
-- Preview: https://main--blog--markszulc.hlx.page/
-- Live: https://main--blog--markszulc.hlx.live/
-
-## Installation
-
-```sh
-npm i
-```
-
-## Tests
-
-```sh
-npm test
-```
-
-## Local development
-
-1. Create a new repository based on the `helix-project-boilerplate` template and add a mountpoint in the `fstab.yaml`
-1. Add the [helix-bot](https://github.com/apps/helix-bot) to the repository
-1. Install the [Helix CLI](https://github.com/adobe/helix-cli): `npm install -g @adobe/helix-cli`
-1. Start Franklin Proxy: `hlx up` (opens your browser at `http://localhost:3000`)
-1. Open the `{repo}` directory in your favorite IDE and start coding :)
+[MarkSzulc.com](https://www.markszulc.com)

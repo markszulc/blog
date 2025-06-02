@@ -18,7 +18,7 @@
   color: #fff;
 }
 
-@media (min-width: 822px) {
+@media (width >= 822px) {
   .homebanner {
     flex-direction: row;
     max-height: 540px;
@@ -26,7 +26,7 @@
   }
 }
 
-@media (min-width: 822px) {
+@media (width >= 822px) {
   .homebanner {
     padding: 0 34px;
   }
@@ -44,7 +44,7 @@
   text-align: center;
 }
 
-@media (min-width: 822px) {
+@media (width >= 822px) {
   .homebanner div {
     width: 600px;
     height: 549px;
@@ -68,7 +68,7 @@
   width: 300px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .homebanner .icon svg {
     height: 200px;
     width: 600px;

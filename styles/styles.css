@@ -21,7 +21,7 @@
   @font-face {
     font-family: Raleway;
     font-style: normal;
-    font-weight: 400,500;
+    font-weight: 500;
     font-display: swap;
     src: local('Raleway-Regular'), url('../fonts/Raleway-Regular.ttf') format('truetype');
   }
@@ -67,7 +67,7 @@
 
 }
 
-@media (min-width: 900px) {
+@media (width >= 900px) {
   :root {
     --heading-font-size-xxl: 54px;
     --heading-font-size-xl: 40px;
@@ -262,13 +262,13 @@ main .section {
   padding: 0 30px;
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   main .section {
     padding: 0;
   }
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .section > div {
     max-width: 1200px;
     margin: auto;

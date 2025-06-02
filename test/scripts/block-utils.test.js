@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-expressions */
+ 
 /* global describe before it */
 
 import { readFile } from '@web/test-runner-commands';
@@ -12,7 +12,7 @@ document.head.innerHTML = await readFile({ path: './head.html' });
 
 describe('Utils methods', () => {
   before(async () => {
-    blockUtils = await import('../../scripts/lib-franklin.js');
+    blockUtils = await import('../../scripts/aem.js');
     document.body.innerHTML = await readFile({ path: './body.html' });
   });
 

@@ -1,7 +1,7 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: #f00;
-  color: #fff;
+  background-color: #fff;
+  color: #0b0b0c;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -177,7 +177,7 @@ header nav .nav-sections ul  {
 
 header nav .nav-sections ul > li {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
   
 }
 

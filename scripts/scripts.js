@@ -1,5 +1,4 @@
 import {
-  sampleRUM,
   buildBlock,
   loadHeader,
   loadFooter,
@@ -8,12 +7,11 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
-  waitForLCP,
-  loadBlocks,
+  waitForFirstImage,
+  loadSection,
+  loadSections,
   loadCSS,
 } from './aem.js';
-
-const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -22,7 +20,7 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
-   
+  // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [picture, h1] }));
@@ -31,41 +29,15 @@ function buildHeroBlock(main) {
 }
 
 /**
- * Build figure element
- * @param {Element} blockEl The original element to be placed in figure.
- * @returns figEl Generated figure
+ * load fonts.css and set a session storage flag
  */
-export function buildFigure(blockEl) {
-  const figEl = document.createElement('figure');
-  figEl.classList.add('figure');
-  Array.from(blockEl.children).forEach((child) => {
-    const clone = child.cloneNode(true);
-    // picture, video, or embed link is NOT wrapped in P tag
-    if (clone.nodeName === 'PICTURE' || clone.nodeName === 'VIDEO' || clone.nodeName === 'A') {
-      figEl.prepend(clone);
-    } else {
-      // content wrapped in P tag(s)
-      const picture = clone.querySelector('picture');
-      if (picture) {
-        figEl.prepend(picture);
-      }
-      const video = clone.querySelector('video');
-      if (video) {
-        figEl.prepend(video);
-      }
-      const link = clone.querySelector('a');
-      if (link) {
-        const img = figEl.querySelector('picture') || figEl.querySelector('video');
-        if (img) {
-          // wrap picture or video in A tag
-          link.textContent = '';
-          link.append(img);
-        }
-        figEl.prepend(link);
-      }
-    }
-  });
-  return figEl;
+async function loadFonts() {
+  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  try {
+    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
+  } catch (e) {
+    // do nothing
+  }
 }
 
 /**
@@ -76,7 +48,7 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
   } catch (error) {
-     
+    // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
 }
@@ -85,6 +57,7 @@ function buildAutoBlocks(main) {
  * Decorates the main element.
  * @param {Element} main The main element
  */
+// eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
@@ -105,24 +78,16 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await waitForLCP(LCP_BLOCKS);
+    await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
-}
 
-/**
- * Adds the favicon.
- * @param {string} href The favicon URL
- */
-export function addFavIcon(href) {
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.type = 'image/png';
-  link.href = href;
-  const existingLink = document.querySelector('head link[rel="icon"]');
-  if (existingLink) {
-    existingLink.parentElement.replaceChild(link, existingLink);
-  } else {
-    document.getElementsByTagName('head')[0].appendChild(link);
+  try {
+    /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
+    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
+      loadFonts();
+    }
+  } catch (e) {
+    // do nothing
   }
 }
 
@@ -132,7 +97,7 @@ export function addFavIcon(href) {
  */
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
-  await loadBlocks(main);
+  await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -142,10 +107,7 @@ async function loadLazy(doc) {
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.png`);
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
+  loadFonts();
 }
 
 /**
@@ -153,6 +115,7 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
+  // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);
   // load anything that can be postponed to the latest here
 }

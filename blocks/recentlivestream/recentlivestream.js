@@ -12,6 +12,13 @@ export default async function decorate(block) {
 
   let featurecount = 0;
 
+  // Sort index.data by publication-date (most recent first)
+  index.data.sort((a, b) => {
+    const dateA = new Date(a['publication-date']);
+    const dateB = new Date(b['publication-date']);
+    return dateB - dateA;
+  });
+
   index.data
     .forEach((post) => {
       if (post.category === 'livestream' && post.featured === 'true') {

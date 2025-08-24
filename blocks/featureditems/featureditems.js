@@ -12,9 +12,15 @@ export default async function decorate(block) {
 
   let featurecount = 0;
 
+  index.data.sort((a, b) => {
+    const dateA = new Date(a['publication-date']);
+    const dateB = new Date(b['publication-date']);
+    return dateB - dateA;
+  });
+
   index.data
     .forEach((post) => {
-      if (post.featured === 'true') {
+      if (post.category !== 'livestream' && post.featured === 'true') {
         if (featurecount < 6) {
           const li = document.createElement('li');
           const title = '';

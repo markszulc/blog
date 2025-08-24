@@ -1,0 +1,42 @@
+.quote blockquote {
+  margin: 0 auto;
+  padding: 0 24px;
+  max-width: 900px;
+}
+
+@media (width >= 900px) {
+  .quote blockquote {
+    padding: 0 32px;
+  }
+}
+
+.quote blockquote .quote-quotation {
+  font-size: 120%;
+}
+
+.quote blockquote .quote-quotation > :first-child {
+  text-indent: -0.5ch;
+}
+
+.quote blockquote .quote-quotation > :first-child::before,
+.quote blockquote .quote-quotation > :last-child::after {
+  line-height: 0;
+}
+
+.quote blockquote .quote-quotation > :first-child::before {
+  content: "“";
+}
+
+.quote blockquote .quote-quotation > :last-child::after {
+  content: "”";
+}
+
+.quote blockquote .quote-attribution {
+  text-align: left;
+  font-style: normal;
+}
+
+.quote blockquote .quote-attribution > :first-child::before {
+  content: "";
+  padding-left: 1.5ch;
+}

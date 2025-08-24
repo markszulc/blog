@@ -18,12 +18,12 @@
 }
 
 .livestreamlist li {
-    max-width: 340px;
+    max-width: 360px;
     padding-left: 0;
     margin-bottom: 20px;
 
     @media (width >= 900px) {
-        max-width: 600px;
+        max-width: 360px;
         padding-left: 0;
     }
 }
@@ -35,7 +35,7 @@
 
 .livestreamlist li h2 {
     font-size: 24px;
-    max-width: 380px;
+    max-width: 360px;
     font-weight: 900;
     text-align: center;
     margin: 0;
@@ -43,15 +43,58 @@
 
 .livestreamlist li h4 {
     font-size: 18px;
-    max-width: 380px;
+    max-width: 360px;
     margin: 0;
 }
 
+.livestreamlist li p {
+    max-width: 360px;
+}
+
 .livestreamlist li img {
-    max-width: 320px;
+    max-width: 360px;
     
     @media (width >= 900px) {
-        max-width: 380px;
+        max-width: 360px;
         padding-left: 0;
     }
+}
+
+.livestreamlist .title {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-weight: 400;
+    margin: 0.5rem 0;
+    text-wrap: balance;
+}
+
+.livestreamlist .description {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0.5rem 0;
+}
+
+.livestreamlist .date {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.livestreamlist .date svg{
+    width: 16px;
+    height: 16px;
+    stroke: #666;
+    flex-shrink: 0;
+}
+
+.livestreamlist .pubdate {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0;
 }

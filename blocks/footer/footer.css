@@ -50,12 +50,21 @@ footer img[data-icon-name] {
 }
 
 footer .footer .columns > div > div:nth-child(1) {
-    min-width: 474px;
+    min-width: 70%;
     padding-right: 100px;
+
+    @media (width >= 900px) {
+        min-width: 474px;
+        padding-left: 0;
+    }
 }
 
 footer .default-content-wrapper {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+footer .columns > div {
+  gap: 20px;
 }

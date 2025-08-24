@@ -15,12 +15,13 @@
     list-style: none;
     display: flex;
     justify-content: space-between; 
-    gap: 60px;
+    gap: 30px;
     padding: 0 10px;
     overflow-x: scroll;
 
     @media (width >= 900px) {
         padding: 0;
+        gap: 60px;
     }
 }
 

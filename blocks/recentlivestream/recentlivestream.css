@@ -4,8 +4,8 @@
     aspect-ratio: 16/9;
 
     @media (width >= 900px) {
-        max-width: 380px; 
-        width: 380px;   
+        max-width: 360px; 
+        width: 360px;   
         aspect-ratio: 16/9;
         padding-left: 0;
     }
@@ -15,7 +15,7 @@
     list-style: none;
     display: flex;
     justify-content: space-between; 
-    gap: 10px;
+    gap: 60px;
     padding: 0 10px;
     overflow-x: scroll;
 
@@ -57,4 +57,42 @@
         width: 380px;
         padding-left: 0;
     }
+}
+
+.recentlivestream .title {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    font-weight: 400;
+    margin: 0.5rem 0;
+}
+
+.recentlivestream .description {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0.5rem 0;
+}
+
+.recentlivestream .date {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.recentlivestream .date svg{
+    width: 16px;
+    height: 16px;
+    stroke: #666;
+    flex-shrink: 0;
+}
+
+.recentlivestream .pubdate {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #666;
+    margin: 0;
 }

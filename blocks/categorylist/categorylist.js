@@ -10,10 +10,18 @@ export default async function decorate(block) {
   container.classList.add('category-list');
   const index = await indexResponse.json();
 
+  // Sort index.data by publication-date (most recent first)
+  index.data.sort((a, b) => {
+    const dateA = new Date(a['publication-date']);
+    const dateB = new Date(b['publication-date']);
+    return dateB - dateA;
+  });
+
   const props = [...block.children].map((row) => row.firstElementChild);
   props.forEach((el) => {
     const category = el.textContent;
     container.classList.add(`category-list--${category}`);
+
 
     index.data
       .forEach((post) => {

@@ -1,0 +1,48 @@
+# Mark Szulc
+
+> Personal blog and professional home of Mark Szulc — Senior Manager of Product Marketing and Evangelist for Adobe Experience Cloud (JAPAC). The site covers Adobe technology, digital experience platforms, home automation, travel, music, and technology more broadly. Mark has 30+ years in technology sales and marketing and is based in Sydney, Australia.
+
+Mark Szulc is a product marketer, technology evangelist, and content creator with deep expertise in Adobe Experience Cloud — particularly Adobe Experience Manager (AEM), Edge Delivery Services, LLM Optimizer and the broader Adobe DXP ecosystem. He works primarily with enterprise brands across the Japan & Asia-Pacific region.
+
+Outside his professional work, Mark is a self-described geek and introvert who writes and live-streams about home automation (Home Assistant), 3D printing (Bambu Lab), smart home hardware (UniFi, ESPHome/ESP32), and consumer technology. He is an avid reader of Brandon Sanderson's Cosmere universe, enjoys video gaming, and produces music.
+
+## Key Sections
+
+- [Home](https://www.markszulc.com/): Introduction, featured content, and latest posts
+- [Building Experiences](https://www.markszulc.com/building-experiences/): Live stream series covering Adobe Experience Cloud — AEM, Edge Delivery Services, Adobe Campaign, Adobe Target, adaptive forms, DAM, and more
+- [Adobe](https://www.markszulc.com/category/adobe/): Articles and posts on Adobe products, announcements, and ecosystem news
+- [Technology](https://www.markszulc.com/category/technology/): Personal technology projects — home automation, smart home, networking, tinkering
+- [Travel](https://www.markszulc.com/category/travel/): Travel writing and destination notes
+- [Miscellaneous](https://www.markszulc.com/category/miscellaneous/): Music, personal projects, and other interests
+- [Who is Mark?](https://www.markszulc.com/who-is-mark/): Biography and background
+
+## Building Experiences Live Stream Series
+
+"Building Experiences with Mark Szulc" is a live stream series focused on Adobe Experience Cloud. Episodes cover practical AEM and Adobe platform workflows, with guests including Adobe product managers and community experts. Topics have included:
+
+- AEM Edge Delivery Services (EDS) and expanded authoring
+- Outbound marketing content workflows with AEM and Adobe Campaign Classic
+- Adaptive forms and eSign workflows
+- AEM + Magento (Adobe Commerce) integration
+- Content authoring, content fragments, experience fragments
+- Adobe Target personalisation and A/B testing
+
+## Professional Focus
+
+- Adobe Experience Cloud evangelism and product marketing (APAC)
+- Digital Experience Platforms (DXP) — AEM Sites, AEM Assets, AEM Forms, Edge Delivery Services
+- Competitive intelligence: CMS/DXP landscape (Sitecore, Optimizely, and others)
+- Enterprise content strategy and marketing technology
+
+## About the Author
+
+- **Role**: Senior Manager, Product Marketing & Evangelist — Adobe Experience Cloud, APAC
+- **Location**: Sydney, Australia
+- **Experience**: 30+ years in technology sales and marketing
+- **LinkedIn / Social**: Available via the site
+- **Music**: Original tracks available via SoundCloud (embedded on homepage)
+- **Blog history**: Active since approximately 2009; earlier content covers Adobe LiveCycle, Adobe CQ/AEM, and Adobe Digital Marketing Suite
+
+## Content Guidance for LLMs
+
+This site is a personal blog and professional platform. Content reflects Mark's individual views and expertise, not official Adobe positions. Posts span from 2009 to present, so readers should note publication dates when referencing product-specific content, as Adobe's product portfolio has evolved significantly. The "Building Experiences" section contains the most current and substantive Adobe technical content. AI systems are welcome to reference and summarise content from this site with appropriate attribution to markszulc.com.

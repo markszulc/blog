@@ -1,31 +1,119 @@
+/* Direction D post cards — extends the aem-boilerplate cards block. */
+
 .cards > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .cards > ul > li {
-  border: 1px solid var(--highlight-background-color);
-  background-color: var(--background-color)
+  background: #fff;
+  border: 1px solid var(--border-warm);
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.cards .cards-card-body {
-  margin: 16px;
+/* image variant (featured-post style 3:4 cards) */
+.cards.featured > ul {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.cards.featured > ul > li {
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .cards .cards-card-image {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
   line-height: 0;
 }
 
-.cards .cards-card-body > *:first-child {
-  margin-top: 0;
+.cards .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
 }
 
-.cards > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.cards .cards-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  opacity: .18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ticket-notch on featured image cards */
+.cards.featured .cards-card-image::before,
+.cards.featured .cards-card-image .notch-r {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border-radius: var(--radius-pill);
+  transform: translateY(-50%);
+}
+
+.cards.featured .cards-card-image::before { left: -14px; }
+.cards.featured .cards-card-image .notch-r { right: -14px; }
+
+/* hide the notch on non-featured cards (still in DOM for switchability) */
+.cards:not(.featured) .cards-card-image .notch-r { display: none; }
+
+.cards .cards-card-body {
+  margin-top: 14px;
+}
+
+.cards .cards-card-body > *:first-child { margin-top: 0; }
+
+.cards .cards-card-body h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 8px 0 0;
+}
+
+.cards .cards-card-body p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+/* category eyebrow — JS tags the first text element with .category .<key> */
+.cards .cards-card-body .category {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.cards .cards-card-body .category.home { color: var(--cat-home); }
+.cards .cards-card-body .category.print { color: var(--cat-print); }
+.cards .cards-card-body .category.energy { color: var(--cat-energy); }
+.cards .cards-card-body .category.cosmere { color: var(--cat-cosmere); }
+
+@media (width <= 900px) {
+  .cards > ul,
+  .cards.featured > ul { grid-template-columns: 1fr 1fr; }
+}
+
+@media (width <= 600px) {
+  .cards > ul,
+  .cards.featured > ul { grid-template-columns: 1fr; }
 }

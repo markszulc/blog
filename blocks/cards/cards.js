@@ -1,5 +1,12 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
+const CATS = {
+  'home automation': 'home',
+  '3d printing': 'print',
+  energy: 'energy',
+  cosmere: 'cosmere',
+};
+
 export default function decorate(block) {
   /* change to ul, li */
   const ul = document.createElement('ul');
@@ -7,8 +14,19 @@ export default function decorate(block) {
     const li = document.createElement('li');
     li.innerHTML = row.innerHTML;
     [...li.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
+      if (div.children.length === 1 && div.querySelector('picture')) {
+        div.className = 'cards-card-image';
+        const notch = document.createElement('div');
+        notch.className = 'notch-r';
+        div.append(notch);
+      } else {
+        div.className = 'cards-card-body';
+        const eyebrow = div.querySelector('p, span');
+        if (eyebrow) {
+          const key = eyebrow.textContent.trim().toLowerCase().split('·')[0].trim();
+          if (CATS[key]) eyebrow.classList.add('category', CATS[key]);
+        }
+      }
     });
     ul.append(li);
   });

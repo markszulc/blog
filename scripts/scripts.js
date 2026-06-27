@@ -14,18 +14,34 @@ import {
 } from './aem.js';
 
 /**
- * Builds hero block and prepends to main in a new section.
+ * Builds the Direction D split-bento hero from a leading H1 + picture.
+ * Text cell  = H1 + following <p>/<ul> siblings (lead paragraph, button link)
+ * Media cell = the picture (or its wrapping <p>)
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
-    main.prepend(section);
+  if (!h1 || !picture) return;
+
+  // collect H1 + following sibling text content (stops at next heading or block)
+  const textEls = [h1];
+  let n = h1.nextElementSibling;
+  while (n && !/^H[1-6]$/.test(n.tagName) && !n.classList.contains('section-metadata')) {
+    if (n.contains(picture) || n === picture) break;
+    textEls.push(n);
+    n = n.nextElementSibling;
   }
+
+  const textCell = document.createElement('div');
+  textCell.append(...textEls);
+
+  const mediaCell = document.createElement('div');
+  mediaCell.append(picture.closest('p') || picture);
+
+  const section = document.createElement('div');
+  section.append(buildBlock('hero', [[textCell, mediaCell]]));
+  main.prepend(section);
 }
 
 /**

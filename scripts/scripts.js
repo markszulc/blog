@@ -14,6 +14,50 @@ import {
 } from './aem.js';
 
 /**
+ * Helix only emits a fresh top-level <div> in <main> when the source doc has
+ * an <hr>. Some upstream converters (DOCX → Google Docs in particular) drop
+ * the horizontal lines, collapsing the whole page into one wrapper. When that
+ * happens, multiple .section-metadata blocks end up in the same section —
+ * decorateSections processes only the first, leaving the others as broken
+ * block stubs that 404 against /blocks/section-metadata/, and bleeds the
+ * wrong variant across the page.
+ *
+ * Split the single wrapper at every .section-metadata boundary so each one
+ * gets its own section. Pages that already use explicit <hr>s (multiple
+ * top-level divs in main) are untouched.
+ * @param {Element} main The container element
+ */
+function splitImplicitSectionsByMetadata(main) {
+  if (main.children.length !== 1) return;
+  const wrapper = main.firstElementChild;
+  if (wrapper.tagName !== 'DIV') return;
+  const metadata = [...wrapper.querySelectorAll(':scope > .section-metadata')];
+  if (metadata.length === 0) return;
+
+  // Once the author has signalled section-level styling with any metadata,
+  // also split at every H2 — that's the natural editorial boundary the author
+  // would have separated with an <hr> if the converter hadn't dropped them.
+  // Pages with zero metadata (legacy articles) are left alone above.
+  const groups = [[]];
+  [...wrapper.children].forEach((el) => {
+    if (el.tagName === 'H2' && groups[groups.length - 1].length > 0) {
+      groups.push([]);
+    }
+    groups[groups.length - 1].push(el);
+    if (el.classList.contains('section-metadata')) groups.push([]);
+  });
+  if (!groups[groups.length - 1].length) groups.pop();
+  if (groups.length < 2) return;
+
+  const newWrappers = groups.map((group) => {
+    const div = document.createElement('div');
+    group.forEach((el) => div.appendChild(el));
+    return div;
+  });
+  wrapper.replaceWith(...newWrappers);
+}
+
+/**
  * Builds the Direction D split-bento hero from a leading H1 + picture.
  * Text cell  = H1 + following <p>/<ul> siblings (lead paragraph, button link)
  * Media cell = the picture (or its wrapping <p>)
@@ -62,7 +106,16 @@ async function loadFonts() {
  */
 function buildAutoBlocks(main) {
   try {
+    splitImplicitSectionsByMetadata(main);
     buildHeroBlock(main);
+    // Drop top-level wrappers left empty by the auto-blocking above (e.g. the
+    // original wrapper after buildHeroBlock pulls h1 + lead + button + picture
+    // out into a freshly prepended hero section).
+    [...main.children].forEach((div) => {
+      if (div.tagName === 'DIV' && !div.children.length && !div.textContent.trim()) {
+        div.remove();
+      }
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

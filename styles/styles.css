@@ -275,19 +275,13 @@ main img {
   width: 100%;
 }
 
-/* sections */
+/* sections — Direction D: 1320px feature width, 28px horizontal padding */
 main .section {
-  padding: 32px 24px;
-}
-
-@media (width >= 1200px) {
-  main .section {
-    padding: 32px 0;
-  }
+  padding: 24px 28px;
 }
 
 main .section > div {
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
@@ -317,8 +311,13 @@ main .section.card-surface > div {
   padding: 56px 52px;
 }
 
-/* article reading vs feature widths */
-main .section .default-content-wrapper {
+/* Article reading column — 720px prose width.
+ * Opt-in via Section Metadata Style: reading. Also auto-applied to the body
+ * section of a hero + single-body article (the most common long-form layout)
+ * by matching the page shape: main has exactly two sections, the second is
+ * not the hero. Homepage-style pages with 3+ sections render at full width. */
+main .section.reading .default-content-wrapper,
+main > .section:nth-child(2):last-child:not(.hero-container) > .default-content-wrapper {
   max-width: 720px;
   margin: 0 auto;
 }

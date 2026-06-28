@@ -1,5 +1,7 @@
 /* Direction D split bento hero */
 
+/* Hero section overrides the default vertical padding so the bento sits
+   tight to the nav — matches Direction D's 8px top, 22px bottom. */
 main .hero-container { padding: 8px 28px 22px; }
 
 .hero {
@@ -7,8 +9,6 @@ main .hero-container { padding: 8px 28px 22px; }
   grid-template-columns: 1fr 1.08fr;
   gap: 22px;
   align-items: stretch;
-  max-width: 1180px;
-  margin: 0 auto;
 }
 
 /* left: warm text card */

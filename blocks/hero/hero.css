@@ -1,8 +1,9 @@
 /* Direction D split bento hero */
 
 /* Hero section overrides the default vertical padding so the bento sits
-   tight to the nav — matches Direction D's 8px top, 22px bottom. */
-main .hero-container { padding: 8px 28px 22px; }
+   tight to the nav. Horizontal padding matches the section default (2rem)
+   so the warm text card's left edge aligns with all other section content. */
+main .hero-container { padding: 8px 2rem 22px; }
 
 .hero {
   display: grid;
@@ -11,11 +12,12 @@ main .hero-container { padding: 8px 28px 22px; }
   align-items: stretch;
 }
 
-/* left: warm text card */
+/* left: warm text card — internal padding reduced to 32px so the text
+   inside this card sits closer to the rest of the page's left edge. */
 .hero .hero-text {
   background: var(--surface-warm);
   border-radius: var(--radius-bento);
-  padding: 56px 52px;
+  padding: 56px 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;

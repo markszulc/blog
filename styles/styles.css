@@ -275,13 +275,14 @@ main img {
   width: 100%;
 }
 
-/* sections — Direction D: 1320px feature width, 28px horizontal padding */
+/* sections — aligned to the header's 1264px / 2rem grid so the brand,
+ * section H2s, and bento cards all share one left edge. */
 main .section {
-  padding: 24px 28px;
+  padding: 24px 2rem;
 }
 
 main .section > div {
-  max-width: 1320px;
+  max-width: 1264px;
   margin: 0 auto;
 }
 

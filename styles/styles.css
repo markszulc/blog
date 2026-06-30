@@ -286,15 +286,38 @@ main .section > div {
   margin: 0 auto;
 }
 
-/* section metadata variants */
-main .section.warm { background: var(--surface-warm); }
-main .section.soft-blue { background: var(--accent-soft); }
+/* section metadata variants — Direction D bento style.
+ * Single-wrapper sections (pure default content, e.g. the newsletter CTA)
+ * render as a rounded inset card. Sections containing blocks remain full
+ * bleed so the inner block grid still spans edge-to-edge. */
+main .section.warm,
+main .section.soft-blue,
+main .section.dark { background: transparent; }
 
-main .section.dark {
+main .section.warm:not(:has(> div + div)) > div,
+main .section.soft-blue:not(:has(> div + div)) > div,
+main .section.dark:not(:has(> div + div)) > div {
+  box-sizing: border-box;
+  border-radius: var(--radius-bento);
+  padding: 64px 56px;
+}
+
+main .section.warm:not(:has(> div + div)) > div { background: var(--surface-warm); }
+main .section.soft-blue:not(:has(> div + div)) > div { background: var(--accent-soft); }
+
+main .section.dark:not(:has(> div + div)) > div {
   background: var(--ink);
   color: #fff;
 }
 
+/* Multi-wrapper sections fall back to full-bleed band. */
+main .section.warm:has(> div + div) { background: var(--surface-warm); }
+main .section.soft-blue:has(> div + div) { background: var(--accent-soft); }
+
+main .section.dark:has(> div + div) {
+  background: var(--ink);
+  color: #fff;
+}
 
 main .section.dark h1,
 main .section.dark h2,

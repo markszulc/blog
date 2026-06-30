@@ -1,13 +1,14 @@
 footer {
   padding: 2rem;
-  background-color: #212121;
-  color: #bbb;
+  background-color: var(--surface);
+  color: var(--ink-2);
   font-size: 16px;
   text-align: left;
+  border-top: 1px solid var(--border-warm);
 }
 
 footer .footer {
-  max-width: 1200px;
+  max-width: 1264px;
   margin: auto;
 }
 
@@ -18,7 +19,7 @@ footer .footer p {
 footer .footer h4 {
   margin: 0;
   margin-bottom: 9px;
-  color: #fff;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -36,17 +37,19 @@ footer .columns > div {
   align-items: self-start;
   margin-block-start: 26px;
   padding-block-end: 34px;
-  border-bottom: 1px solid #616161;
+  border-bottom: 1px solid var(--border-warm);
 }
 
 footer a:any-link {
-    color: #bbb;
+  color: var(--ink-2);
 }
 
-
+footer a:hover {
+  color: var(--accent);
+}
 
 footer img[data-icon-name] {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 footer .footer .columns > div > div:nth-child(1) {

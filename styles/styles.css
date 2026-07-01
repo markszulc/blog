@@ -324,37 +324,45 @@ main .section > div {
   margin: 0 auto;
 }
 
-/* section metadata variants — Direction D bento style.
- * Single-wrapper sections (pure default content, e.g. the newsletter CTA)
- * render as a rounded inset card. Sections containing blocks remain full
- * bleed so the inner block grid still spans edge-to-edge. */
+/* section metadata variants — Direction D bento style. The card treatment
+ * (background, radius, padding, page-width constraint) lives on the
+ * section itself, not on its inner wrapper divs, so it renders as one
+ * seamless card no matter how many blocks the section contains (a lone
+ * heading, or a heading plus an embed, etc). */
 main .section.warm,
 main .section.soft-blue,
-main .section.dark { background: transparent; }
-
-main .section.warm:not(:has(> div + div)) > div,
-main .section.soft-blue:not(:has(> div + div)) > div,
-main .section.dark:not(:has(> div + div)) > div {
+main .section.dark {
   box-sizing: border-box;
+  max-width: 1264px;
+  margin: 0 auto;
   border-radius: var(--radius-bento);
   padding: 64px 56px;
 }
 
-main .section.warm:not(:has(> div + div)) > div { background: var(--surface-warm); }
-main .section.soft-blue:not(:has(> div + div)) > div { background: var(--accent-soft); }
+main .section.warm > div,
+main .section.soft-blue > div,
+main .section.dark > div {
+  max-width: none;
+  margin: 0;
+}
 
-main .section.dark:not(:has(> div + div)) > div {
+main .section.warm { background: var(--surface-warm); }
+main .section.soft-blue { background: var(--accent-soft); }
+
+main .section.dark {
   background: var(--ink);
   color: #fff;
 }
 
-/* Multi-wrapper sections fall back to full-bleed band. */
-main .section.warm:has(> div + div) { background: var(--surface-warm); }
-main .section.soft-blue:has(> div + div) { background: var(--accent-soft); }
-
-main .section.dark:has(> div + div) {
-  background: var(--ink);
-  color: #fff;
+/* Media embedded inside a colored section variant gets a white card of
+ * its own, matching the bento pattern of white content nested in color. */
+main .section.warm .embed,
+main .section.soft-blue .embed,
+main .section.dark .embed {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 main .section.dark h1,

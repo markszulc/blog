@@ -355,13 +355,17 @@ main .section.dark {
 }
 
 /* Media embedded inside a colored section variant gets a white card of
- * its own, matching the bento pattern of white content nested in color. */
+ * its own, matching the bento pattern of white content nested in color.
+ * Zero out the base .embed rule's own bottom margin — the section's own
+ * padding already provides the gap before the card's edge, so the two
+ * would otherwise stack into a much bigger gap than intended. */
 main .section.warm .embed,
 main .section.soft-blue .embed,
 main .section.dark .embed {
   background: #fff;
   border-radius: var(--radius-card);
   padding: 16px;
+  margin: 0;
   box-sizing: border-box;
 }
 

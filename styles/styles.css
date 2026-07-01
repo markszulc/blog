@@ -357,10 +357,14 @@ main .section.dark {
 }
 
 /* Alternative to the filled soft-blue card: white interior, thick soft-blue
- * border instead of a color fill — same hue as .soft-blue's background. */
+ * border instead of a color fill — same hue as .soft-blue's background.
+ * Padding is the shared 64px/56px minus the 18px border, so content starts
+ * at the same offset as every other card variant (border eats into the
+ * inset that padding alone provides elsewhere). */
 main .section.outline {
   background: var(--surface);
   border: 18px solid var(--accent-soft);
+  padding: 46px 38px;
 }
 
 /* Media embedded inside a colored section variant gets a white card of

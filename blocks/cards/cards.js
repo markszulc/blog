@@ -5,6 +5,8 @@ const CATS = {
   '3d printing': 'print',
   energy: 'energy',
   cosmere: 'cosmere',
+  adobe: 'adobe',
+  maker: 'maker',
 };
 
 export default function decorate(block) {

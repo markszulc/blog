@@ -35,6 +35,8 @@
   --cat-print: #f2a65a;
   --cat-energy: #74bb81;
   --cat-cosmere: #b9a6f2;
+  --cat-adobe: #e85c4a;
+  --cat-maker: #5aafa6;
 
   /* type families */
   --font-fallback: -apple-system, system-ui, sans-serif;

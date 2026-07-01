@@ -96,6 +96,8 @@
 .cards .cards-card-body .category.print { color: var(--cat-print); }
 .cards .cards-card-body .category.energy { color: var(--cat-energy); }
 .cards .cards-card-body .category.cosmere { color: var(--cat-cosmere); }
+.cards .cards-card-body .category.adobe { color: var(--cat-adobe); }
+.cards .cards-card-body .category.maker { color: var(--cat-maker); }
 
 @media (width <= 900px) {
   .cards > ul,

@@ -25,10 +25,14 @@
   gap: 22px;
 }
 
+/* Grid stretches every card in a row to match the tallest one. Override
+   the base rule's space-between so image+text stay stacked at the top
+   instead of the text getting pushed down to fill the extra height. */
 .cards.featured > ul > li {
   background: none;
   border: none;
   padding: 0;
+  justify-content: flex-start;
 }
 
 .cards .cards-card-image {

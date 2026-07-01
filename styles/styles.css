@@ -234,27 +234,21 @@ a.button.emphasis:hover, a.button.secondary:hover, button.secondary:hover {
 
 /* "view all" heading link — a plain (unbolded, non-italic) link placed
  * directly after a section heading. decorateSectionHeadingLinks() pulls it
- * out of the default .button treatment and into this row layout. */
-.section-heading-row {
+ * out of the default .button treatment and makes the heading itself the
+ * flex row (heading text wrapped in a span + the link as a second child) —
+ * see the function's comment for why this avoids a wrapper <div>. */
+h2.section-heading-row,
+h3.section-heading-row {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 8px;
-}
-
-.section-heading-row h2,
-.section-heading-row h3 {
-  margin: 0;
-}
-
-.view-all-container {
-  margin: 0;
-  white-space: nowrap;
 }
 
 a.view-all {
   display: inline-block;
+  flex: none;
+  white-space: nowrap;
   color: var(--ink);
   font-family: var(--body-font-family);
   font-weight: 600;
@@ -265,7 +259,8 @@ a.view-all {
 }
 
 @media (width <= 700px) {
-  .section-heading-row {
+  h2.section-heading-row,
+  h3.section-heading-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;

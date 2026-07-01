@@ -23,8 +23,11 @@ export default function decorate(block) {
         div.className = 'cards-card-body';
         const eyebrow = div.querySelector('p, span');
         if (eyebrow) {
-          const key = eyebrow.textContent.trim().toLowerCase().split('·')[0].trim();
-          if (CATS[key]) eyebrow.classList.add('category', CATS[key]);
+          // Match on a leading category name regardless of what separator
+          // (·, •, -, or none) an author types before the reading time.
+          const text = eyebrow.textContent.trim().toLowerCase();
+          const key = Object.keys(CATS).find((cat) => text.startsWith(cat));
+          if (key) eyebrow.classList.add('category', CATS[key]);
         }
       }
     });

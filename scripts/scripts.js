@@ -95,6 +95,15 @@ function buildHeroBlock(main) {
  * link (no bold/italic wrapper) placed directly after a heading opts out
  * of that and gets the DESIGN.md "view all" treatment instead. Bold/italic
  * links keep behaving as primary/secondary buttons everywhere else.
+ *
+ * Makes the heading itself the flex container (wrapping its own text in a
+ * <span>, then appending the link) rather than introducing a new <div>.
+ * decorateBlocks() treats any <div> sitting directly under
+ * .default-content-wrapper as a candidate block and tries to fetch
+ * /blocks/<name>/<name>.js for it — an extra wrapper div here would get
+ * caught by that and 404. Heading tags are never matched, so this sidesteps
+ * it entirely.
+ *
  * Runs after decorateSections so `.default-content-wrapper` already exists.
  * @param {Element} main The container element
  */
@@ -105,15 +114,14 @@ function decorateSectionHeadingLinks(main) {
     const link = next.querySelector(':scope > a.button');
     if (!link || link.classList.contains('primary') || link.classList.contains('secondary')) return;
 
-    const row = document.createElement('div');
-    row.className = 'section-heading-row';
-    heading.before(row);
-    row.append(heading, next);
+    const label = document.createElement('span');
+    label.append(...heading.childNodes);
+    heading.append(label, link);
+    heading.classList.add('section-heading-row');
 
     link.classList.remove('button');
     link.classList.add('view-all');
-    next.classList.remove('button-container');
-    next.classList.add('view-all-container');
+    next.remove();
   });
 }
 

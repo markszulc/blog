@@ -325,13 +325,14 @@ main .section > div {
 }
 
 /* section metadata variants — Direction D bento style. The card treatment
- * (background, radius, padding, page-width constraint) lives on the
- * section itself, not on its inner wrapper divs, so it renders as one
- * seamless card no matter how many blocks the section contains (a lone
- * heading, or a heading plus an embed, etc). */
+ * (radius, padding, page-width constraint) lives on the section itself,
+ * not on its inner wrapper divs, so it renders as one seamless card no
+ * matter how many blocks the section contains (a lone heading, or a
+ * heading plus an embed, etc). */
 main .section.warm,
 main .section.soft-blue,
-main .section.dark {
+main .section.dark,
+main .section.outline {
   box-sizing: border-box;
   max-width: 1264px;
   margin: 24px auto;
@@ -341,7 +342,8 @@ main .section.dark {
 
 main .section.warm > div,
 main .section.soft-blue > div,
-main .section.dark > div {
+main .section.dark > div,
+main .section.outline > div {
   max-width: none;
   margin: 0;
 }
@@ -354,11 +356,20 @@ main .section.dark {
   color: #fff;
 }
 
+/* Alternative to the filled soft-blue card: white interior, thick accent
+ * border instead of a color fill. */
+main .section.outline {
+  background: var(--surface);
+  border: 3px solid var(--accent);
+}
+
 /* Media embedded inside a colored section variant gets a white card of
  * its own, matching the bento pattern of white content nested in color.
- * Zero out the base .embed rule's own bottom margin — the section's own
- * padding already provides the gap before the card's edge, so the two
- * would otherwise stack into a much bigger gap than intended. */
+ * Skipped for .outline — its interior is already white, so a nested
+ * white card would show no contrast. Zero out the base .embed rule's own
+ * bottom margin — the section's own padding already provides the gap
+ * before the card's edge, so the two would otherwise stack into a much
+ * bigger gap than intended. */
 main .section.warm .embed,
 main .section.soft-blue .embed,
 main .section.dark .embed {
@@ -367,6 +378,10 @@ main .section.dark .embed {
   padding: 16px;
   margin: 0;
   box-sizing: border-box;
+}
+
+main .section.outline .embed {
+  margin: 0;
 }
 
 main .section.dark h1,

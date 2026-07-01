@@ -356,11 +356,11 @@ main .section.dark {
   color: #fff;
 }
 
-/* Alternative to the filled soft-blue card: white interior, thick accent
- * border instead of a color fill. */
+/* Alternative to the filled soft-blue card: white interior, thick soft-blue
+ * border instead of a color fill — same hue as .soft-blue's background. */
 main .section.outline {
   background: var(--surface);
-  border: 3px solid var(--accent);
+  border: 18px solid var(--accent-soft);
 }
 
 /* Media embedded inside a colored section variant gets a white card of

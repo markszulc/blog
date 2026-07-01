@@ -334,7 +334,7 @@ main .section.soft-blue,
 main .section.dark {
   box-sizing: border-box;
   max-width: 1264px;
-  margin: 0 auto;
+  margin: 24px auto;
   border-radius: var(--radius-bento);
   padding: 64px 56px;
 }

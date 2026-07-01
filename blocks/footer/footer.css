@@ -16,11 +16,20 @@ footer .footer p {
   margin: 0
 }
 
+/* brand — Direction D wordmark box. Text is the author's name as authored
+   in /footer (not the site domain), so no case transform here. */
 footer .footer h4 {
+  display: inline-block;
   margin: 0;
-  margin-bottom: 9px;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  font-weight: 600;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
 }
 
 footer .footer ul {

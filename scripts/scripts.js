@@ -89,6 +89,35 @@ function buildHeroBlock(main) {
 }
 
 /**
+ * Turns "Heading followed by a solo plain-text link" into a heading row —
+ * heading left, link right-aligned as a plain underlined "view all" link.
+ * EDS auto-wraps every standalone link as a filled `.button`; a *plain*
+ * link (no bold/italic wrapper) placed directly after a heading opts out
+ * of that and gets the DESIGN.md "view all" treatment instead. Bold/italic
+ * links keep behaving as primary/secondary buttons everywhere else.
+ * Runs after decorateSections so `.default-content-wrapper` already exists.
+ * @param {Element} main The container element
+ */
+function decorateSectionHeadingLinks(main) {
+  main.querySelectorAll('.default-content-wrapper > h2, .default-content-wrapper > h3').forEach((heading) => {
+    const next = heading.nextElementSibling;
+    if (!next || !next.classList.contains('button-container') || next.children.length !== 1) return;
+    const link = next.querySelector(':scope > a.button');
+    if (!link || link.classList.contains('primary') || link.classList.contains('secondary')) return;
+
+    const row = document.createElement('div');
+    row.className = 'section-heading-row';
+    heading.before(row);
+    row.append(heading, next);
+
+    link.classList.remove('button');
+    link.classList.add('view-all');
+    next.classList.remove('button-container');
+    next.classList.add('view-all-container');
+  });
+}
+
+/**
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
@@ -133,6 +162,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionHeadingLinks(main);
   decorateBlocks(main);
 }
 

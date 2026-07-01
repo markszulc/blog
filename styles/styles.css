@@ -232,6 +232,46 @@ a.button.emphasis:hover, a.button.secondary:hover, button.secondary:hover {
   background: #000;
 }
 
+/* "view all" heading link — a plain (unbolded, non-italic) link placed
+ * directly after a section heading. decorateSectionHeadingLinks() pulls it
+ * out of the default .button treatment and into this row layout. */
+.section-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 8px;
+}
+
+.section-heading-row h2,
+.section-heading-row h3 {
+  margin: 0;
+}
+
+.view-all-container {
+  margin: 0;
+  white-space: nowrap;
+}
+
+a.view-all {
+  display: inline-block;
+  color: var(--ink);
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 2px;
+}
+
+@media (width <= 700px) {
+  .section-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
 main input {
   font-family: var(--body-font-family);
   font-size: 1rem;

@@ -21,7 +21,7 @@ main .hero-container { padding: 8px 2rem 22px; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 600px;
+  min-height: 400px;
 }
 
 .hero .hero-text h1 { margin: 0 0 26px; }
@@ -31,6 +31,7 @@ main .hero-container { padding: 8px 2rem 22px; }
   line-height: 1.55;
   color: var(--muted);
   max-width: 30em;
+  margin: 0;
 }
 
 /* right: feature media card */
@@ -38,7 +39,7 @@ main .hero-container { padding: 8px 2rem 22px; }
   position: relative;
   border-radius: var(--radius-bento);
   overflow: hidden;
-  min-height: 600px;
+  min-height: 400px;
   background: var(--card-tint);
 }
 

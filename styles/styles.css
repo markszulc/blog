@@ -161,7 +161,7 @@ hr {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
-  margin: 0 0 14px;
+  margin: 0 0 10px;
 }
 
 code, pre, samp {

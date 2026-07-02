@@ -47,6 +47,7 @@ footer .columns > div {
   margin-block-start: 26px;
   padding-block-end: 34px;
   border-bottom: 1px solid var(--border-warm);
+  gap: 20px;
 }
 
 footer a:any-link {
@@ -75,8 +76,4 @@ footer .default-content-wrapper {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-}
-
-footer .columns > div {
-  gap: 20px;
 }

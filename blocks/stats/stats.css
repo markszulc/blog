@@ -84,12 +84,35 @@
 /* category-colored chips — same palette and word-matching as the cards
    block's eyebrow color logic, so "Home Automation" etc reads identically
    whether it's a card eyebrow or a stats tag. */
-.stats .stat.tags .chip.home { background: var(--cat-home); color: #fff; }
-.stats .stat.tags .chip.print { background: var(--cat-print); color: #fff; }
-.stats .stat.tags .chip.energy { background: var(--cat-energy); color: #fff; }
-.stats .stat.tags .chip.cosmere { background: var(--cat-cosmere); color: var(--ink); }
-.stats .stat.tags .chip.adobe { background: var(--cat-adobe); color: #fff; }
-.stats .stat.tags .chip.maker { background: var(--cat-maker); color: #fff; }
+.stats .stat.tags .chip.home {
+  background: var(--cat-home);
+  color: #fff;
+}
+
+.stats .stat.tags .chip.print {
+  background: var(--cat-print);
+  color: #fff;
+}
+
+.stats .stat.tags .chip.energy {
+  background: var(--cat-energy);
+  color: #fff;
+}
+
+.stats .stat.tags .chip.cosmere {
+  background: var(--cat-cosmere);
+  color: var(--ink);
+}
+
+.stats .stat.tags .chip.adobe {
+  background: var(--cat-adobe);
+  color: #fff;
+}
+
+.stats .stat.tags .chip.maker {
+  background: var(--cat-maker);
+  color: #fff;
+}
 
 /* image tile */
 .stats .stat.media {

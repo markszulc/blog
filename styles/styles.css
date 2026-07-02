@@ -342,6 +342,23 @@ main .section.outline {
   padding: 64px 56px;
 }
 
+/* Below the 1264px card max-width, `margin: 24px auto` has no leftover
+ * space to center with, so the horizontal margin collapses to 0 and the
+ * card touches the screen edges — unlike the unstyled sections, which
+ * stay inset via their own padding (never collapses regardless of
+ * viewport width). Give these card variants the same 2rem gutter
+ * explicitly at the point auto-centering stops doing that job for them;
+ * 900px matches every other responsive breakpoint in this design. */
+@media (width <= 900px) {
+  main .section.warm,
+  main .section.soft-blue,
+  main .section.dark,
+  main .section.outline {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
 main .section.warm > div,
 main .section.soft-blue > div,
 main .section.dark > div,

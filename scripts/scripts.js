@@ -126,6 +126,32 @@ function decorateSectionHeadingLinks(main) {
 }
 
 /**
+ * Turns a solo *italicized* paragraph directly above a heading into the
+ * DESIGN.md eyebrow label (small mono/uppercase line above a headline —
+ * e.g. "BY THE NUMBERS" above "Years of tinkering, measured.").
+ *
+ * Deliberately not a heading tag: a heading used purely for its font size,
+ * with no real subsection nested under it, misrepresents the page's
+ * heading outline to screen readers (jumping levels — e.g. H4 straight to
+ * H2 — with nothing actually nested in between). This keeps the true
+ * heading as the only heading; the eyebrow is just styled text.
+ *
+ * Runs after decorateSections so `.default-content-wrapper` already exists.
+ * @param {Element} main The container element
+ */
+function decorateEyebrows(main) {
+  main.querySelectorAll('.default-content-wrapper > h1, .default-content-wrapper > h2, .default-content-wrapper > h3').forEach((heading) => {
+    const prev = heading.previousElementSibling;
+    if (!prev || prev.tagName !== 'P' || prev.children.length !== 1) return;
+    const em = prev.querySelector(':scope > em');
+    if (!em || em.textContent !== prev.textContent) return;
+
+    prev.textContent = em.textContent;
+    prev.classList.add('eyebrow');
+  });
+}
+
+/**
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
@@ -171,6 +197,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateSectionHeadingLinks(main);
+  decorateEyebrows(main);
   decorateBlocks(main);
 }
 

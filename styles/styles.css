@@ -109,7 +109,7 @@ header {
 }
 
 /* headings */
-h1, h2, h3, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -133,22 +133,9 @@ h3 {
   letter-spacing: -0.01em;
 }
 
+h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
-
-/* eyebrow label — author types a short line, applies Heading 4 style,
-   directly above the real heading (H1/H2/H3). H4 isn't used for anything
-   else in this design, so it's repurposed wholesale as this treatment. */
-h4 {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 14px;
-  scroll-margin: calc(var(--nav-height) + 1em);
-}
 
 /* accent word — author bolds the word inside a heading */
 h1 strong, h2 strong, h3 strong {
@@ -169,10 +156,12 @@ hr {
 /* eyebrow / mono label */
 .eyebrow {
   font-family: var(--font-mono);
+  font-weight: 600;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+  margin: 0 0 14px;
 }
 
 code, pre, samp {

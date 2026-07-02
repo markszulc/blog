@@ -22,6 +22,18 @@ header nav {
   font-family: var(--body-font-family);
 }
 
+/* Below 1264px, `margin: auto` has no leftover space to center with (the
+ * nav's natural width already fills the viewport), so the horizontal
+ * margin collapses to 0 and the brand/hamburger/sections sit flush
+ * against the screen edges — same issue as the section cards had. Give
+ * the nav an explicit 2rem gutter once auto-centering stops providing
+ * one; matches every other mobile breakpoint in this design. */
+@media (width <= 900px) {
+  header nav {
+    padding: 0 2rem;
+  }
+}
+
 header nav[aria-expanded="true"] {
   grid-template:
     'hamburger brand' var(--nav-height)

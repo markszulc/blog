@@ -41,7 +41,9 @@
   color: var(--accent);
 }
 
-.stats .stat.dark.wide { grid-column: span 2; }
+/* "wide" is a generic 2-col span modifier — usable on any stat type
+   (dark, media, etc), not just dark. */
+.stats .stat.wide { grid-column: span 2; }
 .stats .stat.dark.wide .num { font-size: 68px; }
 
 .stats .stat .label {
@@ -76,7 +78,18 @@
   padding: 5px 12px;
   border-radius: var(--radius-pill);
   background: #fff;
+  color: var(--ink);
 }
+
+/* category-colored chips — same palette and word-matching as the cards
+   block's eyebrow color logic, so "Home Automation" etc reads identically
+   whether it's a card eyebrow or a stats tag. */
+.stats .stat.tags .chip.home { background: var(--cat-home); color: #fff; }
+.stats .stat.tags .chip.print { background: var(--cat-print); color: #fff; }
+.stats .stat.tags .chip.energy { background: var(--cat-energy); color: #fff; }
+.stats .stat.tags .chip.cosmere { background: var(--cat-cosmere); color: var(--ink); }
+.stats .stat.tags .chip.adobe { background: var(--cat-adobe); color: #fff; }
+.stats .stat.tags .chip.maker { background: var(--cat-maker); color: #fff; }
 
 /* image tile */
 .stats .stat.media {
@@ -90,7 +103,6 @@
   grid-column: span 2;
   grid-row: span 2;
 }
-
 
 .stats .stat.media img {
   position: absolute;
@@ -106,8 +118,7 @@
     grid-auto-rows: 160px;
   }
 
-
-  .stats .stat.dark.wide,
+  .stats .stat.wide,
   .stats .stat.tags,
   .stats .stat.media.big { grid-column: span 2; }
 }

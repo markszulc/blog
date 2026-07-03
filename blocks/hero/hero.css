@@ -69,5 +69,5 @@ main .hero-container { padding: 8px 2rem 22px; }
   }
 
   .hero .hero-text h1 { font-size: 40px; }
-  .hero .hero-media { min-height: 320px; }
+  .hero .hero-media { min-height: 300px; }
 }

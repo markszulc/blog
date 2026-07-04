@@ -1,11 +1,15 @@
-/* Bluesky block — responsive feed grid.
- * Colours come entirely from the design tokens in styles/styles.css, so the
- * block flips with dark mode for free. Skeleton cards and media frames reserve
- * their space up front, so nothing shifts when the feed loads (CLS = 0). */
+/* Bluesky block — a 3D stacked-card carousel.
+ * Colours come from the design tokens in styles/styles.css, so the block flips
+ * with dark mode for free. The stage reserves a fixed height and the deck
+ * animates with transform/opacity only, so nothing shifts and it stays cheap
+ * for Core Web Vitals. */
 
 .bluesky {
   --bsky-brand: #1185fe;
-  --bsky-gap: 16px;
+  --bsky-card-w: min(90vw, 380px);
+  --bsky-card-h: 460px;
+
+  outline: none;
 }
 
 .bluesky .bluesky-header {
@@ -14,7 +18,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 8px 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .bluesky .bluesky-header h2 {
@@ -41,56 +45,63 @@
 
 .bluesky .bluesky-follow:hover { filter: brightness(1.08); }
 
-/* --- feed grid --- */
+/* --- stage: reserves height, centres the deck --- */
+.bluesky .bluesky-stage {
+  position: relative;
+  min-height: calc(var(--bsky-card-h) + 150px);
+  perspective: 1400px;
+  touch-action: pan-y; /* horizontal gestures come to us as pointer events */
+}
+
 .bluesky .bluesky-feed {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: var(--bsky-gap);
-  grid-template-columns: 1fr;
+  position: absolute;
+  inset: 0;
 }
 
-@media (width >= 600px) {
-  .bluesky .bluesky-feed { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (width >= 900px) {
-  .bluesky .bluesky-feed { grid-template-columns: repeat(3, 1fr); }
-}
-
+/* --- cards: fixed footprint so the stack is uniform --- */
 .bluesky .bluesky-post {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--bsky-card-w);
+  height: var(--bsky-card-h);
   margin: 0;
   padding: 0;
-  min-height: 200px; /* matches the skeleton so the swap-in doesn't shift */
   background: var(--card-bg);
   border: 1px solid var(--border-warm);
   border-radius: var(--radius-card);
   overflow: hidden;
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 35%);
+  transform-origin: center center;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease;
+  will-change: transform;
+}
 
-  /* let the browser skip layout/paint for off-screen cards */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 260px;
+.bluesky .bluesky-feed.is-dragging .bluesky-post {
+  transition: none;
+  cursor: grabbing;
 }
 
 .bluesky .bluesky-post-link {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   height: 100%;
-  padding: 18px;
   color: var(--ink);
   text-decoration: none;
-  transition: background 0.15s ease;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-
-.bluesky .bluesky-post-link:hover { background: var(--surface-warm); }
 
 /* header */
 .bluesky .bluesky-head {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 16px 16px 10px;
 }
 
 .bluesky .bluesky-avatar {
@@ -127,39 +138,53 @@
 
 .bluesky .bluesky-repost {
   display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
+  margin-left: auto;
   color: var(--muted);
 }
 
 .bluesky .bluesky-repost svg {
-  width: 13px;
-  height: 13px;
+  width: 16px;
+  height: 16px;
 }
 
-/* body text — clamped to keep every card a predictable height */
+/* body text */
 .bluesky .bluesky-text {
   margin: 0;
+  padding: 0 16px;
   font-size: var(--body-font-size-s);
   line-height: 1.5;
   color: var(--ink-2);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* media */
+/* text-only posts get the full card height for their words */
+.bluesky .bluesky-text-long {
+  flex: 1;
+  padding: 4px 18px 0;
+  font-size: var(--body-font-size-m);
+  -webkit-line-clamp: 9;
+  line-clamp: 9;
+}
+
+/* --- media fills the card width, runs to the bottom edge --- */
 .bluesky .bluesky-media {
   margin: 0;
   display: grid;
-  gap: 4px;
-  border-radius: var(--radius-sm);
+  gap: 3px;
   overflow: hidden;
+}
+
+.bluesky .bluesky-fill {
+  flex: 1;
+  margin-top: 12px;
+  position: relative;
+  min-height: 0;
 }
 
 .bluesky .bluesky-media-2,
@@ -168,24 +193,11 @@
 
 .bluesky .bluesky-frame {
   position: relative;
-  aspect-ratio: var(--ar, 16 / 10);
   background: var(--card-tint);
   overflow: hidden;
 }
 
-/* cap tall portrait media so one post can't stretch its whole grid row */
-.bluesky .bluesky-media-1 .bluesky-frame { max-height: 380px; }
-
-/* a lone image keeps its real ratio; multi-image grids stay square-ish */
-.bluesky .bluesky-media-2 .bluesky-frame,
-.bluesky .bluesky-media-3 .bluesky-frame,
-.bluesky .bluesky-media-4 .bluesky-frame { aspect-ratio: 1 / 1; }
-
-/* 3 images: first spans the full height on the left */
-.bluesky .bluesky-media-3 .bluesky-frame:first-child {
-  grid-row: span 2;
-  aspect-ratio: auto;
-}
+.bluesky .bluesky-media-3 .bluesky-frame:first-child { grid-row: span 2; }
 
 .bluesky .bluesky-frame img {
   width: 100%;
@@ -202,17 +214,33 @@
 }
 
 .bluesky .bluesky-play svg {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   color: #fff;
-  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 55%));
+  filter: drop-shadow(0 1px 5px rgb(0 0 0 / 60%));
 }
 
-/* external link card */
+/* date + stats sit over the media on a scrim */
+.bluesky .bluesky-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 20px 14px 12px;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / 62%), transparent);
+  pointer-events: none;
+}
+
+/* external link card (text-only posts) */
 .bluesky .bluesky-external {
   display: flex;
   gap: 12px;
   align-items: center;
+  margin: 12px 16px 0;
   padding: 10px;
   border: 1px solid var(--border-warm);
   border-radius: var(--radius-sm);
@@ -251,14 +279,14 @@
   color: var(--muted);
 }
 
-/* footer */
+/* footer for cards without media */
 .bluesky .bluesky-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   margin-top: auto;
-  padding-top: 4px;
+  padding: 12px 16px;
   font-size: 12px;
   color: var(--muted);
 }
@@ -279,12 +307,54 @@
   height: 14px;
 }
 
-/* --- skeleton (same footprint as a real card → no layout shift) --- */
+/* --- controls --- */
+.bluesky .bluesky-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.bluesky .bluesky-nav {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-pill);
+  background: var(--card-bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.bluesky .bluesky-nav:hover { background: var(--surface-warm); }
+
+.bluesky .bluesky-nav:active { transform: scale(0.94); }
+
+.bluesky .bluesky-nav svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bluesky .bluesky-next svg { transform: rotate(180deg); }
+
+.bluesky .bluesky-counter {
+  min-width: 3.2em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--body-font-size-s);
+  color: var(--muted);
+}
+
+/* --- skeleton --- */
 .bluesky .bluesky-skeleton {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 18px;
+  padding: 16px;
 }
 
 .bluesky .sk {
@@ -320,9 +390,10 @@
   margin-top: 4px;
 }
 
+.bluesky .bluesky-skeleton .bluesky-head { padding: 0; }
+
 .bluesky .bluesky-skeleton .bluesky-meta { gap: 0; }
 
-/* shimmer */
 .bluesky .sk::after {
   content: '';
   position: absolute;
@@ -341,5 +412,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .bluesky .bluesky-post { transition: none; }
+
   .bluesky .sk::after { animation: none; }
 }

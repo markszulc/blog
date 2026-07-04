@@ -232,8 +232,10 @@ function placeFlow(card, off, spread) {
   const rotY = Math.max(-22, Math.min(22, -off * 11));
   const z = -abs * 40;
   card.style.transform = `translate(-50%, -50%) translate3d(${x}px, 0, ${z}px) rotateY(${rotY}deg) scale(${scale})`;
+  // Visible cards stay fully opaque (depth reads from scale + overlap + z-order);
+  // only cards past the fan fade right out.
   const visible = abs <= 2.4;
-  card.style.opacity = visible ? String(Math.max(0, 1 - abs * 0.16)) : '0';
+  card.style.opacity = visible ? '1' : '0';
   card.style.zIndex = String(100 - Math.round(abs * 10));
   card.style.pointerEvents = visible ? '' : 'none';
   card.setAttribute('aria-hidden', abs < 0.5 ? 'false' : 'true');
@@ -247,11 +249,11 @@ function initDeck(root, stage, feed, cards, counter) {
   let moved = 0;
 
   function spreadPx() {
-    const stageW = stage.clientWidth || feed.clientWidth || 0;
+    // A fixed fraction of the card width, so neighbours always overlap the
+    // active card by the same amount — the fan looks identical on first paint
+    // and after every step (no "spreading apart" when a button is pressed).
     const cardW = cards[0].offsetWidth || 360;
-    // Space the neighbours out to fill the width, but never further than ~a
-    // card apart, so 3+ stay close to fully visible.
-    return Math.max(cardW * 0.5, Math.min(cardW * 0.98, stageW / 2 - cardW * 0.44 - 12));
+    return cardW * 0.66;
   }
 
   function layout(dragDx = 0) {
@@ -371,11 +373,14 @@ export default async function decorate(block) {
     head.append(follow);
   }
 
+  const carousel = document.createElement('div');
+  carousel.className = 'bluesky-carousel';
   const stage = document.createElement('div');
   stage.className = 'bluesky-stage';
   const feed = document.createElement('ul');
   feed.className = 'bluesky-feed';
   stage.append(feed);
+  carousel.append(stage);
 
   // skeleton deck (3 stacked) so the loading state already reads as 3D
   const skels = [];
@@ -386,10 +391,10 @@ export default async function decorate(block) {
   }
   skels.forEach((s, i) => placeStack(s, i, 0, 0));
 
-  block.append(head, stage);
+  block.append(head, carousel);
 
   if (!endpoint) {
-    stage.remove();
+    carousel.remove();
     return;
   }
 
@@ -406,37 +411,44 @@ export default async function decorate(block) {
     }
 
     if (!posts.length) {
-      stage.remove();
+      carousel.remove();
       return;
     }
 
     const cards = posts.map(postCard);
     feed.replaceChildren(...cards);
 
-    // controls: prev / counter / next
-    const controls = document.createElement('div');
-    controls.className = 'bluesky-controls';
+    // prev / next flank the deck on the left and right edges
     const prev = document.createElement('button');
     prev.type = 'button';
     prev.className = 'bluesky-nav bluesky-prev';
     prev.setAttribute('aria-label', 'Previous post');
     prev.innerHTML = ARROW;
-    const counter = document.createElement('span');
-    counter.className = 'bluesky-counter';
-    counter.setAttribute('aria-hidden', 'true');
     const next = document.createElement('button');
     next.type = 'button';
     next.className = 'bluesky-nav bluesky-next';
     next.setAttribute('aria-label', 'Next post');
     next.innerHTML = ARROW;
-    controls.append(prev, counter, next);
-    stage.after(controls);
+    carousel.append(prev, next);
+
+    // counter sits below, centred
+    const controls = document.createElement('div');
+    controls.className = 'bluesky-controls';
+    const counter = document.createElement('span');
+    counter.className = 'bluesky-counter';
+    counter.setAttribute('aria-hidden', 'true');
+    controls.append(counter);
+    carousel.after(controls);
 
     const deck = initDeck(block, stage, feed, cards, counter);
     prev.addEventListener('click', deck.prev);
     next.addEventListener('click', deck.next);
-    if (cards.length < 2) controls.hidden = true;
+    if (cards.length < 2) {
+      prev.hidden = true;
+      next.hidden = true;
+      controls.hidden = true;
+    }
   } catch (error) {
-    stage.remove();
+    carousel.remove();
   }
 }

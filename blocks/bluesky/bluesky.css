@@ -212,6 +212,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top; /* anchor to the top of the source image, not centred */
   display: block;
 }
 
@@ -317,16 +318,16 @@
 }
 
 /* --- controls --- */
-.bluesky .bluesky-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 18px;
+.bluesky .bluesky-carousel {
+  position: relative;
 }
 
+/* prev / next flank the deck, vertically centred on its left and right edges */
 .bluesky .bluesky-nav {
-  display: inline-grid;
+  position: absolute;
+  top: 50%;
+  z-index: 200;
+  display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
@@ -336,12 +337,31 @@
   background: var(--card-bg);
   color: var(--ink);
   cursor: pointer;
+  box-shadow: 0 6px 18px -8px rgb(0 0 0 / 45%);
+  transform: translateY(-50%);
   transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.bluesky .bluesky-prev { left: 4px; }
+
+.bluesky .bluesky-next { right: 4px; }
+
+@media (width >= 900px) {
+  .bluesky .bluesky-prev { left: 12px; }
+
+  .bluesky .bluesky-next { right: 12px; }
 }
 
 .bluesky .bluesky-nav:hover { background: var(--surface-warm); }
 
-.bluesky .bluesky-nav:active { transform: scale(0.94); }
+.bluesky .bluesky-nav:active { transform: translateY(-50%) scale(0.94); }
+
+.bluesky .bluesky-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+}
 
 .bluesky .bluesky-nav svg {
   width: 20px;

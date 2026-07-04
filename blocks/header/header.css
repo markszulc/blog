@@ -327,8 +327,8 @@ header nav .nav-tools:empty {
 /* theme toggle — echoes the boxed wordmark (2px ink border, small radius) so
    it reads as part of the brand furniture, not a bolted-on control. */
 header .theme-toggle {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
   display: inline-flex;
@@ -349,8 +349,8 @@ header .theme-toggle:focus-visible {
 }
 
 header .theme-toggle svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   display: block;
 }
 

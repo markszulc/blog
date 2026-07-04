@@ -180,17 +180,29 @@ function skeletonCard() {
 }
 
 export default async function decorate(block) {
+  // Accept either real hyperlinks or bare-text URLs/handles — authors don't
+  // always remember to hyperlink the worker URL in the source document.
   const links = [...block.querySelectorAll('a')];
-  const endpointLink = links.find((a) => !a.href.includes('bsky.app'));
+  const urls = [...links.map((a) => a.href), ...(block.textContent.match(/https?:\/\/[^\s<]+/g) || [])];
+
+  // Data source: the one URL that isn't a bsky.app link.
+  const endpoint = urls.find((u) => !u.includes('bsky.app'));
+
+  // Follow target: a bsky.app URL, else derived from an @handle in the text.
   const profileLink = links.find((a) => a.href.includes('bsky.app'));
-  const endpoint = endpointLink && endpointLink.href;
+  const handleMatch = block.textContent.match(/@([a-z0-9.-]+\.[a-z]{2,})/i);
+  let profileUrl = urls.find((u) => u.includes('bsky.app'))
+    || (handleMatch && `https://bsky.app/profile/${handleMatch[1]}`)
+    || null;
 
-  const headingEl = [...block.querySelectorAll('p, h1, h2, h3, h4')]
-    .find((el) => !el.querySelector('a') && el.textContent.trim());
-  const heading = (headingEl && headingEl.textContent.trim()) || DEFAULT_HEADING;
+  const textLines = [...block.querySelectorAll('p, h1, h2, h3, h4, li')]
+    .map((el) => el.textContent.trim())
+    .filter(Boolean);
+  const isMeta = (t) => /^https?:\/\//i.test(t) || /^follow\b/i.test(t) || t.startsWith('@');
+  const heading = textLines.find((t) => !isMeta(t)) || DEFAULT_HEADING;
 
-  let profileUrl = profileLink && profileLink.href;
-  const profileLabel = (profileLink && profileLink.textContent.trim()) || 'Follow on Bluesky';
+  const followText = textLines.find((t) => /^follow\b/i.test(t) || t.startsWith('@'));
+  const profileLabel = (profileLink && profileLink.textContent.trim()) || followText || 'Follow on Bluesky';
 
   // Build the shell with reserved-height skeletons before any network work.
   block.replaceChildren();

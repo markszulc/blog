@@ -22,6 +22,7 @@ const DISPLAY_COUNT = 6; // cards in the deck
 const MAX_DEPTH = 3; // how many cards peek out behind the front one
 const SWIPE_THRESHOLD = 56; // px of drag needed to advance
 const CLICK_SLOP = 8; // movement under this still counts as a tap/click
+const HOVER_GROW = 1.045; // scale bump on hover, a nudge to signal "clickable"
 
 function icon(paths) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
@@ -218,8 +219,8 @@ function signedOffset(i, active, n) {
 
 // Mobile: a receding deck — cards stack behind the front one, lifted and dimmed.
 // dx is a live drag offset on the front card. Transform/opacity only, no layout.
-function placeStack(card, depth, dx, rot) {
-  const scale = Math.max(0.7, 1 - depth * 0.07);
+function placeStack(card, depth, dx, rot, hovered) {
+  const scale = Math.max(0.7, 1 - depth * 0.07) * (hovered ? HOVER_GROW : 1);
   const lift = depth * 30;
   card.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% - ${lift}px)) scale(${scale}) rotate(${rot}deg)`;
   card.style.opacity = depth > MAX_DEPTH ? '0' : String(Math.max(0, 1 - depth * 0.26));
@@ -231,10 +232,10 @@ function placeStack(card, depth, dx, rot) {
 // Desktop: symmetric coverflow — active card centred and largest, neighbours
 // fanned out across the width, smaller and tilted for depth. off can be
 // fractional while dragging so the whole fan scrubs smoothly.
-function placeFlow(card, off, spread) {
+function placeFlow(card, off, spread, hovered) {
   const abs = Math.abs(off);
   const x = off * spread;
-  const scale = Math.max(0.72, 1 - abs * 0.11);
+  const scale = Math.max(0.72, 1 - abs * 0.11) * (hovered ? HOVER_GROW : 1);
   const rotY = Math.max(-22, Math.min(22, -off * 11));
   const z = -abs * 40;
   card.style.transform = `translate(-50%, -50%) translate3d(${x}px, 0, ${z}px) rotateY(${rotY}deg) scale(${scale})`;
@@ -253,6 +254,7 @@ function initDeck(root, stage, feed, cards) {
   let dragging = false;
   let startX = 0;
   let moved = 0;
+  let hovered = null;
 
   function spreadPx() {
     // A fixed fraction of the card width, so neighbours always overlap the
@@ -266,12 +268,15 @@ function initDeck(root, stage, feed, cards) {
     if (isDesktop()) {
       const spread = spreadPx();
       cards.forEach((card, i) => {
-        placeFlow(card, signedOffset(i, active, n) + (spread ? dragDx / spread : 0), spread);
+        const off = signedOffset(i, active, n) + (spread ? dragDx / spread : 0);
+        placeFlow(card, off, spread, card === hovered);
       });
     } else {
       cards.forEach((card, i) => {
         const depth = (i - active + n) % n;
-        placeStack(card, depth, depth === 0 ? dragDx : 0, depth === 0 ? dragDx * 0.02 : 0);
+        const dx = depth === 0 ? dragDx : 0;
+        const rot = depth === 0 ? dragDx * 0.02 : 0;
+        placeStack(card, depth, dx, rot, card === hovered);
       });
     }
   }
@@ -326,6 +331,21 @@ function initDeck(root, stage, feed, cards) {
   root.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') { go(-1); event.preventDefault(); } else if (event.key === 'ArrowRight') { go(1); event.preventDefault(); }
   });
+
+  // Grow the card under the pointer a touch, so it reads as interactive.
+  // Real-mouse only — touch has no hover state to fake.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        if (dragging) return;
+        hovered = card;
+        layout();
+      });
+      card.addEventListener('mouseleave', () => {
+        if (hovered === card) { hovered = null; layout(); }
+      });
+    });
+  }
 
   window.addEventListener('resize', () => layout());
 

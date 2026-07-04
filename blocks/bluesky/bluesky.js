@@ -301,10 +301,17 @@ function initDeck(root, stage, feed, cards) {
     layout(moved);
   }
 
-  function onUp() {
+  function onUp(event) {
     if (!dragging) return;
     dragging = false;
     feed.classList.remove('is-dragging');
+    // Mouse pointer capture isn't released automatically on pointerup, and while
+    // captured the browser retargets the click that follows to the capturing
+    // element instead of the card underneath — silently breaking "open the post"
+    // and the neighbour-click-to-centre feature. Release it before click fires.
+    if (feed.hasPointerCapture && feed.hasPointerCapture(event.pointerId)) {
+      feed.releasePointerCapture(event.pointerId);
+    }
     const threshold = isDesktop() ? Math.max(44, spreadPx() * 0.28) : SWIPE_THRESHOLD;
     if (moved <= -threshold) go(1);
     else if (moved >= threshold) go(-1);

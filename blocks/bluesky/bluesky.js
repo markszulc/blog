@@ -31,6 +31,14 @@ const HEART = icon('<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c
 const REPOST = icon('<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>');
 const ARROW = icon('<path d="m15 18-6-6 6-6"/>');
 const PLAY = '<span class="bluesky-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>';
+// Bluesky's butterfly wordmark glyph, simplified to a single fill path.
+const BLUESKY_LOGO = '<svg class="bluesky-logo" viewBox="0 0 600 530" fill="currentColor" aria-hidden="true">'
+  + '<path d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.322 97.782-155.54 164.28-205.46'
+  + ' 47.98-36.021 125.72-63.892 125.72 24.795 0 17.712-10.16 148.79-16.121 170.07-20.732 74.02-96.302 92.912-163.554'
+  + ' 81.472C529.313 341.328 589.76 372.514 589.76 421.66c0 89.884-131.72 116.58-160.66 46.06-4.68-14.05-6.71-30.75-6.71-49.61'
+  + ' 0-18.86-2.03-35.56-6.71-49.61-28.94 70.52-160.66 43.824-160.66-46.06 0-49.146 60.447-80.332 79.575-92.79'
+  + '-67.252 11.44-142.822-7.452-163.554-81.472C15.16 175.795 5 44.715 5 27.003 5-61.784 82.74-14.913 130.72 21.108'
+  + 'l5 3.735z"/></svg>';
 
 function formatDate(iso) {
   if (!iso) return '';
@@ -241,7 +249,7 @@ function placeFlow(card, off, spread) {
   card.setAttribute('aria-hidden', abs < 0.5 ? 'false' : 'true');
 }
 
-function initDeck(root, stage, feed, cards, counter) {
+function initDeck(root, stage, feed, cards) {
   const n = cards.length;
   let active = 0;
   let dragging = false;
@@ -268,7 +276,6 @@ function initDeck(root, stage, feed, cards, counter) {
         placeStack(card, depth, depth === 0 ? dragDx : 0, depth === 0 ? dragDx * 0.02 : 0);
       });
     }
-    if (counter) counter.textContent = `${active + 1} / ${n}`;
   }
 
   function go(delta) {
@@ -367,7 +374,10 @@ export default async function decorate(block) {
   follow.className = 'bluesky-follow';
   follow.target = '_blank';
   follow.rel = 'noopener';
-  follow.textContent = profileLabel;
+  const followLabel = document.createElement('span');
+  followLabel.textContent = profileLabel;
+  follow.innerHTML = BLUESKY_LOGO;
+  follow.append(followLabel);
   if (profileUrl) {
     follow.href = profileUrl;
     head.append(follow);
@@ -431,22 +441,12 @@ export default async function decorate(block) {
     next.innerHTML = ARROW;
     carousel.append(prev, next);
 
-    // counter sits below, centred
-    const controls = document.createElement('div');
-    controls.className = 'bluesky-controls';
-    const counter = document.createElement('span');
-    counter.className = 'bluesky-counter';
-    counter.setAttribute('aria-hidden', 'true');
-    controls.append(counter);
-    carousel.after(controls);
-
-    const deck = initDeck(block, stage, feed, cards, counter);
+    const deck = initDeck(block, stage, feed, cards);
     prev.addEventListener('click', deck.prev);
     next.addEventListener('click', deck.next);
     if (cards.length < 2) {
       prev.hidden = true;
       next.hidden = true;
-      controls.hidden = true;
     }
   } catch (error) {
     carousel.remove();

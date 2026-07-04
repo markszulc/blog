@@ -45,10 +45,16 @@
 
 .bluesky .bluesky-follow:hover { filter: brightness(1.08); }
 
+.bluesky .bluesky-follow .bluesky-logo {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
 /* --- stage: reserves height, centres the deck --- */
 .bluesky .bluesky-stage {
   position: relative;
-  min-height: calc(var(--bsky-card-h) + 150px);
+  min-height: calc(var(--bsky-card-h) + 110px);
   touch-action: pan-y; /* horizontal gestures come to us as pointer events */
 }
 
@@ -64,7 +70,7 @@
 /* desktop coverflow fills the width; crop the fan cleanly at the block edges */
 @media (width >= 900px) {
   .bluesky .bluesky-stage {
-    min-height: calc(var(--bsky-card-h) + 48px);
+    min-height: calc(var(--bsky-card-h) + 32px);
     overflow: hidden;
   }
 }
@@ -356,27 +362,12 @@
 
 .bluesky .bluesky-nav:active { transform: translateY(-50%) scale(0.94); }
 
-.bluesky .bluesky-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 14px;
-}
-
 .bluesky .bluesky-nav svg {
   width: 20px;
   height: 20px;
 }
 
 .bluesky .bluesky-next svg { transform: rotate(180deg); }
-
-.bluesky .bluesky-counter {
-  min-width: 3.2em;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  font-size: var(--body-font-size-s);
-  color: var(--muted);
-}
 
 /* --- skeleton --- */
 .bluesky .bluesky-skeleton {

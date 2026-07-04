@@ -10,7 +10,7 @@
 }
 
 .cards > ul > li {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--border-warm);
   border-radius: 18px;
   padding: 22px;
@@ -57,7 +57,7 @@
   top: 50%;
   width: 28px;
   height: 28px;
-  background: #fff;
+  background: var(--surface);
   border-radius: var(--radius-pill);
   transform: translateY(-50%);
 }

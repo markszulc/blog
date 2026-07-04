@@ -29,7 +29,7 @@
 }
 
 .livestreamlist li a {
-    color: #000;
+    color: var(--ink);
     font-size: 16px;
 }
 
@@ -71,14 +71,14 @@
 .livestreamlist .description {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0.5rem 0;
 }
 
 .livestreamlist .date {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0.5rem 0;
     display: flex;
     align-items: center;
@@ -88,13 +88,13 @@
 .livestreamlist .date svg{
     width: 16px;
     height: 16px;
-    stroke: #666;
+    stroke: var(--muted);
     flex-shrink: 0;
 }
 
 .livestreamlist .pubdate {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0;
 }

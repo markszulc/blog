@@ -29,8 +29,8 @@
 
 /* dark stat card with big accent number */
 .stats .stat.dark {
-  background: var(--ink);
-  color: #fff;
+  background: var(--panel-dark);
+  color: var(--panel-dark-fg);
 }
 
 .stats .stat.dark .num {
@@ -58,7 +58,7 @@
   margin-top: 4px;
 }
 
-.stats .stat.dark .sub { color: #bdbdbd; }
+.stats .stat.dark .sub { color: var(--panel-dark-fg-muted); }
 
 /* soft-blue tag card */
 .stats .stat.tags {
@@ -77,8 +77,8 @@
   font-weight: 600;
   padding: 5px 12px;
   border-radius: var(--radius-pill);
-  background: #fff;
-  color: var(--ink);
+  background: var(--chip-bg);
+  color: var(--on-color);
 }
 
 /* category-colored chips — same palette and word-matching as the cards
@@ -86,32 +86,32 @@
    whether it's a card eyebrow or a stats tag. */
 .stats .stat.tags .chip.home {
   background: var(--cat-home);
-  color: #fff;
+  color: var(--on-color-inv);
 }
 
 .stats .stat.tags .chip.print {
   background: var(--cat-print);
-  color: #fff;
+  color: var(--on-color-inv);
 }
 
 .stats .stat.tags .chip.energy {
   background: var(--cat-energy);
-  color: #fff;
+  color: var(--on-color-inv);
 }
 
 .stats .stat.tags .chip.cosmere {
   background: var(--cat-cosmere);
-  color: var(--ink);
+  color: var(--on-color);
 }
 
 .stats .stat.tags .chip.adobe {
   background: var(--cat-adobe);
-  color: #fff;
+  color: var(--on-color-inv);
 }
 
 .stats .stat.tags .chip.maker {
   background: var(--cat-maker);
-  color: #fff;
+  color: var(--on-color-inv);
 }
 
 /* image tile */

@@ -12,7 +12,7 @@
     flex-direction: row;
     gap: 50px;
     text-decoration: none;
-    color: #000;
+    color: var(--ink);
 }
 
 .category-list li:nth-child(2n) a {

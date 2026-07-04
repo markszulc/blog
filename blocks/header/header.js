@@ -87,6 +87,48 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
 }
 
+const SUN_ICON = '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON_ICON = '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+
+/**
+ * Reflects the active theme on the toggle button (icon swap is CSS-driven off
+ * the documentElement's data-theme; this just keeps the a11y state in sync).
+ * @param {Element} button The toggle button
+ * @param {String} theme 'light' or 'dark'
+ */
+function syncToggle(button, theme) {
+  const dark = theme === 'dark';
+  button.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  button.setAttribute('title', dark ? 'Switch to light theme' : 'Switch to dark theme');
+}
+
+/**
+ * Builds the theme toggle for the nav tools slot. The initial theme is already
+ * on documentElement (set pre-paint in head.html); clicking flips it and
+ * persists the choice.
+ */
+function createThemeToggle() {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'theme-toggle';
+  button.innerHTML = SUN_ICON + MOON_ICON;
+  syncToggle(button, document.documentElement.dataset.theme || 'light');
+
+  button.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch (e) {
+      // storage unavailable (private mode) — the toggle still works for the session
+    }
+    syncToggle(button, next);
+  });
+
+  return button;
+}
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -137,6 +179,16 @@ export default async function decorate(block) {
     // prevent mobile nav behavior on window resize
     toggleMenu(nav, navSections, isDesktop.matches);
     isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+
+    // theme toggle lives in the right-hand tools slot; create the slot if the
+    // nav document didn't author a third column for it.
+    let navTools = nav.querySelector('.nav-tools');
+    if (!navTools) {
+      navTools = document.createElement('div');
+      navTools.className = 'nav-tools';
+      nav.append(navTools);
+    }
+    navTools.append(createThemeToggle());
 
     decorateIcons(nav);
     const navWrapper = document.createElement('div');

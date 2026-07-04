@@ -1,10 +1,11 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: #fff;
-  color: #0b0b0c;
+  background-color: var(--surface);
+  color: var(--ink);
   width: 100%;
   z-index: 2;
   position: fixed;
+  border-bottom: 1px solid var(--border-warm);
 }
 
 header nav {
@@ -109,7 +110,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: transparent;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
@@ -207,7 +208,7 @@ header nav .nav-sections ul > li {
 @media (width <= 900px) {
   header nav .nav-sections ul > li {
     padding: 20px 0;
-    border-bottom: #fff solid 1px;
+    border-bottom: var(--border-warm) solid 1px;
   }
 }
 
@@ -312,10 +313,58 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* Collapse an empty tools slot so it doesn't contribute a flex gap on the
    right — otherwise the last nav item sits inset from the section edge. */
 header nav .nav-tools:empty {
   display: none;
+}
+
+/* theme toggle — echoes the boxed wordmark (2px ink border, small radius) so
+   it reads as part of the brand furniture, not a bolted-on control. */
+header .theme-toggle {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+header .theme-toggle:hover,
+header .theme-toggle:focus-visible {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+header .theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* show the moon in light mode (tap to go dark), the sun in dark mode */
+header .theme-toggle .icon-sun { display: none; }
+header .theme-toggle .icon-moon { display: block; }
+
+[data-theme="dark"] header .theme-toggle .icon-sun { display: block; }
+[data-theme="dark"] header .theme-toggle .icon-moon { display: none; }
+
+@media (width <= 900px) {
+  /* keep the toggle compact next to the hamburger on the top row */
+  header nav[aria-expanded="true"] .nav-tools {
+    justify-content: center;
+    padding: 24px 0;
+  }
 }

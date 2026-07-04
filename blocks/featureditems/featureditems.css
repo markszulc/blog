@@ -47,7 +47,7 @@
 }
 
 .featureditems li a {
-    color: #000;
+    color: var(--ink);
     font-size: 16px;
 }
 
@@ -78,14 +78,14 @@
 .featureditems .description {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0.5rem 0;
 }
 
 .featureditems .date {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0.5rem 0;
     display: flex;
     align-items: center;
@@ -95,13 +95,13 @@
 .featureditems .date svg{
     width: 16px;
     height: 16px;
-    stroke: #666;
+    stroke: var(--muted);
     flex-shrink: 0;
 }
 
 .featureditems .pubdate {
     font-size: 0.85rem;
     font-weight: 300;
-    color: #666;
+    color: var(--muted);
     margin: 0;
 }

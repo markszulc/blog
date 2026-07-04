@@ -32,8 +32,8 @@ main .embed {
   }
   
   main .embed.embed-instagram iframe.instagram-media {
-    border: 1px solid var(--color-gray-200);
-    background: white;
+    border: 1px solid var(--border-warm);
+    background: var(--inset-card);
     border-radius: 4px;
     height: 462px;
     width: 320px;

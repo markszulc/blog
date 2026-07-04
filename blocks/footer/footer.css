@@ -62,6 +62,12 @@ footer img[data-icon-name] {
   filter: none;
 }
 
+/* the social glyphs are solid-black monochrome SVGs loaded as <img>, so they
+   can't inherit a themed color — flip them to light on the dark footer. */
+[data-theme="dark"] footer img[data-icon-name] {
+  filter: invert(1);
+}
+
 footer .footer .columns > div > div:nth-child(1) {
     min-width: 70%;
     padding-right: 100px;

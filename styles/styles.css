@@ -38,6 +38,37 @@
   --cat-adobe: #e85c4a;
   --cat-maker: #5aafa6;
 
+  /* which UA form-control / scrollbar palette to render */
+  color-scheme: light;
+
+  /* fixed-contrast helpers — these do NOT flip between themes. Use them for
+     text that always sits on a colored/near-white fill (buttons, chips,
+     category tags) so it stays legible in either mode. */
+  --on-color: #1a1815;      /* dark text on bright or near-white fills */
+  --on-color-inv: #fbfaf8;  /* light text on saturated/dark fills */
+
+  /* button foreground + the dark "emphasis / secondary" pill */
+  --btn-fg: var(--on-color);
+  --btn-emphasis-bg: var(--ink);
+  --btn-emphasis-bg-hover: #000;
+  --btn-emphasis-fg: #fff;
+
+  /* intentional dark panels (.section.dark, stats .dark, homebanner) — a
+     deliberately dark surface in BOTH themes, lifted to warm charcoal in dark
+     mode so it still reads as raised. */
+  --panel-dark: #1e1e1e;
+  --panel-dark-fg: #fff;
+  --panel-dark-fg-muted: #bdbdbd;
+
+  /* the three "white" surfaces, split by how their text is coloured:
+     --card-bg  : cards on the page; text uses --ink/--muted, so it flips dark
+     --chip-bg  : chips + input fields with fixed dark (--on-color) text, so it
+                  stays near-white in dark mode
+     --inset-card: media/emb, frames with no text, free to go dark */
+  --card-bg: #fff;
+  --chip-bg: #fff;
+  --inset-card: #fff;
+
   /* type families */
   --font-fallback: -apple-system, system-ui, sans-serif;
   --font-display: 'Bricolage Grotesque', var(--font-fallback);
@@ -76,6 +107,37 @@
 
   /* nav height */
   --nav-height: 72px;
+}
+
+/* Dark theme — complementary shifts of the same warm palette rather than a
+   flat inversion. Neutrals flip along a warm-charcoal ramp, the brand blue
+   brightens a touch to hold contrast on dark, and the soft-blue fill deepens
+   into a navy so tinted panels stay recognisably "blue". Applied via a
+   data-theme attribute set before first paint (see head.html), so there is no
+   flash and no reliance on the OS setting once the reader has chosen. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #f4f1ec;
+  --ink-2: #dcd7ce;
+  --muted: #a7a198;
+  --accent: #63bcff;
+  --accent-soft: #123049;
+  --btn: #9ec9f2;
+  --btn-hover: #b4d6f6;
+  --surface: #161512;
+  --surface-warm: #201e19;
+  --border-warm: #35322b;
+  --card-tint: #2b2822;
+  --btn-emphasis-bg: #f4f1ec;
+  --btn-emphasis-bg-hover: #fff;
+  --btn-emphasis-fg: #1a1815;
+  --panel-dark: #24231f;
+  --panel-dark-fg: #f4f1ec;
+  --panel-dark-fg-muted: #b0aaa0;
+  --card-bg: #201e19;
+  --chip-bg: #ebeef2;
+  --inset-card: #2e2b25;
 }
 
 @media (width >= 900px) {
@@ -207,7 +269,7 @@ a.button:any-link, button {
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
-  color: var(--ink);
+  color: var(--btn-fg);
   background: var(--btn);
   margin: 16px 0;
   white-space: nowrap;
@@ -226,15 +288,15 @@ button:disabled, button:disabled:hover {
 
 /* dark / emphasis button variant — author uses italic/emphasis link */
 a.button.emphasis, a.button.secondary, button.secondary {
-  background: var(--ink);
-  color: #fff;
+  background: var(--btn-emphasis-bg);
+  color: var(--btn-emphasis-fg);
   border-radius: var(--radius-pill);
   padding: 9px 16px;
   font-size: 13px;
 }
 
 a.button.emphasis:hover, a.button.secondary:hover, button.secondary:hover {
-  background: #000;
+  background: var(--btn-emphasis-bg-hover);
 }
 
 /* "view all" heading link — a plain (unbolded, non-italic) link placed
@@ -371,8 +433,8 @@ main .section.warm { background: var(--surface-warm); }
 main .section.soft-blue { background: var(--accent-soft); }
 
 main .section.dark {
-  background: var(--ink);
-  color: #fff;
+  background: var(--panel-dark);
+  color: var(--panel-dark-fg);
 }
 
 /* Alternative to the filled soft-blue card: white interior, thick soft-blue
@@ -396,7 +458,7 @@ main .section.outline {
 main .section.warm .embed,
 main .section.soft-blue .embed,
 main .section.dark .embed {
-  background: #fff;
+  background: var(--inset-card);
   border-radius: var(--radius-card);
   padding: 16px;
   margin: 0;
@@ -409,8 +471,8 @@ main .section.outline .embed {
 
 main .section.dark h1,
 main .section.dark h2,
-main .section.dark h3 { color: #fff; }
-main .section.dark p { color: #bdbdbd; }
+main .section.dark h3 { color: var(--panel-dark-fg); }
+main .section.dark p { color: var(--panel-dark-fg-muted); }
 
 main .section.highlight {
   background-color: var(--highlight-background-color);

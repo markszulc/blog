@@ -49,7 +49,6 @@
 .bluesky .bluesky-stage {
   position: relative;
   min-height: calc(var(--bsky-card-h) + 150px);
-  perspective: 1400px;
   touch-action: pan-y; /* horizontal gestures come to us as pointer events */
 }
 
@@ -59,6 +58,15 @@
   padding: 0;
   position: absolute;
   inset: 0;
+  perspective: 1600px; /* gives the coverflow tilt real depth */
+}
+
+/* desktop coverflow fills the width; crop the fan cleanly at the block edges */
+@media (width >= 900px) {
+  .bluesky .bluesky-stage {
+    min-height: calc(var(--bsky-card-h) + 48px);
+    overflow: hidden;
+  }
 }
 
 /* --- cards: fixed footprint so the stack is uniform --- */
@@ -78,6 +86,7 @@
   transform-origin: center center;
   transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .bluesky .bluesky-feed.is-dragging .bluesky-post {

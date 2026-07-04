@@ -198,9 +198,21 @@ function skeletonCard() {
   return li;
 }
 
-// Position one card for its depth in the deck (0 = front). dx is a live drag
-// offset; everything is transform/opacity so it never triggers layout.
-function place(card, depth, dx, rot) {
+function isDesktop() {
+  return window.matchMedia('(min-width: 900px)').matches;
+}
+
+// Signed shortest distance from the active card (0 = centre, -1 = left, +1 = right).
+function signedOffset(i, active, n) {
+  let off = (i - active) % n;
+  if (off > n / 2) off -= n;
+  if (off < -n / 2) off += n;
+  return off;
+}
+
+// Mobile: a receding deck — cards stack behind the front one, lifted and dimmed.
+// dx is a live drag offset on the front card. Transform/opacity only, no layout.
+function placeStack(card, depth, dx, rot) {
   const scale = Math.max(0.7, 1 - depth * 0.07);
   const lift = depth * 30;
   card.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% - ${lift}px)) scale(${scale}) rotate(${rot}deg)`;
@@ -210,17 +222,50 @@ function place(card, depth, dx, rot) {
   card.setAttribute('aria-hidden', depth === 0 ? 'false' : 'true');
 }
 
-function initDeck(root, feed, cards, counter) {
+// Desktop: symmetric coverflow — active card centred and largest, neighbours
+// fanned out across the width, smaller and tilted for depth. off can be
+// fractional while dragging so the whole fan scrubs smoothly.
+function placeFlow(card, off, spread) {
+  const abs = Math.abs(off);
+  const x = off * spread;
+  const scale = Math.max(0.72, 1 - abs * 0.11);
+  const rotY = Math.max(-22, Math.min(22, -off * 11));
+  const z = -abs * 40;
+  card.style.transform = `translate(-50%, -50%) translate3d(${x}px, 0, ${z}px) rotateY(${rotY}deg) scale(${scale})`;
+  const visible = abs <= 2.4;
+  card.style.opacity = visible ? String(Math.max(0, 1 - abs * 0.16)) : '0';
+  card.style.zIndex = String(100 - Math.round(abs * 10));
+  card.style.pointerEvents = visible ? '' : 'none';
+  card.setAttribute('aria-hidden', abs < 0.5 ? 'false' : 'true');
+}
+
+function initDeck(root, stage, feed, cards, counter) {
   const n = cards.length;
   let active = 0;
   let dragging = false;
   let startX = 0;
   let moved = 0;
 
-  const front = () => cards[active];
+  function spreadPx() {
+    const stageW = stage.clientWidth || feed.clientWidth || 0;
+    const cardW = cards[0].offsetWidth || 360;
+    // Space the neighbours out to fill the width, but never further than ~a
+    // card apart, so 3+ stay close to fully visible.
+    return Math.max(cardW * 0.5, Math.min(cardW * 0.98, stageW / 2 - cardW * 0.44 - 12));
+  }
 
-  function layout() {
-    cards.forEach((card, i) => place(card, (i - active + n) % n, 0, 0));
+  function layout(dragDx = 0) {
+    if (isDesktop()) {
+      const spread = spreadPx();
+      cards.forEach((card, i) => {
+        placeFlow(card, signedOffset(i, active, n) + (spread ? dragDx / spread : 0), spread);
+      });
+    } else {
+      cards.forEach((card, i) => {
+        const depth = (i - active + n) % n;
+        placeStack(card, depth, depth === 0 ? dragDx : 0, depth === 0 ? dragDx * 0.02 : 0);
+      });
+    }
     if (counter) counter.textContent = `${active + 1} / ${n}`;
   }
 
@@ -241,15 +286,16 @@ function initDeck(root, feed, cards, counter) {
   function onMove(event) {
     if (!dragging) return;
     moved = event.clientX - startX;
-    place(front(), 0, moved, moved * 0.02);
+    layout(moved);
   }
 
   function onUp() {
     if (!dragging) return;
     dragging = false;
     feed.classList.remove('is-dragging');
-    if (moved <= -SWIPE_THRESHOLD) go(1);
-    else if (moved >= SWIPE_THRESHOLD) go(-1);
+    const threshold = isDesktop() ? Math.max(44, spreadPx() * 0.28) : SWIPE_THRESHOLD;
+    if (moved <= -threshold) go(1);
+    else if (moved >= threshold) go(-1);
     else layout();
   }
 
@@ -257,14 +303,24 @@ function initDeck(root, feed, cards, counter) {
   feed.addEventListener('pointermove', onMove);
   feed.addEventListener('pointerup', onUp);
   feed.addEventListener('pointercancel', onUp);
-  // A real drag shouldn't also open the link.
+  // A real drag shouldn't open a link; a click on a neighbour re-centres it.
   feed.addEventListener('click', (event) => {
-    if (Math.abs(moved) > CLICK_SLOP) event.preventDefault();
+    if (Math.abs(moved) > CLICK_SLOP) { event.preventDefault(); return; }
+    const li = event.target.closest('.bluesky-post');
+    if (!li) return;
+    const idx = cards.indexOf(li);
+    if (idx !== -1 && idx !== active) {
+      event.preventDefault();
+      active = idx;
+      layout();
+    }
   }, true);
 
   root.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') { go(-1); event.preventDefault(); } else if (event.key === 'ArrowRight') { go(1); event.preventDefault(); }
   });
+
+  window.addEventListener('resize', () => layout());
 
   layout();
   return { next: () => go(1), prev: () => go(-1) };
@@ -328,7 +384,7 @@ export default async function decorate(block) {
     feed.append(s);
     skels.push(s);
   }
-  skels.forEach((s, i) => place(s, i, 0, 0));
+  skels.forEach((s, i) => placeStack(s, i, 0, 0));
 
   block.append(head, stage);
 
@@ -376,7 +432,7 @@ export default async function decorate(block) {
     controls.append(prev, counter, next);
     stage.after(controls);
 
-    const deck = initDeck(block, feed, cards, counter);
+    const deck = initDeck(block, stage, feed, cards, counter);
     prev.addEventListener('click', deck.prev);
     next.addEventListener('click', deck.next);
     if (cards.length < 2) controls.hidden = true;

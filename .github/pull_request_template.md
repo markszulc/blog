@@ -1,3 +1,3 @@
 Test URLs:
-- Before: https://main--<repo>--<owner>.hlx.page/
-- After: https://<branch>--<repo>--<owner>.hlx.page/
+- Before: https://main--blog--markszulc.aem.page/
+- After: https://redesign--blog--markszulc.aem.page/

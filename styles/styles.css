@@ -486,12 +486,9 @@ main .section.card-surface > div {
 }
 
 /* Article reading column — 720px prose width.
- * Opt-in via Section Metadata Style: reading. Also auto-applied to the body
- * section of a hero + single-body article (the most common long-form layout)
- * by matching the page shape: main has exactly two sections, the second is
- * not the hero. Homepage-style pages with 3+ sections render at full width. */
-main .section.reading .default-content-wrapper,
-main > .section:nth-child(2):last-child:not(.hero-container) > .default-content-wrapper {
+ * Opt-in only, via Section Metadata Style: reading. Every other page follows
+ * the site-wide 1264px grid so content shares one consistent width standard. */
+main .section.reading .default-content-wrapper {
   max-width: 720px;
   margin: 0 auto;
 }

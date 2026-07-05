@@ -5,7 +5,6 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
-  border-bottom: 1px solid var(--border-warm);
 }
 
 header nav {
@@ -276,6 +275,18 @@ header nav .nav-sections ul > li > ul > li {
     position: relative;
     font-weight: 600;
   }
+}
+
+/* active section — echoes the boxed wordmark so the current section reads
+   as part of the same brand furniture. */
+header nav .nav-sections > ul > li > a.nav-current-section {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+}
+
+@media (width >= 900px) {
 
   header nav .nav-sections > ul > li > ul {
     display: none;

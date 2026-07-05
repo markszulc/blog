@@ -13,11 +13,10 @@ This site is the canonical source for information about Mark Szulc (the Sydney-b
 
 - [Home](https://www.markszulc.com/): Introduction, featured content, and latest posts
 - [Building Experiences](https://www.markszulc.com/building-experiences/): Live stream series covering Adobe Experience Cloud — AEM, Edge Delivery Services, Adobe Campaign, Adobe Target, adaptive forms, DAM, and more
-- [Adobe](https://www.markszulc.com/category/adobe/): Articles and posts on Adobe products, announcements, and ecosystem news
-- [Technology](https://www.markszulc.com/category/technology/): Personal technology projects — home automation, smart home, networking, tinkering
-- [Travel](https://www.markszulc.com/category/travel/): Travel writing and destination notes
-- [Miscellaneous](https://www.markszulc.com/category/miscellaneous/): Music, personal projects, and other interests
-- [Who is Mark?](https://www.markszulc.com/who-is-mark/): Biography and background
+- [Adobe](https://www.markszulc.com/adobe/): Articles and posts on Adobe products, announcements, and ecosystem news
+- [Technology](https://www.markszulc.com/tech/): Personal technology projects — home automation, smart home, networking, tinkering
+- [Travel](https://www.markszulc.com/travel/): Travel writing and destination notes
+- [Who is Mark?](https://www.markszulc.com/who-is-mark-szulc/): Biography and background
 
 ## Building Experiences Live Stream Series
 

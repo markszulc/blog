@@ -28,6 +28,20 @@ function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
+/**
+ * Highlights the top-level nav link matching the current path's section,
+ * e.g. marks "Technology" active when browsing anywhere under /tech/.
+ * @param {Element} navSections The nav sections container
+ */
+function highlightCurrentSection(navSections) {
+  const { pathname } = window.location;
+  navSections.querySelectorAll(':scope > ul > li > a').forEach((a) => {
+    const linkPath = new URL(a.href).pathname;
+    const isCurrent = linkPath !== '/' && (pathname === linkPath || pathname.startsWith(linkPath));
+    a.classList.toggle('nav-current-section', isCurrent);
+  });
+}
+
 // closeOnEscape and toggleMenu call each other (Escape collapses the menu;
 // the menu registers/unregisters the Escape handler), so one forward
 // reference is unavoidable no matter the declaration order.
@@ -165,6 +179,7 @@ export default async function decorate(block) {
           }
         });
       });
+      highlightCurrentSection(navSections);
     }
 
     // hamburger for mobile

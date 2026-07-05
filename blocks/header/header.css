@@ -278,12 +278,18 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 /* active section — echoes the boxed wordmark so the current section reads
-   as part of the same brand furniture. */
-header nav .nav-sections > ul > li > a.nav-current-section {
+   as part of the same brand furniture. Every top-level link reserves the
+   same transparent border/padding box so the active one's text doesn't
+   shift relative to its siblings when the border becomes visible. */
+header nav .nav-sections > ul > li > a {
   display: inline-block;
-  border: 2px solid var(--ink);
+  border: 2px solid transparent;
   border-radius: var(--radius-sm);
   padding: 2px 8px;
+}
+
+header nav .nav-sections > ul > li > a.nav-current-section {
+  border-color: var(--ink);
 }
 
 @media (width >= 900px) {

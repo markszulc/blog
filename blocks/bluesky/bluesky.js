@@ -396,7 +396,10 @@ export default async function decorate(block) {
     .map((el) => el.textContent.trim())
     .filter(Boolean);
   const isMeta = (t) => /^https?:\/\//i.test(t) || /^follow\b/i.test(t) || t.startsWith('@');
-  const heading = textLines.find((t) => !isMeta(t)) || DEFAULT_HEADING;
+  // No fallback text here — many pages already carry their own eyebrow/title
+  // above the block, so a default would just repeat it. Only show a heading
+  // when the author actually typed one inside the block.
+  const heading = textLines.find((t) => !isMeta(t)) || '';
   const followText = textLines.find((t) => /^follow\b/i.test(t) || t.startsWith('@'));
   const profileLabel = (profileLink && profileLink.textContent.trim()) || followText || 'Follow on Bluesky';
 
@@ -404,14 +407,16 @@ export default async function decorate(block) {
   block.replaceChildren();
   block.setAttribute('role', 'group');
   block.setAttribute('aria-roledescription', 'carousel');
-  block.setAttribute('aria-label', heading);
+  block.setAttribute('aria-label', heading || DEFAULT_HEADING);
   block.tabIndex = 0;
 
   const head = document.createElement('div');
   head.className = 'bluesky-header';
-  const h2 = document.createElement('h2');
-  h2.textContent = heading;
-  head.append(h2);
+  if (heading) {
+    const h2 = document.createElement('h2');
+    h2.textContent = heading;
+    head.append(h2);
+  }
 
   const follow = document.createElement('a');
   follow.className = 'bluesky-follow';

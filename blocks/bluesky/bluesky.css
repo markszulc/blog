@@ -32,6 +32,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+
+  /* keeps the pill on the right even when there's no heading to space against */
+  margin-left: auto;
   padding: 8px 16px;
   border-radius: var(--radius-pill);
   background: var(--bsky-brand);

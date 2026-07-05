@@ -286,52 +286,70 @@ function initDeck(root, stage, feed, cards) {
     layout();
   }
 
-  function onDown(event) {
-    if (n < 2 || event.button > 0) return;
-    dragging = true;
-    startX = event.clientX;
-    moved = 0;
-    feed.classList.add('is-dragging');
-    if (feed.setPointerCapture) feed.setPointerCapture(event.pointerId);
-  }
-
+  // Movement/release are tracked on window instead of via setPointerCapture:
+  // capturing the pointer to `feed` also retargets the click that follows a
+  // plain tap to the capturing element instead of the card underneath it —
+  // silently breaking both "open the post" and neighbour-click-to-centre.
+  // window-level listeners give the same "keep tracking outside the card"
+  // behaviour without touching capture at all.
   function onMove(event) {
     if (!dragging) return;
     moved = event.clientX - startX;
     layout(moved);
   }
 
-  function onUp(event) {
+  function onUp() {
     if (!dragging) return;
     dragging = false;
     feed.classList.remove('is-dragging');
-    // Mouse pointer capture isn't released automatically on pointerup, and while
-    // captured the browser retargets the click that follows to the capturing
-    // element instead of the card underneath — silently breaking "open the post"
-    // and the neighbour-click-to-centre feature. Release it before click fires.
-    if (feed.hasPointerCapture && feed.hasPointerCapture(event.pointerId)) {
-      feed.releasePointerCapture(event.pointerId);
-    }
+    window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('pointerup', onUp);
+    window.removeEventListener('pointercancel', onUp);
     const threshold = isDesktop() ? Math.max(44, spreadPx() * 0.28) : SWIPE_THRESHOLD;
     if (moved <= -threshold) go(1);
     else if (moved >= threshold) go(-1);
     else layout();
   }
 
+  function onDown(event) {
+    if (n < 2 || event.button > 0) return;
+    dragging = true;
+    startX = event.clientX;
+    moved = 0;
+    feed.classList.add('is-dragging');
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+  }
+
   feed.addEventListener('pointerdown', onDown);
-  feed.addEventListener('pointermove', onMove);
-  feed.addEventListener('pointerup', onUp);
-  feed.addEventListener('pointercancel', onUp);
   // A real drag shouldn't open a link; a click on a neighbour re-centres it.
+  //
+  // event.target isn't trustworthy here: browsers can retarget the click that
+  // follows a pointerdown/pointerup sequence to an ancestor (this "feed" list)
+  // instead of the real element under the cursor, once the gesture is handled
+  // by listeners set up during pointerdown. document.elementFromPoint gives the
+  // genuine hit-test, unaffected by that, so resolve the card through it instead.
   feed.addEventListener('click', (event) => {
     if (Math.abs(moved) > CLICK_SLOP) { event.preventDefault(); return; }
-    const li = event.target.closest('.bluesky-post');
+    const real = document.elementFromPoint(event.clientX, event.clientY);
+    const li = real && real.closest('.bluesky-post');
     if (!li) return;
     const idx = cards.indexOf(li);
+
     if (idx !== -1 && idx !== active) {
       event.preventDefault();
       active = idx;
       layout();
+      return;
+    }
+
+    // Active card: let a correctly-targeted click follow its native href.
+    // Only step in when the browser's own target missed the anchor.
+    const link = real.closest('.bluesky-post-link');
+    if (link && event.target !== link && !link.contains(event.target)) {
+      event.preventDefault();
+      window.open(link.href, link.target || '_self', 'noopener');
     }
   }, true);
 

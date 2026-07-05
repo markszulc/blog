@@ -22,7 +22,6 @@ export default async function decorate(block) {
     const category = el.textContent;
     container.classList.add(`category-list--${category}`);
 
-
     index.data
       .forEach((post) => {
         if (post.category !== category) {

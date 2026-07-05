@@ -1,0 +1,147 @@
+/* Direction D stats bento */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(188px, auto);
+  gap: 16px;
+}
+
+.stats .stat {
+  border-radius: var(--radius-card);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* EDS Doc Authoring wraps each cell's text in <p>. The global body rule
+   p { margin: 0 0 1.1em } would otherwise add a ~75px bottom margin on the
+   big num (1.1em of a 68px <p>) and overflow the card. */
+.stats .stat p {
+  margin: 0;
+}
+
+.stats .stat .label,
+.stats .stat .sub {
+  line-height: 1.3;
+}
+
+/* dark stat card with big accent number */
+.stats .stat.dark {
+  background: var(--panel-dark);
+  color: var(--panel-dark-fg);
+}
+
+.stats .stat.dark .num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+/* "wide" is a generic 2-col span modifier — usable on any stat type
+   (dark, media, etc), not just dark. */
+.stats .stat.wide { grid-column: span 2; }
+.stats .stat.dark.wide .num { font-size: 68px; }
+
+.stats .stat .label {
+  font-weight: 700;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.stats .stat .sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.stats .stat.dark .sub { color: var(--panel-dark-fg-muted); }
+
+/* soft-blue tag card */
+.stats .stat.tags {
+  background: var(--accent-soft);
+  grid-column: span 2;
+}
+
+.stats .stat.tags .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stats .stat.tags .chip {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  color: var(--on-color);
+}
+
+/* category-colored chips — same palette and word-matching as the cards
+   block's eyebrow color logic, so "Home Automation" etc reads identically
+   whether it's a card eyebrow or a stats tag. */
+.stats .stat.tags .chip.home {
+  background: var(--cat-home);
+  color: var(--on-color-inv);
+}
+
+.stats .stat.tags .chip.print {
+  background: var(--cat-print);
+  color: var(--on-color-inv);
+}
+
+.stats .stat.tags .chip.energy {
+  background: var(--cat-energy);
+  color: var(--on-color-inv);
+}
+
+.stats .stat.tags .chip.cosmere {
+  background: var(--cat-cosmere);
+  color: var(--on-color);
+}
+
+.stats .stat.tags .chip.adobe {
+  background: var(--cat-adobe);
+  color: var(--on-color-inv);
+}
+
+.stats .stat.tags .chip.maker {
+  background: var(--cat-maker);
+  color: var(--on-color-inv);
+}
+
+/* image tile */
+.stats .stat.media {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background: var(--card-tint);
+}
+
+.stats .stat.media.big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.stats .stat.media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (width <= 900px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 160px;
+  }
+
+  .stats .stat.wide,
+  .stats .stat.tags,
+  .stats .stat.media.big { grid-column: span 2; }
+}

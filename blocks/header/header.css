@@ -1,10 +1,11 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: #fff;
-  color: #0b0b0c;
+  background-color: var(--surface);
+  color: var(--ink);
   width: 100%;
   z-index: 2;
   position: fixed;
+  border-bottom: 1px solid var(--border-warm);
 }
 
 header nav {
@@ -18,8 +19,20 @@ header nav {
   margin: auto;
   max-width: 1264px;
   height: var(--nav-height);
-  padding: 0 1rem;
+  padding: 0;
   font-family: var(--body-font-family);
+}
+
+/* Below 1264px, `margin: auto` has no leftover space to center with (the
+ * nav's natural width already fills the viewport), so the horizontal
+ * margin collapses to 0 and the brand/hamburger/sections sit flush
+ * against the screen edges — same issue as the section cards had. Give
+ * the nav an explicit 2rem gutter once auto-centering stops providing
+ * one; matches every other mobile breakpoint in this design. */
+@media (width <= 900px) {
+  header nav {
+    padding: 0 2rem;
+  }
 }
 
 header nav[aria-expanded="true"] {
@@ -29,12 +42,6 @@ header nav[aria-expanded="true"] {
     'tools tools' var(--nav-height) / auto 1fr;
   overflow-y: auto;
   min-height: 100vh;
-}
-
-@media (width >= 600px) {
-  header nav {
-    padding: 0 2rem;
-  }
 }
 
 @media (width >= 900px) {
@@ -54,8 +61,39 @@ header nav p {
   line-height: 1;
 }
 
+/* brand — Direction D wordmark: boxed, Bricolage 800, lowercase */
+header .nav-brand {
+  grid-area: brand;
+  flex-basis: auto;
+  line-height: 1;
+}
+
+header .nav-brand p {
+  margin: 0;
+  line-height: 1;
+}
+
+header .nav-brand a {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--ink);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+}
+
 header nav a:any-link {
   color: currentcolor;
+}
+
+header nav .nav-brand img {
+  width: 128px;
+  height: auto;
 }
 
 /* hamburger */
@@ -72,7 +110,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: transparent;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
@@ -139,20 +177,6 @@ header nav[aria-expanded="true"] .nav-hamburger-icon::after {
   }
 }
 
-/* brand */
-header .nav-brand {
-  grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
-  line-height: 1;
-}
-
-header nav .nav-brand img {
-  width: 128px;
-  height: auto;
-}
-
 /* sections */
 header nav .nav-sections {
   grid-area: sections;
@@ -184,7 +208,7 @@ header nav .nav-sections ul > li {
 @media (width <= 900px) {
   header nav .nav-sections ul > li {
     padding: 20px 0;
-    border-bottom: #fff solid 1px;
+    border-bottom: var(--border-warm) solid 1px;
   }
 }
 
@@ -289,4 +313,58 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Collapse an empty tools slot so it doesn't contribute a flex gap on the
+   right — otherwise the last nav item sits inset from the section edge. */
+header nav .nav-tools:empty {
+  display: none;
+}
+
+/* theme toggle — echoes the boxed wordmark (2px ink border, small radius) so
+   it reads as part of the brand furniture, not a bolted-on control. */
+header .theme-toggle {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+header .theme-toggle:hover,
+header .theme-toggle:focus-visible {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+header .theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* show the moon in light mode (tap to go dark), the sun in dark mode */
+header .theme-toggle .icon-sun { display: none; }
+header .theme-toggle .icon-moon { display: block; }
+
+[data-theme="dark"] header .theme-toggle .icon-sun { display: block; }
+[data-theme="dark"] header .theme-toggle .icon-moon { display: none; }
+
+@media (width <= 900px) {
+  /* keep the toggle compact next to the hamburger on the top row */
+  header nav[aria-expanded="true"] .nav-tools {
+    justify-content: center;
+    padding: 24px 0;
+  }
 }

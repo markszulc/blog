@@ -1,0 +1,99 @@
+/* Direction D newsletter CTA — designed to live inside a .section.dark card */
+
+.newsletter > div {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Grid/flex items default to a min-width equal to their content's
+   intrinsic size, which refuses to shrink below that no matter how
+   narrow the container gets. Without this, the email input's browser
+   default min-content width forces the whole card wider than the
+   viewport at mobile sizes. */
+.newsletter-text,
+.newsletter-form-col {
+  min-width: 0;
+}
+
+.newsletter .newsletter-text h2 { margin: 0 0 14px; }
+
+.newsletter .newsletter-text p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+}
+
+/* Override the global `main input` block-level styles so the input sits
+   inline next to the button instead of taking the full column width. */
+.newsletter-form input[type="email"] {
+  flex: 1 1 160px;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  display: inline-block;
+  margin: 0;
+  background: var(--chip-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 15px 16px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: var(--on-color);
+}
+
+.newsletter-form input[type="email"]:hover { border: none; }
+
+.newsletter-form button {
+  background: var(--btn);
+  color: var(--btn-fg);
+  font-family: var(--body-font-family);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 15px 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.newsletter-form button:hover { background: var(--btn-hover); }
+
+.newsletter .newsletter-footnote {
+  font-size: 13px;
+  margin: 12px 0 0;
+  color: var(--panel-dark-fg-muted);
+}
+
+.newsletter-status {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--panel-dark-fg-muted);
+}
+
+.newsletter-status-error { color: #f2a89e; }
+
+.newsletter-confirmed {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--panel-dark-fg);
+}
+
+@media (width <= 900px) {
+  .newsletter > div {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

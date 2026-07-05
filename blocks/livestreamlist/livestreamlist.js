@@ -31,7 +31,7 @@ export default async function decorate(block) {
     let formattedDate = '';
     if (post['publication-date']) {
       const date = new Date(post['publication-date']);
-      if (!isNaN(date.getTime())) {
+      if (!Number.isNaN(date.getTime())) {
         formattedDate = date.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'short',

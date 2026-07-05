@@ -1,0 +1,438 @@
+/* Bluesky block — a 3D stacked-card carousel.
+ * Colours come from the design tokens in styles/styles.css, so the block flips
+ * with dark mode for free. The stage reserves a fixed height and the deck
+ * animates with transform/opacity only, so nothing shifts and it stays cheap
+ * for Core Web Vitals. */
+
+.bluesky {
+  --bsky-brand: #1185fe;
+  --bsky-card-w: min(90vw, 380px);
+  --bsky-card-h: 460px;
+
+  outline: none;
+}
+
+.bluesky .bluesky-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.bluesky .bluesky-header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--heading-font-size-l);
+  line-height: 1.1;
+}
+
+.bluesky .bluesky-follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--bsky-brand);
+  color: #fff;
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: filter 0.15s ease;
+}
+
+.bluesky .bluesky-follow:hover { filter: brightness(1.08); }
+
+.bluesky .bluesky-follow .bluesky-logo {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* --- stage: reserves height, centres the deck --- */
+.bluesky .bluesky-stage {
+  position: relative;
+  min-height: calc(var(--bsky-card-h) + 110px);
+  touch-action: pan-y; /* horizontal gestures come to us as pointer events */
+}
+
+.bluesky .bluesky-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  inset: 0;
+  perspective: 1600px; /* gives the coverflow tilt real depth */
+}
+
+/* desktop coverflow fills the width; crop the fan cleanly at the block edges */
+@media (width >= 900px) {
+  .bluesky .bluesky-stage {
+    min-height: calc(var(--bsky-card-h) + 32px);
+    overflow: hidden;
+  }
+}
+
+/* --- cards: fixed footprint so the stack is uniform --- */
+.bluesky .bluesky-post {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--bsky-card-w);
+  height: var(--bsky-card-h);
+  margin: 0;
+  padding: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 8px 18px -12px rgb(0 0 0 / 32%);
+  transform-origin: center center;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.bluesky .bluesky-feed.is-dragging .bluesky-post {
+  transition: none;
+  cursor: grabbing;
+}
+
+.bluesky .bluesky-post-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* header */
+.bluesky .bluesky-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 10px;
+}
+
+.bluesky .bluesky-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--card-tint);
+}
+
+.bluesky .bluesky-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.bluesky .bluesky-name {
+  font-weight: 600;
+  font-size: var(--body-font-size-s);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bluesky .bluesky-handle {
+  font-size: var(--body-font-size-xs);
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bluesky .bluesky-repost {
+  display: inline-flex;
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.bluesky .bluesky-repost svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* body text */
+.bluesky .bluesky-text {
+  margin: 0;
+  padding: 0 16px;
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--ink-2);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* text-only posts get the full card height for their words */
+.bluesky .bluesky-text-long {
+  flex: 1;
+  padding: 4px 18px 0;
+  font-size: var(--body-font-size-m);
+  -webkit-line-clamp: 9;
+  line-clamp: 9;
+}
+
+/* --- media fills the card width, runs to the bottom edge --- */
+.bluesky .bluesky-media {
+  margin: 0;
+  display: grid;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.bluesky .bluesky-fill {
+  flex: 1;
+  margin-top: 12px;
+  position: relative;
+  min-height: 0;
+}
+
+.bluesky .bluesky-media-2,
+.bluesky .bluesky-media-3,
+.bluesky .bluesky-media-4 { grid-template-columns: 1fr 1fr; }
+
+.bluesky .bluesky-frame {
+  position: relative;
+  background: var(--card-tint);
+  overflow: hidden;
+}
+
+.bluesky .bluesky-media-3 .bluesky-frame:first-child { grid-row: span 2; }
+
+.bluesky .bluesky-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; /* anchor to the top of the source image, not centred */
+  display: block;
+}
+
+.bluesky .bluesky-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.bluesky .bluesky-play svg {
+  width: 48px;
+  height: 48px;
+  color: #fff;
+  filter: drop-shadow(0 1px 5px rgb(0 0 0 / 60%));
+}
+
+/* date + stats sit over the media on a scrim */
+.bluesky .bluesky-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 20px 14px 12px;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(to top, rgb(0 0 0 / 62%), transparent);
+  pointer-events: none;
+}
+
+/* external link card (text-only posts) */
+.bluesky .bluesky-external {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 16px 0;
+  padding: 10px;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-sm);
+  background: var(--surface-warm);
+}
+
+.bluesky .bluesky-external img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--card-tint);
+}
+
+.bluesky .bluesky-external-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bluesky .bluesky-external-title {
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bluesky .bluesky-external-host {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* footer for cards without media */
+.bluesky .bluesky-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.bluesky .bluesky-stats {
+  display: inline-flex;
+  gap: 12px;
+}
+
+.bluesky .bluesky-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bluesky .bluesky-stat svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- controls --- */
+.bluesky .bluesky-carousel {
+  position: relative;
+}
+
+/* prev / next flank the deck, vertically centred on its left and right edges */
+.bluesky .bluesky-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-pill);
+  background: var(--card-bg);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 6px 18px -8px rgb(0 0 0 / 45%);
+  transform: translateY(-50%);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.bluesky .bluesky-prev { left: 4px; }
+
+.bluesky .bluesky-next { right: 4px; }
+
+@media (width >= 900px) {
+  .bluesky .bluesky-prev { left: 12px; }
+
+  .bluesky .bluesky-next { right: 12px; }
+}
+
+.bluesky .bluesky-nav:hover { background: var(--surface-warm); }
+
+.bluesky .bluesky-nav:active { transform: translateY(-50%) scale(0.94); }
+
+.bluesky .bluesky-nav svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bluesky .bluesky-next svg { transform: rotate(180deg); }
+
+/* --- skeleton --- */
+.bluesky .bluesky-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.bluesky .sk {
+  background: var(--card-tint);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.bluesky .sk-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+}
+
+.bluesky .sk-line {
+  height: 12px;
+  width: 100%;
+}
+
+.bluesky .sk-name { width: 40%; }
+
+.bluesky .sk-handle {
+  width: 55%;
+  margin-top: 4px;
+}
+
+.bluesky .sk-short { width: 65%; }
+
+.bluesky .sk-media {
+  flex: 1;
+  min-height: 90px;
+  margin-top: 4px;
+}
+
+.bluesky .bluesky-skeleton .bluesky-head { padding: 0; }
+
+.bluesky .bluesky-skeleton .bluesky-meta { gap: 0; }
+
+.bluesky .sk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 45%), transparent);
+  animation: bluesky-shimmer 1.4s infinite;
+}
+
+[data-theme="dark"] .bluesky .sk::after {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 8%), transparent);
+}
+
+@keyframes bluesky-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bluesky .bluesky-post { transition: none; }
+
+  .bluesky .sk::after { animation: none; }
+}

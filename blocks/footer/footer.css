@@ -1,13 +1,14 @@
 footer {
   padding: 2rem;
-  background-color: #212121;
-  color: #bbb;
+  background-color: var(--surface);
+  color: var(--ink-2);
   font-size: 16px;
   text-align: left;
+  border-top: 1px solid var(--border-warm);
 }
 
 footer .footer {
-  max-width: 1200px;
+  max-width: 1264px;
   margin: auto;
 }
 
@@ -15,11 +16,20 @@ footer .footer p {
   margin: 0
 }
 
+/* brand — Direction D wordmark box. Text is the author's name as authored
+   in /footer (not the site domain), so no case transform here. */
 footer .footer h4 {
+  display: inline-block;
   margin: 0;
-  margin-bottom: 9px;
-  color: #fff;
-  font-weight: 600;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
 }
 
 footer .footer ul {
@@ -36,17 +46,26 @@ footer .columns > div {
   align-items: self-start;
   margin-block-start: 26px;
   padding-block-end: 34px;
-  border-bottom: 1px solid #616161;
+  border-bottom: 1px solid var(--border-warm);
+  gap: 20px;
 }
 
 footer a:any-link {
-    color: #bbb;
+  color: var(--ink-2);
 }
 
-
+footer a:hover {
+  color: var(--accent);
+}
 
 footer img[data-icon-name] {
-  filter: brightness(0) invert(1);
+  filter: none;
+}
+
+/* the social glyphs are solid-black monochrome SVGs loaded as <img>, so they
+   can't inherit a themed color — flip them to light on the dark footer. */
+[data-theme="dark"] footer img[data-icon-name] {
+  filter: invert(1);
 }
 
 footer .footer .columns > div > div:nth-child(1) {
@@ -63,8 +82,4 @@ footer .default-content-wrapper {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-}
-
-footer .columns > div {
-  gap: 20px;
 }

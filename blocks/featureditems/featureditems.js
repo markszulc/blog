@@ -10,8 +10,6 @@ export default async function decorate(block) {
 
   const container = document.createElement('ul');
 
-  let featurecount = 0;
-
   index.data.sort((a, b) => {
     const dateA = new Date(a['publication-date']);
     const dateB = new Date(b['publication-date']);
@@ -40,7 +38,7 @@ export default async function decorate(block) {
     let formattedDate = '';
     if (post['publication-date']) {
       const date = new Date(post['publication-date']);
-      if (!isNaN(date.getTime())) {
+      if (!Number.isNaN(date.getTime())) {
         formattedDate = date.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'short',
@@ -60,11 +58,13 @@ export default async function decorate(block) {
   });
 
   // If not a multiple of 3, fill with additional livestream posts
-  let remainder = featuredItems.length % 3;
+  const remainder = featuredItems.length % 3;
   if (remainder !== 0) {
     const needed = 3 - remainder;
     // Get additional livestream posts not already in featuredItems
-    const additional = index.data.filter(post => post.category === 'livestream' && post.featured !== 'true' && !featuredItems.includes(post)).slice(0, needed);
+    const additional = index.data
+      .filter((post) => post.category === 'livestream' && post.featured !== 'true' && !featuredItems.includes(post))
+      .slice(0, needed);
     additional.forEach((post) => {
       const li = document.createElement('li');
       const title = '';
@@ -76,7 +76,7 @@ export default async function decorate(block) {
       let formattedDate = '';
       if (post['publication-date']) {
         const date = new Date(post['publication-date']);
-        if (!isNaN(date.getTime())) {
+        if (!Number.isNaN(date.getTime())) {
           formattedDate = date.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',

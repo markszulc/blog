@@ -1,37 +1,73 @@
-/* block specific CSS goes here */
+/* Direction D split bento hero */
 
-main .hero-container > div {
-  max-width: unset;
+/* Hero section overrides the default vertical padding so the bento sits
+   tight to the nav. Horizontal padding matches the section default (2rem)
+   so the warm text card's left edge aligns with all other section content. */
+main .hero-container { padding: 8px 2rem 22px; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 22px;
+  align-items: stretch;
 }
-  
-main .hero-container {
-  padding: 0;
+
+/* left: warm text card — internal padding reduced to 32px so the text
+   inside this card sits closer to the rest of the page's left edge. */
+.hero .hero-text {
+  background: var(--surface-warm);
+  border-radius: var(--radius-bento);
+  padding: 56px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 400px;
 }
-  
-main .hero {
+
+.hero .hero-text h1 { margin: 0 0 26px; }
+
+.hero .hero-text p {
+  font-size: var(--body-font-size-l);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 30em;
+  margin: 0;
+}
+
+/* right: feature media card */
+.hero .hero-media {
   position: relative;
-  padding: 32px;
-  min-height: 300px;
-  background-color: #000;
+  border-radius: var(--radius-bento);
+  overflow: hidden;
+  min-height: 400px;
+  background: var(--card-tint);
 }
 
-main .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: white;
-}
-
-main .hero picture {
+.hero .hero-media picture,
+.hero .hero-media img {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
-main .hero img {
-  object-fit: cover;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+.hero .hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 38%, rgb(0 0 0 / 62%) 100%);
+  pointer-events: none;
+}
+
+@media (width <= 900px) {
+  .hero { grid-template-columns: 1fr; }
+
+  .hero .hero-text {
+    min-height: 0;
+    padding: 40px 28px;
+  }
+
+  .hero .hero-text h1 { font-size: 40px; }
+  .hero .hero-media { min-height: 300px; }
 }

@@ -10,129 +10,224 @@
  * governing permissions and limitations under the License.
  */
 
- @view-transition {
+@view-transition {
   navigation: auto;
 }
 
+:root {
+  /* brand */
+  --ink: #1e1e1e;
+  --ink-2: #33312e;
+  --muted: #55534e;
+  --accent: #44b1ff;
+  --accent-soft: #c3e0f8;
+  --btn: #9ec9f2;
+  --btn-hover: #8bbcec;
 
+  /* surfaces */
+  --surface: #fff;
+  --surface-warm: #f7f4ee;
+  --border-warm: #e4e0d8;
+  --card-tint: #e7e2d9;
 
- :root {
-  /* colors */
-  --link-color: red;
-  --link-hover-color: #c00;
-  --background-color: #F5F5F5;
-  --overlay-background-color: #eee;
-  --highlight-background-color: #ccc;
-  --text-color: #000;
+  /* category accents */
+  --cat-home: #44b1ff;
+  --cat-print: #f2a65a;
+  --cat-energy: #74bb81;
+  --cat-cosmere: #b9a6f2;
+  --cat-adobe: #e85c4a;
+  --cat-maker: #5aafa6;
 
-  /* fonts */
-  --body-font-family: 'Raleway', helvetica, ubuntu, roboto, noto, sans-serif;
-  --heading-font-family: 'Raleway', sans-serif;
-  --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+  /* which UA form-control / scrollbar palette to render */
+  color-scheme: light;
+
+  /* fixed-contrast helpers — these do NOT flip between themes. Use them for
+     text that always sits on a colored/near-white fill (buttons, chips,
+     category tags) so it stays legible in either mode. */
+  --on-color: #1a1815;      /* dark text on bright or near-white fills */
+  --on-color-inv: #fbfaf8;  /* light text on saturated/dark fills */
+
+  /* button foreground + the dark "emphasis / secondary" pill */
+  --btn-fg: var(--on-color);
+  --btn-emphasis-bg: var(--ink);
+  --btn-emphasis-bg-hover: #000;
+  --btn-emphasis-fg: #fff;
+
+  /* intentional dark panels (.section.dark, stats .dark, homebanner) — a
+     deliberately dark surface in BOTH themes, lifted to warm charcoal in dark
+     mode so it still reads as raised. */
+  --panel-dark: #1e1e1e;
+  --panel-dark-fg: #fff;
+  --panel-dark-fg-muted: #bdbdbd;
+
+  /* the three "white" surfaces, split by how their text is coloured:
+     --card-bg  : cards on the page; text uses --ink/--muted, so it flips dark
+     --chip-bg  : chips + input fields with fixed dark (--on-color) text, so it
+                  stays near-white in dark mode
+     --inset-card: media/emb, frames with no text, free to go dark */
+  --card-bg: #fff;
+  --chip-bg: #fff;
+  --inset-card: #fff;
+
+  /* type families */
+  --font-fallback: -apple-system, system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', var(--font-fallback);
+  --body-font-family: 'Libre Franklin', var(--font-fallback);
+  --heading-font-family: var(--font-display);
+  --font-mono: 'JetBrains Mono', menlo, consolas, 'Liberation Mono', monospace;
+  --fixed-font-family: var(--font-mono);
 
   /* body sizes */
+  --body-font-size-l: 19px;
   --body-font-size-m: 18px;
-  --body-font-size-s: 16px;
+  --body-font-size-s: 15px;
   --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 54px;
+  --heading-font-size-xxl: 60px;
   --heading-font-size-xl: 40px;
-  --heading-font-size-l: 26px;
+  --heading-font-size-l: 34px;
   --heading-font-size-m: 24px;
   --heading-font-size-s: 20px;
   --heading-font-size-xs: 18px;
 
-  /* nav height */
-  --nav-height: 60px;
+  /* radii */
+  --radius-bento: 28px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --radius-sm: 8px;
 
+  /* EDS standard hooks — remap so boilerplate components inherit the brand */
+  --background-color: var(--surface);
+  --overlay-background-color: var(--surface-warm);
+  --highlight-background-color: var(--accent-soft);
+  --text-color: var(--ink);
+  --link-color: var(--accent);
+  --link-hover-color: var(--ink);
+
+  /* nav height */
+  --nav-height: 72px;
+}
+
+/* Dark theme — complementary shifts of the same warm palette rather than a
+   flat inversion. Neutrals flip along a warm-charcoal ramp, the brand blue
+   brightens a touch to hold contrast on dark, and the soft-blue fill deepens
+   into a navy so tinted panels stay recognisably "blue". Applied via a
+   data-theme attribute set before first paint (see head.html), so there is no
+   flash and no reliance on the OS setting once the reader has chosen. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #f4f1ec;
+  --ink-2: #dcd7ce;
+  --muted: #a7a198;
+  --accent: #63bcff;
+  --accent-soft: #123049;
+  --btn: #9ec9f2;
+  --btn-hover: #b4d6f6;
+  --surface: #161512;
+  --surface-warm: #201e19;
+  --border-warm: #35322b;
+  --card-tint: #2b2822;
+  --btn-emphasis-bg: #f4f1ec;
+  --btn-emphasis-bg-hover: #fff;
+  --btn-emphasis-fg: #1a1815;
+  --panel-dark: #24231f;
+  --panel-dark-fg: #f4f1ec;
+  --panel-dark-fg-muted: #b0aaa0;
+  --card-bg: #201e19;
+  --chip-bg: #ebeef2;
+  --inset-card: #2e2b25;
 }
 
 @media (width >= 900px) {
   :root {
-    --heading-font-size-xxl: 54px;
-    --heading-font-size-xl: 40px;
-    --heading-font-size-l: 30px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;
+    --heading-font-size-xxl: 62px;
   }
 }
 
 html {
   margin: 0;
   padding: 0;
-  border-left: 8px solid red;
   min-height: 100vh;
 }
 
 body {
-  font-size: var(--body-font-size-m);
   margin: 0;
+  background: var(--background-color);
+  color: var(--ink-2);
   font-family: var(--body-font-family);
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.72;
   display: none;
 }
 
 body.appear {
-  display: unset;
+  display: block;
 }
 
 header {
   height: var(--nav-height);
 }
 
-h1, h2, h3,
-h4, h5, h6 {
-  font-family: var(--heading-font-family);
-  font-weight: 400;
-  line-height: 1.25;
-  margin-top: 1em;
-  margin-bottom: .5em;
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.05;
+  margin: 0 0 0.6em;
   scroll-margin: calc(var(--nav-height) + 1em);
-
+  text-wrap: balance;
 }
 
-h1 { 
-  text-transform: uppercase;
+h1 {
   font-size: var(--heading-font-size-xxl);
-  font-weight: 900;
- }
-
-h2 { 
-  text-transform: uppercase;
-  font-size: var(--heading-font-size-xl);
-  font-weight: 900;
-  text-align: center;
-
+  line-height: 1;
 }
 
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
-h5 { font-size: var(--heading-font-size-s) }
-h6 { font-size: var(--heading-font-size-xs) }
+h2 { font-size: var(--heading-font-size-xl); }
 
-h1 + h3 {
-  margin-top: -32px;
-  margin-bottom: 1em;
+h3 {
+  font-size: var(--heading-font-size-s);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h4 { font-size: var(--heading-font-size-m); }
+h5 { font-size: var(--heading-font-size-s); }
+h6 { font-size: var(--heading-font-size-xs); }
+
+/* accent word — author bolds the word inside a heading */
+h1 strong, h2 strong, h3 strong {
+  color: var(--accent);
+  font-weight: inherit;
 }
 
 p, dl, ol, ul, pre, blockquote {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin: 0 0 1.1em;
 }
 
 hr {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
+  margin: 1.5em 0;
   border: 0;
-  border-bottom: 1px solid var(--overlay-background-color);
+  border-bottom: 1px solid var(--border-warm);
+}
+
+/* eyebrow / mono label */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
 }
 
 code, pre, samp {
-  font-family: var(--fixed-font-family);
+  font-family: var(--font-mono);
   font-size: var(--body-font-size-s);
 }
 
@@ -145,9 +240,9 @@ pre {
 }
 
 main pre {
-  background-color: var(--overlay-background-color);
+  background-color: var(--surface-warm);
   padding: 1em;
-  border-radius: .25em;
+  border-radius: var(--radius-sm);
   overflow-x: auto;
   white-space: pre;
 }
@@ -158,66 +253,104 @@ a:any-link {
 }
 
 a:hover {
-  text-decoration: underline;
   color: var(--link-hover-color);
 }
 
-/* buttons */
+/* buttons (EDS auto-decorates links into .button-container .button) */
 a.button:any-link, button {
   font-family: var(--body-font-family);
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
-  border: 2px solid transparent;
-  padding: 5px 30px;
-  padding-block: 1rem;
+  border: none;
+  padding: 13px 24px;
   text-align: center;
   font-style: normal;
-  font-weight: 600;
-  font-size: 0.825rem;
+  font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
+  color: var(--btn-fg);
+  background: var(--btn);
   margin: 16px 0;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-radius: 30px;
-  border-radius: calc(0.625rem - 2px);
+  border-radius: var(--radius-sm);
+  transition: background 160ms ease;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
+a.button:hover, a.button:focus, button:hover, button:focus {
+  background: var(--btn-hover);
 }
 
 button:disabled, button:disabled:hover {
-  background-color: var(--overlay-background-color);
+  background-color: var(--border-warm);
   cursor: unset;
 }
 
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
+/* dark / emphasis button variant — author uses italic/emphasis link */
+a.button.emphasis, a.button.secondary, button.secondary {
+  background: var(--btn-emphasis-bg);
+  color: var(--btn-emphasis-fg);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  font-size: 13px;
+}
+
+a.button.emphasis:hover, a.button.secondary:hover, button.secondary:hover {
+  background: var(--btn-emphasis-bg-hover);
+}
+
+/* "view all" heading link — a plain (unbolded, non-italic) link placed
+ * directly after a section heading. decorateSectionHeadingLinks() pulls it
+ * out of the default .button treatment and makes the heading itself the
+ * flex row (heading text wrapped in a span + the link as a second child) —
+ * see the function's comment for why this avoids a wrapper <div>. */
+h2.section-heading-row,
+h3.section-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+a.view-all {
+  display: inline-block;
+  flex: none;
+  white-space: nowrap;
+  color: var(--ink);
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 2px;
+}
+
+@media (width <= 700px) {
+  h2.section-heading-row,
+  h3.section-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
 
 main input {
-  font-size: 1.25rem;
+  font-family: var(--body-font-family);
+  font-size: 1rem;
   width: 100%;
   max-width: 50rem;
   display: block;
   margin-bottom: 1rem;
-  padding: 0.75rem 0.6rem;
-  border-radius: 0.25rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
   box-sizing: border-box;
-  border: 1px solid var(--text-color);
-  color: var(--text-color);
-  background-color: var(--background-color);
+  border: 1px solid var(--border-warm);
+  color: var(--ink);
+  background-color: var(--surface);
 }
 
 main input:hover {
-  border: 1px solid var(--text-color);
+  border-color: var(--ink);
 }
 
 main blockquote {
@@ -226,7 +359,6 @@ main blockquote {
   text-indent: -1rem;
   hanging-punctuation: first;
 }
-
 
 main img {
   max-width: 100%;
@@ -245,25 +377,123 @@ main img {
   width: 100%;
 }
 
+/* sections — aligned to the header's 1264px / 2rem grid so the brand,
+ * section H2s, and bento cards all share one left edge. */
 main .section {
-  padding: 0 30px;
+  padding: 24px 2rem;
 }
 
-@media (width >= 1200px) {
-  main .section {
-    padding: 0;
+main .section > div {
+  max-width: 1264px;
+  margin: 0 auto;
+}
+
+/* section metadata variants — Direction D bento style. The card treatment
+ * (radius, padding, page-width constraint) lives on the section itself,
+ * not on its inner wrapper divs, so it renders as one seamless card no
+ * matter how many blocks the section contains (a lone heading, or a
+ * heading plus an embed, etc). */
+main .section.warm,
+main .section.soft-blue,
+main .section.dark,
+main .section.outline {
+  box-sizing: border-box;
+  max-width: 1264px;
+  margin: 24px auto;
+  border-radius: var(--radius-bento);
+  padding: 64px 56px;
+}
+
+/* Below the 1264px card max-width, `margin: 24px auto` has no leftover
+ * space to center with, so the horizontal margin collapses to 0 and the
+ * card touches the screen edges — unlike the unstyled sections, which
+ * stay inset via their own padding (never collapses regardless of
+ * viewport width). Give these card variants the same 2rem gutter
+ * explicitly at the point auto-centering stops doing that job for them;
+ * 900px matches every other responsive breakpoint in this design. */
+@media (width <= 900px) {
+  main .section.warm,
+  main .section.soft-blue,
+  main .section.dark,
+  main .section.outline {
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
 }
 
-@media (width >= 1200px) {
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0;
-  }
+main .section.warm > div,
+main .section.soft-blue > div,
+main .section.dark > div,
+main .section.outline > div {
+  max-width: none;
+  margin: 0;
 }
 
-/* section metadata */
+main .section.warm { background: var(--surface-warm); }
+main .section.soft-blue { background: var(--accent-soft); }
+
+main .section.dark {
+  background: var(--panel-dark);
+  color: var(--panel-dark-fg);
+}
+
+/* Alternative to the filled soft-blue card: white interior, thick soft-blue
+ * border instead of a color fill — same hue as .soft-blue's background.
+ * Padding is the shared 64px/56px minus the 18px border, so content starts
+ * at the same offset as every other card variant (border eats into the
+ * inset that padding alone provides elsewhere). */
+main .section.outline {
+  background: var(--surface);
+  border: 18px solid var(--accent-soft);
+  padding: 46px 38px;
+}
+
+/* Media embedded inside a colored section variant gets a white card of
+ * its own, matching the bento pattern of white content nested in color.
+ * Skipped for .outline — its interior is already white, so a nested
+ * white card would show no contrast. Zero out the base .embed rule's own
+ * bottom margin — the section's own padding already provides the gap
+ * before the card's edge, so the two would otherwise stack into a much
+ * bigger gap than intended. */
+main .section.warm .embed,
+main .section.soft-blue .embed,
+main .section.dark .embed {
+  background: var(--inset-card);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+main .section.outline .embed {
+  margin: 0;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3 { color: var(--panel-dark-fg); }
+main .section.dark p { color: var(--panel-dark-fg-muted); }
+
 main .section.highlight {
   background-color: var(--highlight-background-color);
 }
+
+/* rounded "card" sections (bento feel) */
+main .section.card-surface > div {
+  background: var(--surface-warm);
+  border-radius: var(--radius-bento);
+  padding: 56px 52px;
+}
+
+/* Article reading column — 720px prose width.
+ * Opt-in via Section Metadata Style: reading. Also auto-applied to the body
+ * section of a hero + single-body article (the most common long-form layout)
+ * by matching the page shape: main has exactly two sections, the second is
+ * not the hero. Homepage-style pages with 3+ sections render at full width. */
+main .section.reading .default-content-wrapper,
+main > .section:nth-child(2):last-child:not(.hero-container) > .default-content-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+main .section.feature > div { max-width: 920px; }

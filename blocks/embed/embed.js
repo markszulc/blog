@@ -55,6 +55,20 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
+// SoundCloud's classic widget is designed for a fixed height, not a
+// percentage-of-width aspect ratio — it stays visually "tight" (art +
+// waveform sized to the chrome around them) at any container width.
+// Authors can paste either the widget URL (from Share > Embed) or a
+// plain track/set page link; the latter gets wrapped into a widget URL.
+const embedSoundcloud = (url) => {
+  const widgetUrl = url.hostname.includes('w.soundcloud.com')
+    ? url.href
+    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(url.href)}&color=%23ff5500`;
+  const embedHTML = `<iframe src="${widgetUrl}" style="border: 0; width: 100%; height: 166px;"
+      scrolling="no" frameborder="no" allow="autoplay" title="Content from SoundCloud" loading="lazy"></iframe>`;
+  return embedHTML;
+};
+
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
@@ -72,6 +86,10 @@ const loadEmbed = (block, link, autoplay) => {
     {
       match: ['twitter'],
       embed: embedTwitter,
+    },
+    {
+      match: ['soundcloud'],
+      embed: embedSoundcloud,
     },
   ];
 

@@ -15,6 +15,14 @@
 const COOKIE_NAME = 'ms_newsletter_subscribed';
 const COOKIE_MAX_AGE_DAYS = 365;
 
+// Checkbox label -> exact beehiiv "Interest" custom field option string.
+// Keep in sync with the list-type custom field's options in beehiiv.
+const INTERESTS = [
+  { label: 'Adobe', value: 'Adobe' },
+  { label: 'Smart Home', value: 'Smart Home / Home Assistant' },
+  { label: 'Maker', value: 'Maker Projects' },
+];
+
 function getCookie(name) {
   return document.cookie
     .split('; ')
@@ -88,13 +96,63 @@ export default function decorate(block) {
 
   form.append(input, button);
 
+  // Expanding panel: hidden until the user focuses the email field, then
+  // reveals optional fields for a more personalized newsletter.
+  const expand = document.createElement('div');
+  expand.className = 'newsletter-expand';
+
+  const expandInner = document.createElement('div');
+  expandInner.className = 'newsletter-expand-inner';
+
+  const expandIntro = document.createElement('p');
+  expandIntro.className = 'newsletter-expand-intro';
+  expandIntro.textContent = "Tell me a bit more (totally optional) so I can tailor what I send you.";
+
+  const firstNameLabel = document.createElement('label');
+  firstNameLabel.className = 'newsletter-field-label';
+  firstNameLabel.textContent = 'First name';
+  const firstNameInput = document.createElement('input');
+  firstNameInput.type = 'text';
+  firstNameInput.name = 'firstName';
+  firstNameInput.autocomplete = 'given-name';
+  firstNameInput.placeholder = 'Jane';
+  firstNameLabel.append(firstNameInput);
+
+  const interestFieldset = document.createElement('fieldset');
+  interestFieldset.className = 'newsletter-interests';
+  const interestLegend = document.createElement('legend');
+  interestLegend.textContent = "What are you interested in?";
+  const interestHint = document.createElement('p');
+  interestHint.className = 'newsletter-interest-hint';
+  interestHint.textContent = "I write about a few different topics — pick any that interest you and I'll make sure those show up more often.";
+  interestFieldset.append(interestLegend, interestHint);
+
+  const interestCheckboxes = INTERESTS.map(({ label, value }) => {
+    const optionLabel = document.createElement('label');
+    optionLabel.className = 'newsletter-interest-option';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = 'interest';
+    checkbox.value = value;
+    optionLabel.append(checkbox, document.createTextNode(label));
+    interestFieldset.append(optionLabel);
+    return checkbox;
+  });
+
+  expandInner.append(expandIntro, firstNameLabel, interestFieldset);
+  expand.append(expandInner);
+
+  input.addEventListener('focus', () => {
+    expand.classList.add('is-expanded');
+  }, { once: true });
+
   const status = document.createElement('p');
   status.className = 'newsletter-status';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.hidden = true;
 
-  rightCell.replaceChildren(form, status);
+  rightCell.replaceChildren(form, expand, status);
   paragraphs.slice(2).forEach((p) => {
     p.classList.add('newsletter-footnote');
     rightCell.append(p);
@@ -105,6 +163,11 @@ export default function decorate(block) {
     if (!endpoint || !input.reportValidity()) return;
 
     const email = input.value.trim();
+    const firstName = firstNameInput.value.trim();
+    const interests = interestCheckboxes
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+
     input.disabled = true;
     button.disabled = true;
     button.textContent = 'Subscribing…';
@@ -115,7 +178,11 @@ export default function decorate(block) {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          ...(firstName && { firstName }),
+          ...(interests.length && { interests }),
+        }),
       });
       const data = await response.json().catch(() => ({}));
 

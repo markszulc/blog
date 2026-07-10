@@ -139,6 +139,7 @@ export default function decorate(block) {
     checkbox.type = 'checkbox';
     checkbox.name = 'interest';
     checkbox.value = value;
+    checkbox.checked = true;
     optionLabel.append(checkbox, document.createTextNode(label));
     interestFieldset.append(optionLabel);
     return checkbox;

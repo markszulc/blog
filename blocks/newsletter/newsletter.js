@@ -99,7 +99,7 @@ export default function decorate(block) {
   button.setAttribute('form', form.id);
   button.textContent = buttonText;
 
-  form.append(input, button);
+  form.append(input);
 
   // Expanding panel: hidden until the user focuses the email field, then
   // reveals optional fields for a more personalized newsletter.
@@ -147,9 +147,32 @@ export default function decorate(block) {
   expandInner.append(expandIntro, firstNameLabel, interestFieldset);
   expand.append(expandInner);
 
+  // Grid shell: column 1 (input, then expand panel below it) sized against
+  // column 2 (the button), so expanded fields line up under the email
+  // input. The button's own grid cell never changes size or column — on
+  // expand it just slides down via transform to trail the new bottom edge.
+  const formShell = document.createElement('div');
+  formShell.className = 'newsletter-form-shell';
+  formShell.append(form, expand, button);
+
+  const BUTTON_GAP = 16;
+
   input.addEventListener('focus', () => {
+    // Measure before expanding: however the button is placed by CSS at this
+    // breakpoint (beside the input, or stacked below it), this lands it
+    // just under the expand panel's eventual bottom edge either way.
+    const expandTop = expand.getBoundingClientRect().top;
+    const buttonTop = button.getBoundingClientRect().top;
+    const buttonHeight = button.getBoundingClientRect().height;
+    const targetTop = expandTop + expandInner.scrollHeight + BUTTON_GAP;
+
     expand.classList.add('is-expanded');
-    expandInner.append(button);
+    button.style.transform = `translateY(${targetTop - buttonTop}px)`;
+    // The transform is purely visual and doesn't push the shell's own
+    // height out, so reserve real space for where the button lands —
+    // otherwise it overlaps whatever renders after the shell (status text,
+    // footnote).
+    formShell.style.paddingBottom = `${buttonHeight + BUTTON_GAP}px`;
   }, { once: true });
 
   const status = document.createElement('p');
@@ -158,7 +181,7 @@ export default function decorate(block) {
   status.setAttribute('aria-live', 'polite');
   status.hidden = true;
 
-  rightCell.replaceChildren(form, expand, status);
+  rightCell.replaceChildren(formShell, status);
   paragraphs.slice(2).forEach((p) => {
     p.classList.add('newsletter-footnote');
     rightCell.append(p);

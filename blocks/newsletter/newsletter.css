@@ -25,22 +25,33 @@
   line-height: 1.5;
 }
 
+/* Grid shell: column 1 holds the email input and (once expanded) the
+   fields below it, so they always share the input's exact width. Column 2
+   holds the button, sized to its own content and never touched by column
+   1's width — expanding never resizes it, it only slides down via
+   transform to trail the new bottom edge (see .newsletter-submit below). */
+.newsletter-form-shell {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  min-width: 0;
+  padding-bottom: 0;
+  transition: padding-bottom 0.3s ease;
+}
+
 .newsletter-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  grid-column: 1;
+  grid-row: 1;
   margin: 0;
   min-width: 0;
 }
 
-/* Override the global `main input` block-level styles so the input sits
-   inline next to the button instead of taking the full column width. */
+/* Override the global `main input` block-level styles. */
 .newsletter-form input[type="email"] {
-  flex: 1 1 160px;
   min-width: 0;
-  width: auto;
+  width: 100%;
   max-width: none;
-  display: inline-block;
+  display: block;
   margin: 0;
   background: var(--chip-bg);
   border: none;
@@ -53,7 +64,9 @@
 
 .newsletter-form input[type="email"]:hover { border: none; }
 
-.newsletter-form-col .newsletter-submit {
+.newsletter-submit {
+  grid-column: 2;
+  grid-row: 1;
   background: var(--btn);
   color: var(--btn-fg);
   font-family: var(--body-font-family);
@@ -65,17 +78,10 @@
   cursor: pointer;
   white-space: nowrap;
   margin: 0;
+  transition: transform 0.3s ease;
 }
 
-.newsletter-form-col .newsletter-submit:hover { background: var(--btn-hover); }
-
-/* Once focusing the email field moves the button into the expand panel,
-   it drops to the bottom of the stack and spans full width. */
-.newsletter-expand-inner .newsletter-submit {
-  display: block;
-  width: 100%;
-  margin: 16px 0 0;
-}
+.newsletter-submit:hover { background: var(--btn-hover); }
 
 .newsletter .newsletter-footnote {
   font-size: 13px;
@@ -84,6 +90,8 @@
 }
 
 .newsletter-expand {
+  grid-column: 1;
+  grid-row: 2;
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.3s ease;
@@ -185,4 +193,27 @@
     grid-template-columns: 1fr;
     gap: 28px;
   }
+}
+
+/* Below this width the button's fixed size (it never resizes, even here)
+   no longer fits beside the input without squeezing it unreadably thin, so
+   stack it under the input instead of beside it. The expand panel still
+   lines up under the input; the JS-driven slide-down transform is measured
+   at runtime, so it lands the button below the expand panel from whatever
+   position it starts at in this layout. */
+@media (width <= 480px) {
+  .newsletter-form-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-form { grid-row: 1; }
+
+  .newsletter-submit {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+    margin-top: 10px;
+  }
+
+  .newsletter-expand { grid-row: 3; }
 }

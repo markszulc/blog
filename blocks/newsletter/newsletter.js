@@ -81,6 +81,7 @@ export default function decorate(block) {
 
   const form = document.createElement('form');
   form.className = 'newsletter-form';
+  form.id = `newsletter-form-${Math.random().toString(36).slice(2, 9)}`;
   form.noValidate = true;
 
   const input = document.createElement('input');
@@ -92,6 +93,10 @@ export default function decorate(block) {
 
   const button = document.createElement('button');
   button.type = 'submit';
+  button.className = 'newsletter-submit';
+  // Set explicitly so the button still submits the form after being moved
+  // out of it (into the expand panel) once the user focuses the email field.
+  button.setAttribute('form', form.id);
   button.textContent = buttonText;
 
   form.append(input, button);
@@ -115,7 +120,7 @@ export default function decorate(block) {
   firstNameInput.type = 'text';
   firstNameInput.name = 'firstName';
   firstNameInput.autocomplete = 'given-name';
-  firstNameInput.placeholder = 'Jane';
+  firstNameInput.placeholder = 'Larry';
   firstNameLabel.append(firstNameInput);
 
   const interestFieldset = document.createElement('fieldset');
@@ -144,6 +149,7 @@ export default function decorate(block) {
 
   input.addEventListener('focus', () => {
     expand.classList.add('is-expanded');
+    expandInner.append(button);
   }, { once: true });
 
   const status = document.createElement('p');

@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
-  align-items: center;
+  align-items: start;
 }
 
 /* Grid/flex items default to a min-width equal to their content's
@@ -53,7 +53,7 @@
 
 .newsletter-form input[type="email"]:hover { border: none; }
 
-.newsletter-form button {
+.newsletter-form-col .newsletter-submit {
   background: var(--btn);
   color: var(--btn-fg);
   font-family: var(--body-font-family);
@@ -67,7 +67,15 @@
   margin: 0;
 }
 
-.newsletter-form button:hover { background: var(--btn-hover); }
+.newsletter-form-col .newsletter-submit:hover { background: var(--btn-hover); }
+
+/* Once focusing the email field moves the button into the expand panel,
+   it drops to the bottom of the stack and spans full width. */
+.newsletter-expand-inner .newsletter-submit {
+  display: block;
+  width: 100%;
+  margin: 16px 0 0;
+}
 
 .newsletter .newsletter-footnote {
   font-size: 13px;
@@ -110,9 +118,9 @@
   background: var(--chip-bg);
   border: none;
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  padding: 15px 16px;
   font-family: var(--body-font-family);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--on-color);
 }
 

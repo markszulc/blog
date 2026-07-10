@@ -107,8 +107,13 @@
 }
 
 .newsletter-expand-intro {
-  margin: 14px 0 0;
+  margin: 14px 0 18px;
+  padding: 10px 12px;
+  background: rgb(255 255 255 / 6%);
+  border-left: 2px solid var(--panel-dark-fg-muted);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   font-size: 13px;
+  font-style: italic;
   color: var(--panel-dark-fg-muted);
 }
 

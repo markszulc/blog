@@ -1,5 +1,16 @@
 /* Direction D newsletter CTA — designed to live inside a .section.dark card */
 
+/* This card is always dark, regardless of the page-wide light/dark toggle
+   (:root sets color-scheme to match that toggle instead). Left alone, native
+   controls drawn here — notably the interest checkboxes — pick up the page's
+   light-mode UA theme and render with too little contrast against this dark
+   background; Safari in particular ends up drawing them essentially
+   invisibly. Scoping color-scheme: dark here fixes that regardless of the
+   page-wide theme. */
+.newsletter {
+  color-scheme: dark;
+}
+
 .newsletter > div {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -175,6 +186,7 @@
 
 .newsletter-interest-option input[type="checkbox"] {
   margin: 0;
+  accent-color: var(--btn);
 }
 
 .newsletter-status {

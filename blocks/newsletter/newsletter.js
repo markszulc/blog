@@ -77,7 +77,12 @@ export default function decorate(block) {
   let buttonText = 'Subscribe';
   if (link) buttonText = link.textContent.trim();
   else if (linkPara) buttonText = linkPara.textContent.trim();
-  const endpoint = link ? link.href : '';
+  // Google Docs' auto-linker sometimes swallows a sentence-ending period into
+  // the URL itself (a trailing FQDN dot on the hostname). Chromium quietly
+  // strips it before connecting, but Safari sends it as the literal TLS/SNI
+  // hostname, which then fails to match the cert — so drop it defensively
+  // rather than depend on every author noticing it in the doc.
+  const endpoint = link ? link.href.replace(/\.(?=\/?$)/, '') : '';
 
   const form = document.createElement('form');
   form.className = 'newsletter-form';

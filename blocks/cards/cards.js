@@ -7,6 +7,7 @@ const CATS = {
   cosmere: 'cosmere',
   adobe: 'adobe',
   maker: 'maker',
+  'building experiences': 'building experiences'
 };
 
 export default function decorate(block) {

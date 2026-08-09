@@ -3,7 +3,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 const CATS = {
   'home automation': 'home',
   '3d printing': 'print',
-  'building experiences': 'building experiences',
+  'building experiences': 'buildexp',
   energy: 'energy',
   adobe: 'adobe',
   maker: 'maker',

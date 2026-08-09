@@ -3,11 +3,10 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 const CATS = {
   'home automation': 'home',
   '3d printing': 'print',
+  'building experiences': 'building experiences',
   energy: 'energy',
-  cosmere: 'cosmere',
   adobe: 'adobe',
   maker: 'maker',
-  'building experiences': 'building experiences'
 };
 
 export default function decorate(block) {

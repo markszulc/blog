@@ -31,17 +31,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <script type="module">
     import { sampleRUM } from '/scripts/aem.js';
 
+    // the page content is swapped for the /fragments/404 document once it
+    // loads, so wait for a button container to appear before adding the
+    // referrer-aware back button.
+    const addBackButton = () => {
+      const btnContainer = document.querySelector('main .button-container');
+      if (!btnContainer || btnContainer.querySelector('.error-button-back')) return false;
+      const backBtn = document.createElement('a');
+      backBtn.classList.add('button', 'error-button-back');
+      backBtn.href = new URL(document.referrer).pathname;
+      backBtn.textContent = 'Go back';
+      backBtn.title = 'Go back';
+      btnContainer.append(backBtn);
+      return true;
+    };
+
     window.addEventListener('load', () => {
       if (document.referrer) {
-        const { origin, pathname } = new URL(document.referrer);
+        const { origin } = new URL(document.referrer);
         if (origin === window.location.origin) {
-          const backBtn = document.createElement('a');
-          backBtn.classList.add('button', 'error-button-back');
-          backBtn.href = pathname;
-          backBtn.textContent = 'Go back';
-          backBtn.title = 'Go back';
-          const btnContainer = document.querySelector('.button-container');
-          btnContainer.append(backBtn);
+          addBackButton();
+          // the fragment can land after this point and take the button with
+          // it, so keep re-adding while the error content settles
+          const observer = new MutationObserver(addBackButton);
+          observer.observe(document.querySelector('main'), { childList: true, subtree: true });
+          setTimeout(() => observer.disconnect(), 5000);
         }
       }
       sampleRUM('404', { source: document.referrer, target: window.location.href });

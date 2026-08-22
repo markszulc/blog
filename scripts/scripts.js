@@ -202,6 +202,41 @@ export function decorateMain(main) {
 }
 
 /**
+ * Swaps the markup shipped in 404.html for an authored `/fragments/404`
+ * document, so the error copy can be maintained in content instead of in code.
+ * https://www.aem.live/docs/error-pages
+ * @param {Element} main The container element
+ * @returns {Object|null} The section and its detached fallback content
+ */
+function loadErrorPage(main) {
+  const section = main.querySelector('.section');
+  if (!section) return null;
+  const path = `/fragments/${window.errorCode || '404'}`;
+  const link = document.createElement('a');
+  link.href = path;
+  link.textContent = path;
+  // keep the hardcoded markup around so a missing fragment doesn't leave the
+  // page empty; the wrapper preserves the .section > div layout contract
+  const fallback = document.createElement('div');
+  fallback.className = 'default-content-wrapper';
+  fallback.append(...section.childNodes);
+  section.replaceChildren(buildBlock('fragment', [[link]]));
+  return { section, fallback };
+}
+
+/**
+ * Restores the built-in error markup when the fragment couldn't be loaded.
+ * The fragment block removes itself once it renders, so a leftover .fragment
+ * means the document doesn't exist (or failed to fetch).
+ * @param {Object} errorPage The value returned by loadErrorPage
+ */
+function restoreErrorFallback({ section, fallback }) {
+  if (section.querySelector('.fragment')) {
+    section.replaceChildren(fallback);
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
@@ -210,9 +245,11 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    const errorPage = window.isErrorPage ? loadErrorPage(main) : null;
     decorateMain(main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
+    if (errorPage) restoreErrorFallback(errorPage);
   }
 
   try {

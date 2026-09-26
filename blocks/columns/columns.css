@@ -5,6 +5,9 @@
 
 .columns img {
   width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: var(--radius-bento);
 }
 
 .columns > div > div {
@@ -21,7 +24,7 @@
 
 @media (width >= 900px) {
   .columns > div {
-    align-items: center;
+    align-items: flex-start;
     flex-direction: unset;
     gap: 32px;
   }

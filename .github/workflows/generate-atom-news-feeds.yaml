@@ -5,7 +5,6 @@ on:
     types:
       - resource-published
   schedule:
-    # Runs daily in case any event was missed
     - cron: '30 0 * * *'
   pull_request:
     paths:
@@ -13,34 +12,41 @@ on:
       - '.github/workflows/generate-atom-news-feeds.yaml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.head_ref }}
-        # The bot user https://github.com/markszulc is used to commit the changes. The personal access token
-        # must be created from: https://github.com/settings/tokens
-        # The token is then stored in the secrets of the this.
-        # see https://github.com/markszulc/blog/settings/secrets/actions
-        token: ${{ secrets.BOT_ACCESS_TOKEN }}
-    - name: Configure git
-      run: |
-        git config user.name "GitHubActions"
-        git config user.email "<>"
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    - name: Install dependencies
-      working-directory: ./.github/ci
-      run: npm install
+      - name: Check out repository
+        uses: actions/checkout@v4
+        # Do not set ref: github.head_ref.
+        # checkout selects the correct event ref automatically.
+        with:
+          token: ${{ github.token }}
 
-    - name: Generate Feed
-      working-directory: ./.github/ci
-      run:  node generate-news-feed.js
+      - name: Configure git
+        run: |
+          git config user.name "GitHubActions"
+          git config user.email "actions@github.com"
 
-    - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Update feed.xml"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: ./.github/ci
+        run: npm install
+
+      - name: Generate Feed
+        working-directory: ./.github/ci
+        run: node generate-news-feed.js
+
+      - name: Commit and push changes
+        if: github.event_name != 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update feed.xml"
+          token: ${{ secrets.BOT_ACCESS_TOKEN || github.token }}

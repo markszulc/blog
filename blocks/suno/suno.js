@@ -22,25 +22,32 @@ const getSongId = (href) => {
   }
 };
 
+const SUNO_URL = /https?:\/\/(?:www\.)?suno\.com\/\S+/i;
+
+// The song URL may be a hyperlink or plain text pasted into a cell.
+const findUrlCell = (row) => [...row.children].find((cell) => cell.querySelector('a[href*="suno.com"]') || SUNO_URL.test(cell.textContent));
+
 const parseSongs = (block) => [...block.children].map((row) => {
-  const link = row.querySelector('a[href*="suno.com"]');
-  const id = link && getSongId(link.href);
+  const urlCell = findUrlCell(row);
+  if (!urlCell) return null;
+  const link = urlCell.querySelector('a[href*="suno.com"]');
+  const href = link ? link.href : urlCell.textContent.match(SUNO_URL)[0];
+  const id = getSongId(href);
   if (!id) {
-    if (link) {
-      // eslint-disable-next-line no-console
-      console.warn(`suno: can't embed ${link.href} — use the full suno.com/song/<id> link`);
-    }
+    // eslint-disable-next-line no-console
+    console.warn(`suno: can't embed ${href} — share links (suno.com/s/...) don't work, use the full suno.com/song/<id> link`);
     return null;
   }
   const picture = row.querySelector('picture');
   const [title, description] = [...row.children]
-    .filter((cell) => !cell.contains(link) && !cell.querySelector('picture'))
+    .filter((cell) => cell !== urlCell && !cell.querySelector('picture'))
     .map((cell) => cell.textContent.trim())
     .filter(Boolean);
+  const linkText = link ? link.textContent.trim() : '';
   return {
     id,
     href: `https://suno.com/song/${id}`,
-    title: title || (link.textContent.trim() !== link.href ? link.textContent.trim() : ''),
+    title: title || (linkText && !SUNO_URL.test(linkText) ? linkText : ''),
     description,
     picture,
   };

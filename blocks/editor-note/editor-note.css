@@ -1,0 +1,93 @@
+/* Editor Note — opening note plus byline. */
+
+.editor-note {
+  max-width: 720px;
+  margin: 56px auto 0;
+  padding: 0 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-note .editor-note-body p {
+  font-size: 18px;
+  line-height: 1.72;
+  color: var(--ink-2);
+  margin: 0 0 20px;
+  text-wrap: pretty;
+}
+
+.editor-note .editor-note-body p:last-child { margin-bottom: 0; }
+
+.editor-note .editor-note-body p.editor-note-lead {
+  font-size: 23px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.editor-note .editor-note-byline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid var(--border-warm);
+  padding-top: 20px;
+  margin-top: 4px;
+}
+
+.editor-note .editor-note-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--accent-soft);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.editor-note .editor-note-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editor-note .editor-note-meta { flex: 1; }
+
+.editor-note .editor-note-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.editor-note .editor-note-detail {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.editor-note .editor-note-aside,
+.editor-note .editor-note-byline .editor-note-aside p {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 20em;
+  text-align: right;
+  margin: 0;
+}
+
+@media (width <= 600px) {
+  .editor-note { padding: 0; }
+  .editor-note .editor-note-byline { flex-wrap: wrap; }
+
+  .editor-note .editor-note-aside,
+  .editor-note .editor-note-byline .editor-note-aside p {
+    max-width: none;
+    text-align: left;
+  }
+}

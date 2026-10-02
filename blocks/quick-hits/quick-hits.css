@@ -1,0 +1,104 @@
+/* Quick Hits — warm panel of small update cards with status tags. */
+
+.quick-hits {
+  max-width: 920px;
+  margin: 64px auto 0;
+  box-sizing: border-box;
+  background: var(--surface-warm);
+  border-radius: var(--radius-bento);
+  padding: 36px 36px 38px;
+}
+
+.quick-hits .quick-hits-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.quick-hits .quick-hits-head h1,
+.quick-hits .quick-hits-head h2,
+.quick-hits .quick-hits-head h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.quick-hits .quick-hits-tagline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.quick-hits .quick-hits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.quick-hits .quick-hits-list li {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quick-hits .quick-hits-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.quick-hits .quick-hits-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--ink);
+}
+
+.quick-hits .quick-hits-status {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-pill);
+  padding: 4px 9px;
+}
+
+.quick-hits .quick-hits-status.done {
+  --topic: var(--cat-energy);
+
+  color: color-mix(in srgb, var(--topic) 45%, var(--ink));
+  background: color-mix(in srgb, var(--topic) 20%, var(--surface));
+  border-color: transparent;
+}
+
+.quick-hits .quick-hits-list p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+@media (width <= 700px) {
+  .quick-hits { padding: 28px 20px; }
+
+  .quick-hits .quick-hits-head {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .quick-hits .quick-hits-list { grid-template-columns: 1fr; }
+}

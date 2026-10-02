@@ -67,6 +67,10 @@ function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
   if (!h1 || !picture) return;
+  // leave headings and pictures that belong to an authored block (e.g.
+  // newsletter-masthead, figure) where they are
+  const inBlock = (el) => el.closest('main > div > div[class]');
+  if (inBlock(h1) || inBlock(picture)) return;
 
   // collect H1 + following sibling text content (stops at next heading or block)
   const textEls = [h1];

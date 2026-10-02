@@ -1,0 +1,78 @@
+/* Issue Contents — numbered jump cards, one per story. */
+
+.issue-contents {
+  max-width: 920px;
+  margin: 16px auto 0;
+}
+
+.issue-contents ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.issue-contents .issue-contents-card {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 18px 20px 20px;
+  border: 1px solid var(--border-warm);
+  border-radius: 18px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.issue-contents .issue-contents-card:hover {
+  border-color: var(--topic);
+  color: var(--ink);
+}
+
+.issue-contents .issue-contents-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.issue-contents .issue-contents-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.issue-contents .issue-contents-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--topic);
+}
+
+.issue-contents .issue-contents-topic {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.issue-contents .issue-contents-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+@media (width <= 900px) {
+  .issue-contents ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (width <= 480px) {
+  .issue-contents ol { grid-template-columns: 1fr; }
+}

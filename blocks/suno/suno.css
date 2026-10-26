@@ -108,19 +108,14 @@
   font-size: var(--body-font-size-m);
   font-weight: 600;
   line-height: 1.25;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .suno .suno-track-desc {
   font-size: var(--body-font-size-xs);
   line-height: 1.4;
   color: var(--muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  text-wrap: pretty;
 }
 
 .suno .suno-track[aria-current] .suno-track-num,

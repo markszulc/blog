@@ -1,0 +1,56 @@
+/* Verdict — soft-blue bottom-line panel. */
+
+.verdict {
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+
+.verdict .verdict-panel {
+  background: var(--accent-soft);
+  border-radius: var(--radius-card);
+  padding: 26px 28px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.verdict .verdict-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--on-color);
+  background: var(--chip-bg);
+  border-radius: var(--radius-pill);
+  padding: 6px 11px;
+}
+
+.verdict .verdict-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.verdict p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+@media (width <= 600px) {
+  .verdict { padding: 0; }
+
+  .verdict .verdict-panel {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .verdict .verdict-label { justify-self: start; }
+}

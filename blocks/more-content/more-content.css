@@ -1,0 +1,92 @@
+/* More Content — "Go deeper" row of tinted topic-hub cards. */
+
+.more-content {
+  max-width: 920px;
+  margin: 64px auto 0;
+}
+
+.more-content .more-content-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.more-content .more-content-head h1,
+.more-content .more-content-head h2,
+.more-content .more-content-head h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.more-content .more-content-all {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.more-content .more-content-all:hover { color: var(--accent); }
+
+.more-content .more-content-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.more-content .more-content-card {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--topic-soft);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+/* "Adobe & AI" uses the brand soft-blue exactly, like the design. */
+.more-content .more-content-card.topic-ai { --topic-soft: var(--accent-soft); }
+
+.more-content a.more-content-card:hover {
+  background: color-mix(in srgb, var(--topic) 30%, var(--surface));
+  color: var(--ink);
+}
+
+.more-content .more-content-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.more-content .more-content-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.more-content .more-content-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--topic-deep);
+}
+
+@media (width <= 900px) {
+  .more-content .more-content-list { grid-template-columns: 1fr; }
+}

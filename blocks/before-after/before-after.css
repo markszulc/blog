@@ -1,0 +1,125 @@
+/* Before / After — two linked version cards joined by an arrow. */
+
+.before-after {
+  max-width: 920px;
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+  align-items: center;
+}
+
+.before-after .before-after-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 24px 26px;
+  border-radius: 22px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.before-after .before-after-card.before {
+  background: var(--surface-warm);
+  border: 1px solid var(--border-warm);
+  color: var(--ink);
+}
+
+.before-after a.before-after-card.before:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.before-after .before-after-card.after {
+  background: var(--panel-dark);
+  color: var(--panel-dark-fg);
+}
+
+.before-after a.before-after-card.after:hover {
+  background: color-mix(in srgb, var(--panel-dark) 88%, #fff);
+  color: var(--panel-dark-fg);
+}
+
+.before-after .before-after-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.before-after .before-after-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.before-after .after .before-after-label { color: var(--accent); }
+
+.before-after .before-after-platform,
+.before-after .before-after-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.before-after .before-after-sub { font-size: 14px; }
+
+.before-after .after .before-after-platform,
+.before-after .after .before-after-sub { color: var(--panel-dark-fg-muted); }
+
+.before-after .before-after-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.before-after .before-after-play {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.before-after .before-after-play::after {
+  content: '';
+  margin-left: 4px;
+  border-left: 14px solid var(--ink);
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+}
+
+.before-after .after .before-after-play {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.before-after .after .before-after-play::after { border-left-color: var(--on-color); }
+
+.before-after .before-after-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.before-after .before-after-arrow {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: color-mix(in srgb, var(--border-warm) 80%, var(--ink));
+}
+
+@media (width <= 700px) {
+  .before-after { grid-template-columns: 1fr; }
+
+  .before-after .before-after-arrow {
+    transform: rotate(90deg);
+    padding: 8px 0;
+  }
+}

@@ -1,0 +1,48 @@
+/* Figure — full-width rounded image + caption with a topic dot. */
+
+.figure {
+  max-width: 920px;
+  margin: 32px auto 0;
+}
+
+.figure figure { margin: 0; }
+
+.figure .figure-frame {
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--card-tint);
+}
+
+.figure .figure-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.figure figcaption {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  max-width: 720px;
+  margin: 14px auto 0;
+  padding: 0 28px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.figure figcaption::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--topic);
+  flex-shrink: 0;
+}
+
+@media (width <= 900px) {
+  .figure figcaption { padding: 0; }
+}

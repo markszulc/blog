@@ -1,0 +1,65 @@
+/* Bench Lesson — dark callout, accented with the story's colour. */
+
+.bench-lesson {
+  max-width: 920px;
+  margin: 32px auto 0;
+  box-sizing: border-box;
+  background: var(--panel-dark);
+  border-radius: 24px;
+  padding: 40px 44px;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 36px;
+}
+
+/* --topic for "music" is --ink, which is near-black in light mode — the
+   wrong way round on this always-dark panel, so fall back to the accent. */
+.bench-lesson.topic-music { --topic: var(--accent); }
+
+.bench-lesson .bench-lesson-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--topic);
+  padding-top: 8px;
+  max-width: 12ch;
+}
+
+.bench-lesson .bench-lesson-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--panel-dark-fg);
+  margin-bottom: 14px;
+}
+
+.bench-lesson .bench-lesson-title strong,
+.bench-lesson .bench-lesson-title em {
+  color: var(--topic);
+  font-weight: inherit;
+  font-style: normal;
+}
+
+.bench-lesson p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--panel-dark-fg-muted);
+  margin: 0;
+}
+
+@media (width <= 900px) {
+  .bench-lesson {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 32px 28px;
+  }
+
+  .bench-lesson .bench-lesson-label {
+    max-width: none;
+    padding-top: 0;
+  }
+  .bench-lesson .bench-lesson-title { font-size: 26px; }
+}

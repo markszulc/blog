@@ -1,0 +1,65 @@
+/* Newsletter Masthead — big issue number + title on a warm card. */
+
+.newsletter-masthead {
+  max-width: 920px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: var(--surface-warm);
+  border-radius: var(--radius-bento);
+  padding: 48px 52px 44px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 44px;
+  align-items: end;
+}
+
+.newsletter-masthead .newsletter-masthead-number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 168px;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+}
+
+.newsletter-masthead .newsletter-masthead-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.newsletter-masthead h1,
+.newsletter-masthead h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.newsletter-masthead.dark {
+  background: var(--panel-dark);
+}
+
+.newsletter-masthead.dark h1,
+.newsletter-masthead.dark h2 { color: var(--panel-dark-fg); }
+.newsletter-masthead.dark .newsletter-masthead-eyebrow { color: var(--panel-dark-fg-muted); }
+
+@media (width <= 900px) {
+  .newsletter-masthead {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 28px;
+  }
+
+  .newsletter-masthead .newsletter-masthead-number { font-size: 104px; }
+
+  .newsletter-masthead h1,
+  .newsletter-masthead h2 { font-size: 36px; }
+}

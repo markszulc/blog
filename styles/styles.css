@@ -494,3 +494,37 @@ main .section.reading .default-content-wrapper {
 }
 
 main .section.feature > div { max-width: 920px; }
+
+/* newsletter topic colours (see scripts/topics.js). --topic is the solid
+ * colour, --topic-fg the text that sits on it, --topic-soft a tinted panel
+ * that follows the light/dark surface, --topic-deep text on that panel. */
+.topic-default {
+  --topic: var(--accent);
+  --topic-fg: var(--on-color);
+}
+
+.topic-ai {
+  --topic: var(--cat-home);
+  --topic-fg: var(--on-color);
+}
+
+.topic-smart-home {
+  --topic: var(--cat-energy);
+  --topic-fg: var(--on-color);
+}
+
+.topic-maker {
+  --topic: var(--cat-print);
+  --topic-fg: var(--on-color);
+}
+
+.topic-music {
+  --topic: var(--ink);
+  --topic-fg: var(--surface);
+}
+
+[class*="topic-"] {
+  --topic-soft: color-mix(in srgb, var(--topic) 20%, var(--surface));
+  --topic-line: color-mix(in srgb, var(--topic) 40%, var(--surface));
+  --topic-deep: color-mix(in srgb, var(--topic) 45%, var(--ink));
+}

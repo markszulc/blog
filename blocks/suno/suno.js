@@ -7,6 +7,9 @@
  * browser (no CORS), so titles and art come from the document.
  * Share short links (suno.com/s/...) can't be resolved client-side — use
  * the full /song/<id> link from the song page.
+ *
+ * Suno's embed has no JS API: the page can start a song (?autoplay=1) but
+ * can't tell when it ends, so the playlist doesn't auto-advance.
  */
 
 const SUNO_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -53,9 +56,11 @@ const parseSongs = (block) => [...block.children].map((row) => {
   };
 }).filter(Boolean);
 
-const createPlayer = (song) => {
+const embedUrl = (song, autoplay) => `https://suno.com/embed/${song.id}${autoplay ? '?autoplay=1' : ''}`;
+
+const createPlayer = (song, autoplay) => {
   const iframe = document.createElement('iframe');
-  iframe.src = `https://suno.com/embed/${song.id}`;
+  iframe.src = embedUrl(song, autoplay);
   iframe.title = song.title ? `${song.title} on Suno` : 'Song on Suno';
   iframe.allow = 'autoplay; encrypted-media';
   iframe.loading = 'lazy';
@@ -84,7 +89,10 @@ export default function decorate(block) {
   }, { rootMargin: '200px' });
   observer.observe(block);
 
-  if (songs.length < 2) return;
+  if (songs.length < 2) {
+    block.classList.add('is-single');
+    return;
+  }
 
   const list = document.createElement('ol');
   list.className = 'suno-list';
@@ -93,16 +101,17 @@ export default function decorate(block) {
     const song = songs[index];
     if (!iframe) {
       observer.disconnect();
-      iframe = createPlayer(song);
+      iframe = createPlayer(song, true);
       player.append(iframe);
     } else {
-      iframe.src = `https://suno.com/embed/${song.id}`;
+      // Clicking a track is a user gesture, so the embed may autoplay.
+      iframe.src = embedUrl(song, true);
       iframe.title = song.title ? `${song.title} on Suno` : 'Song on Suno';
     }
     list.querySelectorAll('[aria-current]').forEach((b) => b.removeAttribute('aria-current'));
     button.setAttribute('aria-current', 'true');
-    const { top } = player.getBoundingClientRect();
-    if (top < 0) player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const { top, bottom } = player.getBoundingClientRect();
+    if (top < 0 || bottom > window.innerHeight) player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   songs.forEach((song, index) => {
